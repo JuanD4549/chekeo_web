@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('enterprises_id');
+            $table->foreign('enterprises_id')->references('id')->on('enterprises');
+            $table->string('name');
             $table->timestamps();
         });
     }

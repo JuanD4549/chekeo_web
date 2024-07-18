@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Enterprise extends Model
+class Branche extends Model
 {
     use HasFactory;
-    public function department(): BelongsTo{
-        return $this->belongsTo(Department::class);
+
+    public function enterprise(): BelongsTo
+    {
+        return $this->belongsTo(Enterprise::class);
     }
-    public function branches():HasMany{
-        return $this->hasMany(Branche::class);
+    public function departments(): HasMany
+    {
+        return $this->hasMany(Department::class);
     }
 }
