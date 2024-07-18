@@ -10,9 +10,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Enterprise extends Model
 {
     use HasFactory;
-    public function department(): BelongsTo{
-        return $this->belongsTo(Department::class);
-    }
+    protected $fillable=[
+        'name',
+        'ruc',
+        'cellphone',
+        'address',
+        'legal_representative',
+        'email',
+        'img_url',
+    ];
+
     public function branches():HasMany{
         return $this->hasMany(Branche::class);
     }

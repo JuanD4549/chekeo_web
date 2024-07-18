@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('branches_id');
-            $table->foreign('branches_id')->references('id')->on('branches');
+            $table->unsignedBigInteger('branche_id');
+            $table->foreign('branche_id')->references('id')->on('branches');
             $table->string('name');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

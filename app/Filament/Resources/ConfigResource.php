@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EnterpriseResource\Pages;
-use App\Filament\Resources\EnterpriseResource\RelationManagers;
-use App\Models\Enterprise;
+use App\Filament\Resources\ConfigResource\Pages;
+use App\Filament\Resources\ConfigResource\RelationManagers;
+use App\Models\Config;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class EnterpriseResource extends Resource
+class ConfigResource extends Resource
 {
-    protected static ?string $model = Enterprise::class;
+    protected static ?string $model = Config::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -56,9 +56,9 @@ class EnterpriseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEnterprises::route('/'),
-            'create' => Pages\CreateEnterprise::route('/create'),
-            'edit' => Pages\EditEnterprise::route('/{record}/edit'),
+            'index' => Pages\ListConfigs::route('/'),
+            'create' => Pages\CreateConfig::route('/create'),
+            'edit' => Pages\EditConfig::route('/{record}/edit'),
         ];
     }
 }

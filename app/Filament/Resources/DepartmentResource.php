@@ -23,7 +23,14 @@ class DepartmentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('branche_id')
+                    ->relationship('branche', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Toggle::make('status')
+                    ->required(),
             ]);
     }
 
@@ -31,7 +38,21 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('branche.name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\IconColumn::make('status')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
