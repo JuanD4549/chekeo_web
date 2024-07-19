@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ConfigResource\Pages;
-use App\Filament\Resources\ConfigResource\RelationManagers;
-use App\Models\Config;
+use App\Filament\Resources\RoleResource\Pages;
+use App\Filament\Resources\RoleResource\RelationManagers;
+use App\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,24 +13,22 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ConfigResource extends Resource
+class RoleResource extends Resource
 {
-    protected static ?string $model = Config::class;
+    protected static ?string $model = Role::class;
     protected static ?string $navigationGroup = 'Settings';
-
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('num_branches')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->numeric(),
-                Forms\Components\FileUpload::make('img_url')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('guard_name')
                     ->required()
-                    ->image()
-                    ->imageEditor(),
+                    ->maxLength(255),
             ]);
     }
 
@@ -38,10 +36,9 @@ class ConfigResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('num_branches')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('img_url')
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('guard_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -75,9 +72,9 @@ class ConfigResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListConfigs::route('/'),
-            'create' => Pages\CreateConfig::route('/create'),
-            'edit' => Pages\EditConfig::route('/{record}/edit'),
+            'index' => Pages\ListRoles::route('/'),
+            'create' => Pages\CreateRole::route('/create'),
+            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }

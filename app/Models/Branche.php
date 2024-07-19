@@ -13,6 +13,7 @@ class Branche extends Model
     protected $fillable=[
         'enterprise_id',
         'name',
+        'status',
     ];
 
     public function enterprise(): BelongsTo

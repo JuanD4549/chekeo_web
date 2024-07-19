@@ -16,8 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class BrancheResource extends Resource
 {
     protected static ?string $model = Branche::class;
+    protected static ?string $navigationGroup = 'My Organization';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     public static function form(Form $form): Form
     {
@@ -29,6 +30,8 @@ class BrancheResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Toggle::make('status')
+                    ->required(),
             ]);
     }
 
@@ -41,6 +44,8 @@ class BrancheResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('status')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -66,7 +71,7 @@ class BrancheResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DepartmentsRelationManager::class,
         ];
     }
 
