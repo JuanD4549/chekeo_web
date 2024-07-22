@@ -193,7 +193,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\Filament\DigitalPanelProvider::class,
+        App\Providers\Filament\AdminPanelProvider::class,
+        App\Providers\Filament\PersonalPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
 
     ],

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('register_reliefs', function (Blueprint $table) {
+        Schema::create('security_guard_shifts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('relief_id');
             $table->foreignId('user_id');
-            $table->dateTime('date_time');
-            $table->enum('status', ['ingress', 'egress']);
+            $table->dateTime('date_time_in');
+            $table->dateTime('date_time_out')->nullable();
             $table->enum('turn', ['morning', 'evening ', 'night ']);
+            $table->enum('type', ['12', '24 ']);
             $table->text('detail')->nullable();
             $table->double('latitude');
             $table->double('longitude');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('register_reliefs');
+        Schema::dropIfExists('security_guard_shifts');
     }
 };

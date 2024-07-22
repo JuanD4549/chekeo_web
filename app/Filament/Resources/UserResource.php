@@ -40,7 +40,9 @@ class UserResource extends Resource
                     ->hiddenOn('edit'),
                 Select::make('roles')
                     ->multiple()
-                    ->relationship('roles', 'name'),
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 

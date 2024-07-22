@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RegisterReliefs extends Model
+class SecurityGuardShift extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'relief_id',
         'user_id',
-        'date_time',
+        'date_time_in',
+        'date_time_out',
         'status',
         'turn',
         'detail',
@@ -21,8 +21,8 @@ class RegisterReliefs extends Model
         'img1_url',
         'img2_url',
     ];
-    public function relief(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Relief::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\RoleResource\Pages;
+namespace App\Filament\Resources\CalendarResource\Pages;
 
-use App\Filament\Resources\RoleResource;
+use App\Filament\Resources\CalendarResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditRole extends EditRecord
+class EditCalendar extends EditRecord
 {
-    protected static string $resource = RoleResource::class;
+    protected static string $resource = CalendarResource::class;
 
     protected function getHeaderActions(): array
     {

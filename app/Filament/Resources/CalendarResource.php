@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PermissionResource\Pages;
-use App\Filament\Resources\PermissionResource\RelationManagers;
-use App\Models\Permission;
+use App\Filament\Resources\CalendarResource\Pages;
+use App\Filament\Resources\CalendarResource\RelationManagers;
+use App\Models\Calendar;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,23 +13,32 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PermissionResource extends Resource
+class CalendarResource extends Resource
 {
-    protected static ?string $model = Permission::class;
-    protected static ?string $navigationGroup = 'Settings';
-
+    protected static ?string $model = Calendar::class;
+    protected static ?string $navigationGroup="My Organization";
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\Select::make('day')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('guard_name')
-                    ->required()
-                    ->maxLength(255),
+                    ->options([
+                        'monday'=>'Monday',
+                        'tuesday'=>'Tuesday',
+                        'wednesday'=>'Wednesday',
+                        'thursday'=>'Thursday',
+                        'friday'=>'Friday',
+                        'saturday'=>'Saturday',
+                        'sunday'=>'Sunday'
+                    ]),
+                    
+                Forms\Components\TimePicker::make('time_in')
+                    ->required(),
+                Forms\Components\TimePicker::make('time_out')
+                    ->required(),
             ]);
     }
 
@@ -37,10 +46,10 @@ class PermissionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('day')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('guard_name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('time_in'),
+                Tables\Columns\TextColumn::make('time_out'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -73,9 +82,9 @@ class PermissionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPermissions::route('/'),
-            'create' => Pages\CreatePermission::route('/create'),
-            'edit' => Pages\EditPermission::route('/{record}/edit'),
+            'index' => Pages\ListCalendars::route('/'),
+            'create' => Pages\CreateCalendar::route('/create'),
+            'edit' => Pages\EditCalendar::route('/{record}/edit'),
         ];
     }
 }

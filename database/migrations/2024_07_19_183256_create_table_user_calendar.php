@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reliefs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('table_user_calendar', function (Blueprint $table) {
             $table->foreignId('user_id');
+            $table->foreignId('calendar_id');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reliefs');
+        Schema::dropIfExists('table_user_calendar');
     }
 };
