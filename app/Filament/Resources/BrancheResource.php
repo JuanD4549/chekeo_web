@@ -5,13 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BrancheResource\Pages;
 use App\Filament\Resources\BrancheResource\RelationManagers;
 use App\Models\Branche;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Get;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 
 class BrancheResource extends Resource
 {
@@ -25,14 +29,33 @@ class BrancheResource extends Resource
     {
         return $form
             ->schema([
+                Section::make('Data branch')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('address')
+                            ->maxLength(255),
+                        Forms\Components\Toggle::make('status')
+                            ->default(true),
+                    ]),
                 Forms\Components\Select::make('enterprise_id')
                     ->relationship('enterprise', 'name')
                     ->required(),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('status')
+                Forms\Components\Select::make('user_id')
+                    ->options(
+                        fn (): Collection => User::query()
+                            ->where('charge', 'Boss')
+                            ->pluck('name','id')
+                    )
+                    ->label('Boss')
+                    ->searchable()
+                    ->preload()
+                    ->live()
+                    //->relationship('user', 'name')
                     ->required(),
+
             ]);
     }
 
@@ -42,7 +65,10 @@ class BrancheResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('enterprise.name')
                     ->numeric()
-                    ->sortable(),
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Boss')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('status')

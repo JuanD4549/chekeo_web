@@ -17,10 +17,11 @@ class Enterprise extends Model
         'address',
         'legal_representative',
         'email',
-        'img_url',
+        'img',
     ];
 
     public function branches():HasMany{
         return $this->hasMany(Branche::class);
     }
+    
 }

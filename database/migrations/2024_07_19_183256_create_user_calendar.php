@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('table_user_calendar', function (Blueprint $table) {
+        Schema::create('user_calendar', function (Blueprint $table) {
             $table->foreignId('user_id');
             $table->foreignId('calendar_id');
             $table->timestamps();
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_user_calendar');
+        Schema::dropIfExists('user_calendar');
     }
 };

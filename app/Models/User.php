@@ -22,9 +22,28 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'department_id',
+        'branche_id',
         'name',
+        'ci',
+        'blood_type',
+        'drive_license',
         'email',
         'password',
+        'cellphone',
+        'phone',
+        'address',
+        'charge',
+        'country',
+        'province',
+        'city',
+        'date_in',
+        'enterprise_mail',
+        'enterpriser_phone',
+        'enterpriser_phone_ext',
+        'img',
+        'type_user',
+        'status',
     ];
 
     /**
@@ -53,5 +72,13 @@ class User extends Authenticatable
     public function calendars()
     {
         return $this->belongsToMany(Calendar::class);
+    }
+    public function branche()
+    {
+        return $this->belongsTo(Branche::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 }

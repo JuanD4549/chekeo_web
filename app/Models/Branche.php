@@ -12,7 +12,9 @@ class Branche extends Model
     use HasFactory;
     protected $fillable=[
         'enterprise_id',
+        'user_id',
         'name',
+        'address',
         'status',
     ];
 
@@ -20,8 +22,16 @@ class Branche extends Model
     {
         return $this->belongsTo(Enterprise::class);
     }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
     public function departments(): HasMany
     {
         return $this->hasMany(Department::class);
+    }
+    public function calendars()
+    {
+        return $this->belongsToMany(Calendar::class);
     }
 }

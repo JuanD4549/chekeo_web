@@ -17,6 +17,7 @@ class DepartmentResource extends Resource
 {
     protected static ?string $model = Department::class;
     protected static ?string $navigationGroup = 'My Organization';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
 
@@ -27,11 +28,13 @@ class DepartmentResource extends Resource
                 Forms\Components\Select::make('branche_id')
                     ->relationship('branche', 'name')
                     ->required(),
+                Forms\Components\Select::make('user_id')
+                    ->label('Boss')
+                    ->relationship('user', 'name')
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Toggle::make('status')
-                    ->required(),
             ]);
     }
 
@@ -40,12 +43,12 @@ class DepartmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
-                    ->sortable(),
+                    ->searchable(),
+                    Tables\Columns\TextColumn::make('user.name')
+                    ->label('boss')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

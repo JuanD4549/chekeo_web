@@ -16,11 +16,15 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'DigitalTempo',
+            'ci'=>'123456789',
+            'enterpriser_phone'=>'0978657557',
             'email'=>'digitaltempo@gmail.com',
             'password'=>Hash::make('digitaltempo2023%'),
         ]);
         DB::table('users')->insert([
             'name' => 'Juan Diego',
+            'ci'=>'123456799',
+            'enterpriser_phone'=>'0978657557',
             'email'=>'juandiego402@gmail.com',
             'password'=>Hash::make('digitaltempo2023%'),
         ]);

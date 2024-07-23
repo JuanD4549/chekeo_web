@@ -34,7 +34,6 @@ class CalendarResource extends Resource
                         'saturday'=>'Saturday',
                         'sunday'=>'Sunday'
                     ]),
-                    
                 Forms\Components\TimePicker::make('time_in')
                     ->required(),
                 Forms\Components\TimePicker::make('time_out')

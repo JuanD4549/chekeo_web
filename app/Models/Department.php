@@ -11,10 +11,13 @@ class Department extends Model
     use HasFactory;
     protected $fillable=[
         'branche_id',
+        'user_id',
         'name',
-        'status',
     ];
     public function branche(): BelongsTo{
         return $this->belongsTo(Branche::class);
+    }
+    public function user(): BelongsTo{
+        return $this->belongsTo(User::class);
     }
 }

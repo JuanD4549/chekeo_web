@@ -6,6 +6,7 @@ use App\Filament\Resources\SecurityGuardShiftResource\Pages;
 use App\Filament\Resources\SecurityGuardShiftResource\RelationManagers;
 use App\Models\SecurityGuardShift;
 use Filament\Forms;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -18,8 +19,9 @@ class SecurityGuardShiftResource extends Resource
     protected static ?string $model = SecurityGuardShift::class;
     protected static ?string $navigationGroup = 'Security';
     protected static ?int $navigationSort = 2;
+    protected static ?string $navigationLabel = 'Turn';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
     public static function form(Form $form): Form
     {
@@ -45,12 +47,11 @@ class SecurityGuardShiftResource extends Resource
                 Forms\Components\TextInput::make('longitude')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('img1_url')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('img2_url')
-                    ->maxLength(255),
-                
+                ViewField::make('img1_url')
+                    ->view('forms.components.web-cam')
+                    ->label('Foto')
+                    ->columnSpanFull(),
+
             ]);
     }
 

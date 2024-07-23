@@ -27,10 +27,6 @@ class ConfigResource extends Resource
                 Forms\Components\TextInput::make('num_branches')
                     ->required()
                     ->numeric(),
-                Forms\Components\FileUpload::make('img_url')
-                    ->required()
-                    ->image()
-                    ->imageEditor(),
             ]);
     }
 
@@ -41,8 +37,6 @@ class ConfigResource extends Resource
                 Tables\Columns\TextColumn::make('num_branches')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('img_url')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

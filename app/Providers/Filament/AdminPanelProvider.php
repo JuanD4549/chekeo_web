@@ -57,20 +57,25 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
                 PanelRoles::make()
-                ->roleToAssign('super_admin')
-                ->restrictedRoles(['super_admin']),
+                    ->roleToAssign('super_admin')
+                    ->restrictedRoles(['super_admin']),
             ])
             ->authMiddleware([
                 Authenticate::class,
             ])
             ->navigationGroups([
                 NavigationGroup::make()
-                ->label('Settings')
+                    ->label('Security'),
+                NavigationGroup::make()
+                    ->label('My Organization'),
+                NavigationGroup::make()
+                    ->label('Settings'),
+                NavigationGroup::make()
+                    ->label('Filament Shield'),
                 //->collapsed(false)
                 //->icon('heroicon-o-shopping-cart'),
             ])
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarFullyCollapsibleOnDesktop()
-            ;
+            ->sidebarFullyCollapsibleOnDesktop();
     }
 }

@@ -5,12 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -19,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-    protected static ?string $navigationGroup = 'My Organization';
+    protected static ?string $navigationGroup = 'Settings';
     //protected static ?int $navigationSort = '2';
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
@@ -43,6 +46,71 @@ class UserResource extends Resource
                     ->relationship('roles', 'name')
                     ->preload()
                     ->searchable(),
+                Select::make('branche_id')
+                    ->relationship('branche', 'name')
+                    ->preload()
+                    ->searchable(),
+                Select::make('department_id')
+                    ->relationship('department', 'name')
+                    ->preload()
+                    ->searchable(),
+                Select::make('blood_type')
+                    ->options([
+                        'O+' => 'O+',
+                        'O-' => 'O-',
+                        'A+' => 'A+',
+                        'A-' => 'A-',
+                        'B+' => 'B+',
+                        'B-' => 'B-',
+                        'AB+' => 'AB+',
+                        'AB-' => 'AB-',
+                    ]),
+                Select::make('drive_license')
+                    ->options([
+                        'A' => 'A',
+                        'B' => 'B',
+                        'F' => 'F',
+                        'A1' => 'A1',
+                        'C' => 'C',
+                        'C1' => 'C1',
+                        'D' => 'D',
+                        'D1' => 'D1',
+                        'E' => 'E',
+                        'E1' => 'E1',
+                        'G' => 'G'
+                    ]),
+                TextInput::make('charge')
+                    ->maxLength(255),
+                TextInput::make('cellphone')
+                    ->maxLength(10),
+                TextInput::make('phone')
+                    ->maxLength(10),
+                TextInput::make('address')
+                    ->maxLength(255),
+                TextInput::make('country')
+                    ->maxLength(255),
+                TextInput::make('province')
+                    ->maxLength(255),
+                TextInput::make('city')
+                    ->maxLength(255),
+                DateTimePicker::make('date_in'),
+                TextInput::make('enterprise_mail')
+                    ->email()
+                    ->maxLength(255),
+                TextInput::make('enterpriser_phone')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('enterpriser_phone_ext')
+                    ->label('Extension')
+                    ->maxLength(10),
+                Select::make('type_user')
+                    ->options([
+                        'fixed' => 'Fixed',
+                        'external' => 'External'
+                    ]),
+                FileUpload::make('img'),
+                Toggle::make('status')
+                    ->default(true),
             ]);
     }
 
@@ -51,6 +119,11 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
+                TextColumn::make('branche.name'),
+                TextColumn::make('department.name'),
+                TextColumn::make('charge'),
+                IconColumn::make('status')
+                ->boolean(),
                 TextColumn::make('roles.name'),
             ])
             ->filters([

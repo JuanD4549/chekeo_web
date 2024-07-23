@@ -19,10 +19,14 @@ return new class extends Migration
             $table->enum('turn', ['morning', 'evening ', 'night ']);
             $table->enum('type', ['12', '24 ']);
             $table->text('detail')->nullable();
-            $table->double('latitude');
-            $table->double('longitude');
-            $table->string('img1_url');
-            $table->string('img2_url')->nullable();
+            $table->double('latitude_in');
+            $table->double('longitude_in');
+            $table->double('latitude_out');
+            $table->double('longitude_out');
+            $table->string('img1_url_in');
+            $table->string('img2_url_in')->nullable();
+            $table->string('img1_url_out');
+            $table->string('img2_url_out')->nullable();
             $table->timestamps();
         });
     }

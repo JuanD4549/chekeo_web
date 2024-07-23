@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('legal_representative');
             $table->string('email');
-            $table->string('img_url');
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }

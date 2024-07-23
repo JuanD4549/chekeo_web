@@ -16,4 +16,7 @@ class Calendar extends Model
     public function users(){
         return $this->belongsToMany(User::class);
     }
+    public function branches(){
+        return $this->belongsToMany(Branche::class);
+    }
 }

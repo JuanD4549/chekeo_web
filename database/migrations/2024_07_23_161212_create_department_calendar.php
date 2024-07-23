@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('configs', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('num_branches');
+        Schema::create('department_calendar', function (Blueprint $table) {
+            $table->foreignId('calendar_id');
+            $table->foreignId('department_id');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configs');
+        Schema::dropIfExists('department_calendar');
     }
 };

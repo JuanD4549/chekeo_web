@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class EnterpriseResource extends Resource
 {
     protected static ?string $model = Enterprise::class;
-    protected static ?string $navigationGroup = 'My Organization';
+    protected static ?string $navigationGroup = 'Settings';
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
@@ -31,9 +31,8 @@ class EnterpriseResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cellphone')
-                    ->tel()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(10),
                 Forms\Components\TextInput::make('address')
                     ->required()
                     ->maxLength(255),
@@ -94,7 +93,8 @@ class EnterpriseResource extends Resource
     public static function getRelations(): array
     {
         return [
-           
+            RelationManagers\BranchesRelationManager::class,
+            //RelationManagers\DepartmentsRelationManager::class,
         ];
     }
 
