@@ -26,7 +26,7 @@ class PersonalPanelProvider extends PanelProvider
             ->id('personal')
             ->path('personal')
             ->login()
-            ->default()
+           
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -47,7 +47,7 @@ class PersonalPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->databaseNotifications()
+            //->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
             ])

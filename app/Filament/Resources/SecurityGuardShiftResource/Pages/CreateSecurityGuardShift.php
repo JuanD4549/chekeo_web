@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSecurityGuardShift extends CreateRecord
 {
     protected static string $resource = SecurityGuardShiftResource::class;
+    
 }

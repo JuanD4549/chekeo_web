@@ -25,13 +25,12 @@ class SecurityGuardShiftResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
+                // Forms\Components\Select::make('user_id')
+                //     ->relationship('user', 'name')
+                //     ->required(),
                 Forms\Components\DateTimePicker::make('date_time_in')
                     ->required(),
-                Forms\Components\DateTimePicker::make('date_time_out')
-                    ->required(),
+                Forms\Components\DateTimePicker::make('date_time_out'),
                 Forms\Components\TextInput::make('status')
                     ->required()
                     ->maxLength(255),
@@ -51,6 +50,7 @@ class SecurityGuardShiftResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('img2_url')
                     ->maxLength(255),
+                
             ]);
     }
 
