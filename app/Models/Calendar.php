@@ -14,7 +14,7 @@ class Calendar extends Model
         'time_out',
     ];
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class,'user_calendar');
     }
     public function branches(){
         return $this->belongsToMany(Branche::class);

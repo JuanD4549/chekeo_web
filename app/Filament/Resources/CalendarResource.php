@@ -5,18 +5,21 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CalendarResource\Pages;
 use App\Filament\Resources\CalendarResource\RelationManagers;
 use App\Models\Calendar;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 
 class CalendarResource extends Resource
 {
     protected static ?string $model = Calendar::class;
-    protected static ?string $navigationGroup="My Organization";
+    protected static ?string $navigationGroup = "My Organization";
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -26,14 +29,27 @@ class CalendarResource extends Resource
                 Forms\Components\Select::make('day')
                     ->required()
                     ->options([
-                        'monday'=>'Monday',
-                        'tuesday'=>'Tuesday',
-                        'wednesday'=>'Wednesday',
-                        'thursday'=>'Thursday',
-                        'friday'=>'Friday',
-                        'saturday'=>'Saturday',
-                        'sunday'=>'Sunday'
+                        'monday' => 'Monday',
+                        'tuesday' => 'Tuesday',
+                        'wednesday' => 'Wednesday',
+                        'thursday' => 'Thursday',
+                        'friday' => 'Friday',
+                        'saturday' => 'Saturday',
+                        'sunday' => 'Sunday'
                     ]),
+                Forms\Components\Select::make('branches')
+                    ->multiple()
+                    ->relationship('branches', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->live(),
+                Forms\Components\Select::make('users')
+                    ->multiple()
+                    ->options(fn (Get $get): Collection => User::query()
+                        ->whereIn('branche_id', $get('branches'))
+                        ->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\TimePicker::make('time_in')
                     ->required(),
                 Forms\Components\TimePicker::make('time_out')

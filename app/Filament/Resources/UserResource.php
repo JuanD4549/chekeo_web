@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Department;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -11,13 +12,14 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 
 class UserResource extends Resource
 {
@@ -49,11 +51,19 @@ class UserResource extends Resource
                 Select::make('branche_id')
                     ->relationship('branche', 'name')
                     ->preload()
-                    ->searchable(),
+                    ->searchable()
+                    ->live()
+                    ->afterStateUpdated(fn (Set $set) => $set('department_id', null)),
                 Select::make('department_id')
-                    ->relationship('department', 'name')
+                    ->options(
+                        fn (Get $get): Collection => Department::query()
+                            ->where('id', $get('branche_id'))
+                            ->pluck('name', 'id')
+                    )
+                    ->searchable()
                     ->preload()
-                    ->searchable(),
+                //->relationship('user', 'name')
+                ,
                 Select::make('blood_type')
                     ->options([
                         'O+' => 'O+',
@@ -123,7 +133,7 @@ class UserResource extends Resource
                 TextColumn::make('department.name'),
                 TextColumn::make('charge'),
                 IconColumn::make('status')
-                ->boolean(),
+                    ->boolean(),
                 TextColumn::make('roles.name'),
             ])
             ->filters([
@@ -154,7 +164,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CalendarsRelationManager::class,
         ];
     }
 

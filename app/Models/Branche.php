@@ -34,4 +34,8 @@ class Branche extends Model
     {
         return $this->belongsToMany(Calendar::class);
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

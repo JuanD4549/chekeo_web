@@ -99,6 +99,8 @@ class BrancheResource extends Resource
     {
         return [
             RelationManagers\DepartmentsRelationManager::class,
+            RelationManagers\UsersRelationManager::class,
+            RelationManagers\CalendarsRelationManager::class,
         ];
     }
 

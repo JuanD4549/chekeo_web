@@ -71,7 +71,7 @@ class User extends Authenticatable
     }
     public function calendars()
     {
-        return $this->belongsToMany(Calendar::class);
+        return $this->belongsToMany(Calendar::class,'user_calendar');
     }
     public function branche()
     {
