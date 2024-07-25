@@ -20,10 +20,9 @@ use Illuminate\Support\Collection;
 class BrancheResource extends Resource
 {
     protected static ?string $model = Branche::class;
-    protected static ?string $navigationLabel = 'Branches';
-    protected static ?string $navigationGroup = 'My Organization';
+    //protected static ?string $navigationGroup = 'My Organization';
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    //protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
 
     public static function form(Form $form): Form
     {
@@ -40,9 +39,6 @@ class BrancheResource extends Resource
                         Forms\Components\Toggle::make('status')
                             ->default(true),
                     ]),
-                Forms\Components\Select::make('enterprise_id')
-                    ->relationship('enterprise', 'name')
-                    ->required(),
                 Forms\Components\Select::make('user_id')
                     ->options(
                         fn (): Collection => User::query()

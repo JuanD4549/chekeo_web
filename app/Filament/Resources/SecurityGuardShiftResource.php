@@ -17,11 +17,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class SecurityGuardShiftResource extends Resource
 {
     protected static ?string $model = SecurityGuardShift::class;
-    protected static ?string $navigationGroup = 'Security';
-    protected static ?int $navigationSort = 2;
-    protected static ?string $navigationLabel = 'Turn';
+    //protected static ?string $navigationGroup = 'Security';
+    //protected static ?int $navigationSort = 2;
+    //protected static ?string $navigationLabel = 'Turn';
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+    //protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 
     public static function form(Form $form): Form
     {
@@ -31,23 +31,33 @@ class SecurityGuardShiftResource extends Resource
                 //     ->relationship('user', 'name')
                 //     ->required(),
                 Forms\Components\DateTimePicker::make('date_time_in')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('date_time_out'),
-                Forms\Components\TextInput::make('status')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('turn')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('detail')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('latitude')
+                Forms\Components\DateTimePicker::make('date_time_out')
+                    ->hiddenOn('create'),
+                Forms\Components\Select::make('turn')
+                    ->required()
+                    ->options([
+                        'morning' => 'Mornig',
+                        'evening' => 'Evening',
+                        'night' => 'Night',
+                    ]),
+                Forms\Components\Select::make('type')
+                    ->required()
+                    ->options([
+                        '12' => '12',
+                        '24' => '24',
+                    ]),
+                Forms\Components\Textarea::make('detail')
+                    ->columnSpanFull()
+                    ->live(),
+                Forms\Components\TextInput::make('latitude_in')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('longitude')
+                Forms\Components\TextInput::make('longitude_in')
                     ->required()
                     ->numeric(),
-                ViewField::make('img1_url')
+                ViewField::make('img1_url_in')
                     ->view('forms.components.web-cam')
                     ->label('Foto')
                     ->columnSpanFull(),
@@ -68,25 +78,17 @@ class SecurityGuardShiftResource extends Resource
                 Tables\Columns\TextColumn::make('date_time_out')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('turn')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('latitude')
+                Tables\Columns\TextColumn::make('latitude_in')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
+                Tables\Columns\TextColumn::make('longitude_in')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('img1_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('img2_url')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

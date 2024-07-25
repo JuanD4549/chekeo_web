@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateBranche extends CreateRecord
 {
     protected static string $resource = BrancheResource::class;
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['enterprise_id'] = 1;
+
+        return $data;
+    }
 }

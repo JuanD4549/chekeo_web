@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->dateTime('date_time_in');
             $table->dateTime('date_time_out')->nullable();
-            $table->enum('turn', ['morning', 'evening ', 'night ']);
-            $table->enum('type', ['12', '24 ']);
-            $table->text('detail')->nullable();
+            $table->enum('turn', ['morning', 'evening', 'night']);
+            $table->enum('type', ['12', '24']);
+            $table->text('detail_in')->nullable();
+            $table->text('detail_out')->nullable();
             $table->double('latitude_in');
             $table->double('longitude_in');
             $table->double('latitude_out');

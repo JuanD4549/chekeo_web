@@ -13,20 +13,32 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 
 class CalendarResource extends Resource
 {
     protected static ?string $model = Calendar::class;
-    protected static ?string $navigationGroup = "My Organization";
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    //protected static ?string $navigationGroup = "My Organization";
+    //protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    public static function getModelLabel(): string
+    {
+        return __('general.calendar');
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.calendars');
+    }
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->orderBy('id', 'desc');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('day')
+                    ->label(__('general.table.day'))
                     ->required()
                     ->options([
                         'monday' => 'Monday',
@@ -38,21 +50,25 @@ class CalendarResource extends Resource
                         'sunday' => 'Sunday'
                     ]),
                 Forms\Components\Select::make('branches')
+                    ->label(__('general.branches'))
                     ->multiple()
                     ->relationship('branches', 'name')
                     ->searchable()
-                    ->preload()
-                    ->live(),
+                    ->preload(),
                 Forms\Components\Select::make('users')
+                    ->label(__('general.users'))
+                    ->relationship('users', 'name')
                     ->multiple()
-                    ->options(fn (Get $get): Collection => User::query()
-                        ->whereIn('branche_id', $get('branches'))
+                    ->options(fn (): Collection => User::query()
+                        ->where('charge', '!=','Root')
                         ->pluck('name', 'id'))
                     ->searchable()
                     ->preload(),
                 Forms\Components\TimePicker::make('time_in')
+                    ->label(__('general.time_in'))
                     ->required(),
                 Forms\Components\TimePicker::make('time_out')
+                    ->label(__('general.time_out'))
                     ->required(),
             ]);
     }
@@ -62,14 +78,19 @@ class CalendarResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('day')
+                    ->label(__('general.table.day'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('time_in'),
-                Tables\Columns\TextColumn::make('time_out'),
+                Tables\Columns\TextColumn::make('time_in')
+                    ->label(__('general.table.time_in')),
+                Tables\Columns\TextColumn::make('time_out')
+                    ->label(__('general.table.time_out')),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('general.table.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('general.table.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

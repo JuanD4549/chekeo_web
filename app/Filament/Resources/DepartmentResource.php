@@ -16,10 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class DepartmentResource extends Resource
 {
     protected static ?string $model = Department::class;
-    protected static ?string $navigationGroup = 'My Organization';
-    protected static ?int $navigationSort = 2;
+    //protected static ?string $navigationGroup = 'My Organization';
+    //protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
+    //protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
 
     public static function form(Form $form): Form
     {

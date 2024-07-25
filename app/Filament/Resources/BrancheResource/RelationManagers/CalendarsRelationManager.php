@@ -18,7 +18,7 @@ class CalendarsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('day')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -27,9 +27,14 @@ class CalendarsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
+            ->recordTitleAttribute('day')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('day')
+                    ->label(__('general.table.day')),
+                Tables\Columns\TextColumn::make('time_in')
+                    ->label(__('general.table.time_in')),
+                Tables\Columns\TextColumn::make('time_out')
+                    ->label(__('general.table.time_out')),
             ])
             ->filters([
                 //

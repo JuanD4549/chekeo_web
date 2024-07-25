@@ -24,9 +24,9 @@ use Illuminate\Support\Collection;
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
-    protected static ?string $navigationGroup = 'Settings';
+    //protected static ?string $navigationGroup = 'Settings';
     //protected static ?int $navigationSort = '2';
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    //protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
     {

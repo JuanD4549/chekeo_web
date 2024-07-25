@@ -13,13 +13,17 @@ class SecurityGuardShift extends Model
         'user_id',
         'date_time_in',
         'date_time_out',
-        'status',
         'turn',
+        'type',
         'detail',
-        'latitude',
-        'longitude',
-        'img1_url',
-        'img2_url',
+        'latitude_in',
+        'longitude_in',
+        'latitude_out',
+        'longitude_out',
+        'img1_url_in',
+        'img2_url_in',
+        'img1_url_out',
+        'img2_url_out',
     ];
     public function user(): BelongsTo
     {

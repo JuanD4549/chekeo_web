@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'DigitalTempo',
+            'charge'=>'Root',
             'ci'=>'123456789',
             'enterpriser_phone'=>'0978657557',
             'email'=>'digitaltempo@gmail.com',
@@ -23,6 +24,7 @@ class UserSeeder extends Seeder
         ]);
         DB::table('users')->insert([
             'name' => 'Juan Diego',
+            'charge'=>'Boos',
             'ci'=>'123456799',
             'enterpriser_phone'=>'0978657557',
             'email'=>'juandiego402@gmail.com',
