@@ -2,10 +2,11 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Filament\Resources\EmployeeResource\Pages;
+use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\Department;
-use App\Models\User;
+use App\Models\Employee;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
@@ -21,30 +22,44 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
-class UserResource extends Resource
+class EmployeeResource extends Resource
 {
-    protected static ?string $model = User::class;
-
+    protected static ?string $model = Employee::class;
     protected static ?string $navigationIcon = 'heroicon-o-users';
-
     public static function getModelLabel(): string
     {
-        return __('general.user');
+        return __('general.employee');
     }
     public static function getPluralModelLabel(): string
     {
-        return __('general.users');
+        return __('general.employees');
     }
     public static function getNavigationLabel(): string
     {
-        return __('general.user');
+        return __('general.employee');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.settings');
+        return __('general.menu.my_organization');
     }
-
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('id', '!=', 1)->orderBy('id', 'DESC');
+    }
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'publish'
+        ];
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -162,7 +177,7 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('branche.name'),
-                TextColumn::make('department.name'),
+                TextColumn::make('employee.name'),
                 TextColumn::make('charge'),
                 IconColumn::make('status')
                     ->boolean(),
@@ -175,13 +190,13 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('Verify')
                     ->icon('heroicon-o-check-badge')
-                    ->action(function (User $user) {
+                    ->action(function (Employee $user) {
                         $user->email_verified_at = Date('Y-m-d H:i:s');
                         $user->save();
                     }),
                 Tables\Actions\Action::make('Unverify')
                     ->icon('heroicon-o-x-circle')
-                    ->action(function (User $user) {
+                    ->action(function (Employee $user) {
                         $user->email_verified_at = null;
                         $user->save();
                     })
@@ -203,9 +218,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListEmployee::route('/'),
+            'create' => Pages\CreateEmployee::route('/create'),
+            'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
     }
 }

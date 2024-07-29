@@ -22,8 +22,23 @@ class BrancheResource extends Resource
     protected static ?string $model = Branche::class;
     //protected static ?string $navigationGroup = 'My Organization';
 
-    //protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
-
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    public static function getModelLabel(): string
+    {
+        return __('general.branche');
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.branches');
+    }
+    public static function getNavigationLabel(): string
+    {
+        return __('general.branche');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu.my_organization');
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -43,7 +58,7 @@ class BrancheResource extends Resource
                     ->options(
                         fn (): Collection => User::query()
                             ->where('charge', 'Boss')
-                            ->pluck('name','id')
+                            ->pluck('name', 'id')
                     )
                     ->label('Boss')
                     ->searchable()

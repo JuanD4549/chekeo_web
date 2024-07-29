@@ -2,10 +2,9 @@
 
 return [
     'menu' => [
-        'Security' => 'Seguridad',
-        'MyOrganization' => 'Mi organización',
-        'Settings' => 'Configuraciones',
-        'Security' => 'Seguridad',
+        'security' => 'Seguridad',
+        'my_organization' => 'Mi organización',
+        'settings' => 'Configuraciones',
     ],
     'table' => [
         'day' => 'Día',

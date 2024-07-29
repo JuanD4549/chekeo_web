@@ -16,9 +16,25 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class EnterpriseResource extends Resource
 {
     protected static ?string $model = Enterprise::class;
-    //protected static ?string $navigationGroup = 'Settings';
 
-    //protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+
+    public static function getModelLabel(): string
+    {
+        return __('general.enterprise');
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.enterprises');
+    }
+    public static function getNavigationLabel(): string
+    {
+        return __('general.enterprise');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu.settings');
+    }
 
     public static function form(Form $form): Form
     {

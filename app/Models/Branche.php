@@ -38,4 +38,12 @@ class Branche extends Model
     {
         return $this->hasMany(User::class);
     }
+    public function calendar_guard()
+    {
+        return $this->hasMany(CalendarGuard::class);
+    }
+    public function reliefs()
+    {
+        return $this->hasMany(Relief::class);
+    }
 }

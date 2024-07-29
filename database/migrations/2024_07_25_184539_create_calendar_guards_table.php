@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('security_guard_shifts', function (Blueprint $table) {
+        Schema::create('calendar_guards', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
             $table->foreignId('branche_id');
-            $table->boolean('relief')->default(false);
-            $table->boolean('status')->default(true);
+            $table->enum('type',['12','24'])->defalut('12');
+            $table->enum('day',['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday','sunday']);
+            $table->time('time_in');
+            $table->time('time_out')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('security_guard_shifts');
+        Schema::dropIfExists('calendar_guards');
     }
 };

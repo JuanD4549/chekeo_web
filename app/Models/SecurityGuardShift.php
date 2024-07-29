@@ -11,22 +11,20 @@ class SecurityGuardShift extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'date_time_in',
-        'date_time_out',
-        'turn',
-        'type',
-        'detail',
-        'latitude_in',
-        'longitude_in',
-        'latitude_out',
-        'longitude_out',
-        'img1_url_in',
-        'img2_url_in',
-        'img1_url_out',
-        'img2_url_out',
+        'branche_id',
+        'relief',
+        'status',
     ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function branche(): BelongsTo
+    {
+        return $this->belongsTo(Branche::class);
+    }
+    public function data_security_guard_shifts()
+    {
+        return $this->hasMany(DataSecurityGuardShift::class);
     }
 }

@@ -5,7 +5,6 @@ return [
         'security' => 'Security',
         'my_organization' => 'My Organization',
         'settings' => 'Settings',
-        'security' => 'Security',
         'control_panel' => 'Control Panel',
         'welcome' => 'Welcome',
     ],

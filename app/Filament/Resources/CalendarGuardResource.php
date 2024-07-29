@@ -2,54 +2,55 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SecurityGuardShiftResource\Pages;
-use App\Filament\Resources\SecurityGuardShiftResource\RelationManagers;
-use App\Models\SecurityGuardShift;
+use App\Filament\Resources\CalendarGuardResource\Pages;
+use App\Filament\Resources\CalendarGuardResource\RelationManagers;
+use App\Models\CalendarGuard;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\Relationship;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SecurityGuardShiftResource extends Resource
+class CalendarGuardResource extends Resource
 {
-    protected static ?string $model = SecurityGuardShift::class;
+    protected static ?string $model = CalendarGuard::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+
     public static function getModelLabel(): string
     {
-        return __('general.security_guard_shift');
+        return __('general.calendars_guard');
     }
     public static function getPluralModelLabel(): string
     {
-        return __('general.security_guard_shifts');
+        return __('general.calendars_guards');
     }
     public static function getNavigationLabel(): string
     {
-        return __('general.security_guard_shift');
+        return __('general.calendars_guard');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu.my_organization');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
+                Forms\Components\TextInput::make('branche_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('type')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('day')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('time_in')
                     ->required(),
-                Forms\Components\Select::make('branche_id')
-                    ->relationship('branche', 'name')
-                    ->required(),
-                Forms\Components\Toggle::make('relief')
-                    ->required(),
-                Forms\Components\Toggle::make('status')
-                    ->required(),
+                Forms\Components\TextInput::make('time_out'),
             ]);
     }
 
@@ -57,16 +58,15 @@ class SecurityGuardShiftResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('branche_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('relief')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('day')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('time_in'),
+                Tables\Columns\TextColumn::make('time_out'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -92,16 +92,16 @@ class SecurityGuardShiftResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\DataSecurityGuardShiftsRelationManager::class,
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSecurityGuardShifts::route('/'),
-            'create' => Pages\CreateSecurityGuardShift::route('/create'),
-            'edit' => Pages\EditSecurityGuardShift::route('/{record}/edit'),
+            'index' => Pages\ListCalendarGuards::route('/'),
+            'create' => Pages\CreateCalendarGuard::route('/create'),
+            'edit' => Pages\EditCalendarGuard::route('/{record}/edit'),
         ];
     }
 }

@@ -17,16 +17,29 @@ class DepartmentResource extends Resource
 {
     protected static ?string $model = Department::class;
     //protected static ?string $navigationGroup = 'My Organization';
-    //protected static ?int $navigationSort = 2;
-
-    //protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
-
+    protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
+    public static function getModelLabel(): string
+    {
+        return __('general.department');
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.departments');
+    }
+    public static function getNavigationLabel(): string
+    {
+        return __('general.department');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu.my_organization');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('branche_id')
-                    ->relationship('branche', 'name')
+                    ->relationship('department', 'name')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->label('Boss')
@@ -42,7 +55,7 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('branche.name')
+                Tables\Columns\TextColumn::make('department.name')
                     ->searchable(),
                     Tables\Columns\TextColumn::make('user.name')
                     ->label('boss')

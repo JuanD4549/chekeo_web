@@ -16,15 +16,16 @@ class ListBranches extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-            ->disabled(function(){
-                $config=Config::select('num_branches')
-                ->where('id',1)->first();
-                $countBranches=Branche::get()->count();
-                if($countBranches>$config->num_branches){
-                    return true;
-                }
-                return false;
-            }),
+            // ->disabled(function(){
+            //     $config=Config::select('num_branches')
+            //     ->where('id',1)->first();
+            //     $countBranches=Branche::get()->count();
+            //     if($countBranches>$config->num_branches){
+            //         return true;
+            //     }
+            //     return false;
+            // })
+            ,
         ];
     }
 }

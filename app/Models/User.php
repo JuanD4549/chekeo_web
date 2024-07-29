@@ -11,8 +11,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles, HasPanelShield;
 
@@ -21,6 +23,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+
     protected $fillable = [
         'department_id',
         'branche_id',
@@ -41,7 +45,7 @@ class User extends Authenticatable
         'enterprise_mail',
         'enterpriser_phone',
         'enterpriser_phone_ext',
-        'img',
+        'avatar_url',
         'type_user',
         'status',
     ];
@@ -64,8 +68,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //Filament
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url;
+    }
+    //Relations
 
-    public function security_guard_shift(): HasMany
+    public function security_guard_shifts(): HasMany
     {
         return $this->hasMany(SecurityGuardShift::class);
     }

@@ -2,14 +2,20 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Welcome;
 use App\Filament\Resources\BrancheResource;
+use App\Filament\Resources\CalendarGuardResource;
 use App\Filament\Resources\CalendarResource;
 use App\Filament\Resources\ConfigResource;
+use App\Filament\Resources\DataSecurityGuardShiftResource;
 use App\Filament\Resources\DepartmentResource;
+use App\Filament\Resources\EmployeeResource;
 use App\Filament\Resources\EnterpriseResource;
 use App\Filament\Resources\SecurityGuardShiftResource;
 use App\Filament\Resources\Shield\RoleResource;
 use App\Filament\Resources\UserResource;
+use App\Models\CalendarGuard;
+use App\Policies\CalendarPolicy;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -28,6 +34,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shanerbaner82\PanelRoles\PanelRoles;
 
@@ -40,14 +47,20 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
+            ->unsavedChangesAlerts()
             ->brandLogo(asset('imagenes/chekeo/logo_ligth.svg'))
             ->favicon(asset('imagenes/chekeo/icon16.svg'))
             ->darkModeBrandLogo(asset('imagenes/chekeo/logo_dark.svg'))
             ->brandLogoHeight('5rem')
             ->font('Playwrite DE Grund')
             ->colors([
-                'primary' => Color::Blue,
-                'second' => Color::Red,
+                'primary' => Color::Indigo,
+                'info' => Color::Blue,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -79,58 +92,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
-                return $builder->groups([
-                    NavigationGroup::make(__('general.menu.security'))
-                        ->items([
-                            NavigationItem::make(__('general.turn'))
-                                ->icon('heroicon-o-shield-check')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.security-guard-shifts.*'))
-                                ->url(fn (): string => SecurityGuardShiftResource::getUrl()),
-                        ]),
-                    NavigationGroup::make(__('general.menu.my_organization'))
-                        ->items([
-                            NavigationItem::make(__('general.branches'))
-                                ->icon('heroicon-o-building-office-2')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.branches.*'))
-                                ->url(fn (): string => BrancheResource::getUrl()),
-                            NavigationItem::make(__('general.departments'))
-                                ->icon('heroicon-o-cube-transparent')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.departments.*'))
-                                ->url(fn (): string => DepartmentResource::getUrl()),
-                            NavigationItem::make(__('general.calendars'))
-                                ->icon('heroicon-o-calendar-days')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.calendars.*'))
-                                ->url(fn (): string => CalendarResource::getUrl()),
-                        ]),
-                    NavigationGroup::make(__('general.menu.settings'))
-                        ->items([
-                            NavigationItem::make(__('general.enterprise'))
-                                ->icon('heroicon-o-building-office')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.enterprises.*'))
-                                ->url(fn (): string => EnterpriseResource::getUrl()),
-                            NavigationItem::make(__('general.users'))
-                                ->icon('heroicon-o-users')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.users.*'))
-                                ->url(fn (): string => UserResource::getUrl()),
-                            NavigationItem::make('Roles')
-                                ->icon('heroicon-o-shield-check')
-                                ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.resources.shield.roles.*'))
-                                ->url(fn (): string => RoleResource::getUrl()),
-                            //...RoleResource::getNavigationItems(),
-                            ]),
-                ])
-                    ->items([
-                        NavigationItem::make(__('general.menu.welcome'))
-                            ->icon('heroicon-o-home')
-                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
-                            ->url(fn (): string => Dashboard::getUrl()),
-                        NavigationItem::make(__('general.menu.control_panel'))
-                            ->icon('heroicon-o-chart-bar-square')
-                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.admin.pages.dashboard'))
-                            ->url(fn (): string => Dashboard::getUrl()),
-                    ]);
-            })
 
             ->sidebarCollapsibleOnDesktop()
             ->sidebarFullyCollapsibleOnDesktop();

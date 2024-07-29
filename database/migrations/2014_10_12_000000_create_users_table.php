@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('enterprise_mail')->nullable();
             $table->string('enterpriser_phone');
             $table->string('enterpriser_phone_ext')->nullable();
-            $table->string('img')->nullable();
+            $table->string('avatar_url')->nullable();
             $table->enum('type_user',['fixed','external'])->default('fixed');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

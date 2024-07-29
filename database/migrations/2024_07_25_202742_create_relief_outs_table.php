@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('security_guard_shifts', function (Blueprint $table) {
+        Schema::create('relief_outs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('branche_id');
-            $table->boolean('relief')->default(false);
-            $table->boolean('status')->default(true);
+            $table->foreignId('security_guard_shift_id');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('security_guard_shifts');
+        Schema::dropIfExists('relief_outs');
     }
 };
