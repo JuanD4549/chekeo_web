@@ -5,10 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Funcions\Logica;
 use App\Filament\Resources\DataSecurityGuardShiftResource\Pages;
 use App\Filament\Resources\DataSecurityGuardShiftResource\RelationManagers;
+use App\Forms\Components\Latitude;
+use App\Forms\Components\LatLon;
+use App\Forms\Components\Longitude;
+use App\Forms\Components\WebCam;
 use App\Livewire\WebCamForm;
 use App\Models\DataSecurityGuardShift;
 use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -16,7 +21,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Livewire;
+use Filament\Forms\Components\ViewField;
 
 
 
@@ -73,13 +78,18 @@ class DataSecurityGuardShiftResource extends Resource
                     ->required(),
                 Forms\Components\Textarea::make('detail')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('latitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('longitude')
-                    ->required()
-                    ->numeric(),
-                //Livewire::make(WebCamForm::class)
+                //FileUpload::make('img1_url'),
+                Latitude::make('latitude')
+                //->native()
+                    //->default('sa')
+                    ,
+                //ViewField::make('latitude')
+                //    ->view('forms.components.latitude'),
+                Longitude::make('longitude')
+                //->getValue()
+                ,
+                WebCam::make('img1_url')
+                ->hiddenOn('view')
             ]);
     }
 
@@ -115,6 +125,7 @@ class DataSecurityGuardShiftResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -136,6 +147,7 @@ class DataSecurityGuardShiftResource extends Resource
             'index' => Pages\ListDataSecurityGuardShifts::route('/'),
             'create' => Pages\CreateDataSecurityGuardShift::route('/create'),
             'edit' => Pages\EditDataSecurityGuardShift::route('/{record}/edit'),
+            'view' => Pages\ViewDataSecurityGuardShift::route('/{record}'),
         ];
     }
 }
