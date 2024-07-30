@@ -1,22 +1,30 @@
 <x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
 
-    <div class="row">
-        <div class="col-md-6">
+    <div x-data="{
+        state: $wire.$entangle('{{ $getStatePath() }}'),
+        foto(data_uri) {
+            //console.log(data_uri);
+            this.state = data_uri;
+            $refs.results.innerHTML = '<img src=' + data_uri + '/>'
+        }
+    }">
+        <div class="row">
             <div id="my_camera"></div>
-            <br />
-            <input type=button value="Take Snapshot" onClick="take_snapshot()">
-            <input type="hidden" name="image" class="image-tag">
+            <p x-model="state" x-text='state' hidden></p>
+            <div x-ref="results"></div>
         </div>
-        <div class="col-md-6">
-            <div id="results">Your captured image will appear here...</div>
+        <div class="row">
+            <button type=button x-on:click=" Webcam.snap(function(data_uri) {foto(data_uri)})">Tomar foto </button>
         </div>
+
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
     <script language="JavaScript">
         Webcam.set({
-            width: 490,
-            height: 350,
+            width: 250,
+            height: 150,
             image_format: 'jpeg',
             jpeg_quality: 90
         });
@@ -25,8 +33,6 @@
 
         function take_snapshot() {
             Webcam.snap(function(data_uri) {
-
-
                 document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
             });
         }
