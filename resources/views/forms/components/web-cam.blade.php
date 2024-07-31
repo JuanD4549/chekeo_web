@@ -5,13 +5,14 @@
         foto(data_uri) {
             //console.log(data_uri);
             this.state = data_uri;
-            $refs.results.innerHTML = '<img src=' + data_uri + '/>'
+            document.getElementById('results').innerHTML = '<img src=' + data_uri + '/>';
+            //$refs.results.innerHTML = '<img src=' + data_uri + '/>'
         }
     }">
         <div class="row">
             <div id="my_camera"></div>
             <p x-model="state" x-text='state' hidden></p>
-            <div x-ref="results"></div>
+            <div x-ref="results" id="results"></div>
         </div>
         <div class="row">
             <button type=button x-on:click=" Webcam.snap(function(data_uri) {foto(data_uri)})">Tomar foto </button>

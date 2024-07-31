@@ -22,8 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\ViewField;
-
-
+use Illuminate\Database\Eloquent\Model;
 
 class DataSecurityGuardShiftResource extends Resource
 {
@@ -78,16 +77,8 @@ class DataSecurityGuardShiftResource extends Resource
                     ->required(),
                 Forms\Components\Textarea::make('detail')
                     ->columnSpanFull(),
-                //FileUpload::make('img1_url'),
-                Latitude::make('latitude')
-                //->native()
-                    //->default('sa')
-                    ,
-                //ViewField::make('latitude')
-                //    ->view('forms.components.latitude'),
-                Longitude::make('longitude')
-                //->getValue()
-                ,
+                Latitude::make('latitude'),
+                Longitude::make('longitude'),
                 WebCam::make('img1_url')
                 ->hiddenOn('view')
             ]);
@@ -124,7 +115,8 @@ class DataSecurityGuardShiftResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->hidden(fn(Model $record)=>$record->created_at!=null?true:false),
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([

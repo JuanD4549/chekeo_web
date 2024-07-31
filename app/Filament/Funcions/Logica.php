@@ -13,13 +13,31 @@ class Logica
         foreach ($security_guard_shifts as $key => $value) {
             $data_security_guard_shifts = $value->data_security_guard_shifts;
             //dd($count);
-            if (count($data_security_guard_shifts) ==0) {
+            if (count($data_security_guard_shifts) == 0) {
                 //dd($data_security_guard_shifts, $value->id);
                 return 0;
-            }else if(count($data_security_guard_shifts) ==1){
+            } else if (count($data_security_guard_shifts) == 1) {
                 return $value->id;
             }
         }
+        return null;
+    }
+    public function saveFoto($foto, $folder): ?string
+    {
+        try {
+            $img = $foto;
+            $folderPath = $folder;
+            $image_parts = explode(";base64,", $img);
+            $image_base64 = base64_decode($image_parts[1]);
+            $fileName1 = date("d.m.y") . "." . time() . uniqid() . '.png';
+            $file = $folderPath . $fileName1;
+            file_put_contents($file, $image_base64);
+            return $file;
+        } catch (\Throwable $th) {
+            dd($th);
+            return null;
+        }
+
         return null;
     }
 }

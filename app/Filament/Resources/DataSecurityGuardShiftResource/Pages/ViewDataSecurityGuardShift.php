@@ -2,10 +2,13 @@
 
 namespace App\Filament\Resources\DataSecurityGuardShiftResource\Pages;
 
+use App\Filament\Funcions\Logica;
 use App\Filament\Resources\DataSecurityGuardShiftResource;
 use Filament\Actions;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists;
+use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
@@ -19,15 +22,36 @@ class ViewDataSecurityGuardShift extends ViewRecord
     {
         return $infolist
             ->schema([
-                TextEntry::make('type'),
-                Section::make('Media')
+                Fieldset::make('Data Primary')
+                    ->relationship(
+                        'security_guard_shift',
+                    )
+                    ->schema([
+                        TextEntry::make('user.name'),
+                        TextEntry::make('branche.name'),
+                    ]),
+                Section::make('type')
+                
                     ->description('Images used in the page layout.')
                     ->schema([
+                        TextEntry::make('date_time'),
+                        TextEntry::make('detail')
+                            ->columnSpanFull(),
+                        //FileUpload::make('img1_url'),
+                        TextEntry::make('latitude')
+                        //->native()
+                        //->default('sa')
+                        ,
+                        //ViewField::make('latitude')
+                        //    ->view('forms.components.latitude'),
+                        TextEntry::make('longitude')
+                        //->getValue()
+                        ,
+
                         ImageEntry::make('img1_url')
-                        ->defaultImageUrl(''),
+                            ->defaultImageUrl(''),
                         TextEntry::make('type'),
                     ]),
-                ImageEntry::make('img1_url'),
             ]);
     }
 }
