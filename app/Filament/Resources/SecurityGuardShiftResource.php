@@ -4,8 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SecurityGuardShiftResource\Pages;
 use App\Filament\Resources\SecurityGuardShiftResource\RelationManagers;
+use App\Models\DataSecurityGuardShift;
 use App\Models\SecurityGuardShift;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
@@ -81,6 +84,9 @@ class SecurityGuardShiftResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
