@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\MyLogin;
 use App\Filament\Pages\Welcome;
 use App\Filament\Resources\BrancheResource;
 use App\Filament\Resources\CalendarGuardResource;
@@ -46,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(MyLogin::class)
             ->passwordReset()
             ->unsavedChangesAlerts()
             ->brandLogo(asset('imagenes/chekeo/logo_ligth.svg'))
@@ -63,8 +64,9 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Orange,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            //->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
+                Welcome::class,
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')

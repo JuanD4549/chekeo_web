@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('branche_id');
+            $table->foreignId('detail_in_id')->nullable();
+            $table->foreignId('detail_out_id')->nullable();
             $table->boolean('relief')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();

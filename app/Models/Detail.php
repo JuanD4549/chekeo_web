@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class DataSecurityGuardShift extends Model
+class Detail extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'security_guard_shift_id',
         'type',
         'date_time',
         'detail',
@@ -18,8 +18,12 @@ class DataSecurityGuardShift extends Model
         'img1_url',
         'img2_url',
     ];
-    public function security_guard_shift()
+    public function detail_ins():HasMany
     {
-        return $this->belongsTo(SecurityGuardShift::class);
+        return $this->hasMany(DetailIn::class);
+    }
+    public function detail_outs():HasMany
+    {
+        return $this->hasMany(DetailOut::class);
     }
 }

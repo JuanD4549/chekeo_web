@@ -3,42 +3,39 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SecurityGuardShiftResource\Pages;
-use App\Filament\Resources\SecurityGuardShiftResource\RelationManagers;
-use App\Models\DataSecurityGuardShift;
 use App\Models\SecurityGuardShift;
-use Filament\Tables\Actions\CreateAction;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\Relationship;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SecurityGuardShiftResource extends Resource
 {
     protected static ?string $model = SecurityGuardShift::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+
     public static function getModelLabel(): string
     {
         return __('general.security_guard_shift');
     }
+
     public static function getPluralModelLabel(): string
     {
         return __('general.security_guard_shifts');
     }
+
     public static function getNavigationLabel(): string
     {
         return __('general.security_guard_shift');
     }
+
     public static function getNavigationGroup(): ?string
     {
         return __('general.menu.security');
     }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -46,7 +43,7 @@ class SecurityGuardShiftResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
-                Forms\Components\Select::make('branche_id')
+                Forms\Components\Select::make('s')
                     ->relationship('branche', 'name')
                     ->required(),
                 Forms\Components\Toggle::make('relief')
@@ -54,7 +51,9 @@ class SecurityGuardShiftResource extends Resource
                 Forms\Components\Toggle::make('status')
                     ->required(),
             ]);
+
     }
+
 
     public static function table(Table $table): Table
     {
@@ -84,6 +83,7 @@ class SecurityGuardShiftResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->headerActions([
                 //
@@ -98,7 +98,7 @@ class SecurityGuardShiftResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\DataSecurityGuardShiftsRelationManager::class,
+            //RelationManagers\DataSecurityGuardShiftsRelationManager::class,
         ];
     }
 
@@ -107,7 +107,9 @@ class SecurityGuardShiftResource extends Resource
         return [
             'index' => Pages\ListSecurityGuardShifts::route('/'),
             'create' => Pages\CreateSecurityGuardShift::route('/create'),
+            'view' => Pages\ViewSecurityGuardShift::route('/{record}'),
             'edit' => Pages\EditSecurityGuardShift::route('/{record}/edit'),
         ];
     }
+
 }

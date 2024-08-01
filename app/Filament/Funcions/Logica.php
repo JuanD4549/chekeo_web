@@ -32,7 +32,7 @@ class Logica
             $fileName1 = date("d.m.y") . "." . time() . uniqid() . '.png';
             $file = $folderPath . $fileName1;
             file_put_contents($file, $image_base64);
-            return $file;
+            return $fileName1;
         } catch (\Throwable $th) {
             dd($th);
             return null;

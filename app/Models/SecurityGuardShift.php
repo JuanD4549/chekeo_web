@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SecurityGuardShift extends Model
 {
@@ -12,6 +13,8 @@ class SecurityGuardShift extends Model
     protected $fillable = [
         'user_id',
         'branche_id',
+        'detail_in_id',
+        'detail_out_id',
         'relief',
         'status',
     ];
@@ -23,8 +26,12 @@ class SecurityGuardShift extends Model
     {
         return $this->belongsTo(Branche::class);
     }
-    public function data_security_guard_shifts()
+    public function detail_in():BelongsTo
     {
-        return $this->hasMany(DataSecurityGuardShift::class);
+        return $this->belongsTo(DetailIn::class);
     }
+    public function detail_out():BelongsTo
+     {
+         return $this->belongsTo(DetailOut::class);
+     }
 }

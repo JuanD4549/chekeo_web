@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_security_guard_shifts', function (Blueprint $table) {
+        Schema::create('details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('security_guard_shift_id');
             //$table->enum('turn', ['morning', 'evening', 'night']);
             $table->enum('type', ['in', 'out'])->default('in');
             $table->dateTime('date_time');
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_security_guard_shifts');
+        Schema::dropIfExists('details');
     }
 };

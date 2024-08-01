@@ -30,7 +30,6 @@ class ListSecurityGuardShifts extends ListRecords
             Actions\CreateAction::make(),
             Action::make('ENtrada')
                 ->label('Entrada')
-                ->model(DataSecurityGuardShift::class)
                 ->form([
                     Fieldset::make('Label')
                         ->schema([
