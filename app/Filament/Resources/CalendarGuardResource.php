@@ -15,6 +15,7 @@ class CalendarGuardResource extends Resource
     protected static ?string $model = CalendarGuard::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    //protected static ?int $navigationSort = 34;
 
     public static function getModelLabel(): string
     {

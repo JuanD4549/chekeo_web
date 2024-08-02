@@ -1,20 +1,16 @@
-<x-filament-panels::page>
-    <style>
-        #welcome_logo {
-            /* background-color: blue; */
-            width: 100%;
-        }
+<style>
+    #welcome_logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 500vh;
+        height: 87vh;
+    }
 
-        #container_logo {
-            height: 60%;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
-    <div id="container_logo">
-        <img id="welcome_logo"src={{ asset('imagenes/chekeo/logo_ligth.svg') }} />
-    </div>
-</x-filament-panels::page>
+    #container_logo {
+
+    }
+</style>
+<div id="container_logo">
+    <img id="welcome_logo" src={{ asset('imagenes/chekeo/welcome_1.gif') }} />
+</div>

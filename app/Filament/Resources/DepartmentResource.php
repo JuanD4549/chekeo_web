@@ -18,6 +18,7 @@ class DepartmentResource extends Resource
     protected static ?string $model = Department::class;
     //protected static ?string $navigationGroup = 'My Organization';
     protected static ?string $navigationIcon = 'heroicon-o-cube-transparent';
+    //protected static ?int $navigationSort = 35;
     public static function getModelLabel(): string
     {
         return __('general.department');

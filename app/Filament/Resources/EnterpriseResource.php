@@ -18,6 +18,7 @@ class EnterpriseResource extends Resource
     protected static ?string $model = Enterprise::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    //protected static ?int $navigationSort = 61;
 
     public static function getModelLabel(): string
     {

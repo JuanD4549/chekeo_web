@@ -6,6 +6,8 @@ namespace App\Models;
 
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -79,15 +81,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return $this->hasMany(SecurityGuardShift::class);
     }
-    public function calendars()
+    public function calendars():BelongsToMany
     {
         return $this->belongsToMany(Calendar::class);
     }
-    public function branche()
+    public function branche():BelongsTo
     {
         return $this->belongsTo(Branche::class);
     }
-    public function department()
+    public function department():BelongsTo
     {
         return $this->belongsTo(Department::class);
     }

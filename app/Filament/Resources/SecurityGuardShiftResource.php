@@ -15,6 +15,7 @@ class SecurityGuardShiftResource extends Resource
     protected static ?string $model = SecurityGuardShift::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
+    protected static ?int $navigationSort = 3;
 
     public static function getModelLabel(): string
     {

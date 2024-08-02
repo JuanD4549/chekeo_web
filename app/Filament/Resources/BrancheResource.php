@@ -21,8 +21,8 @@ class BrancheResource extends Resource
 {
     protected static ?string $model = Branche::class;
     //protected static ?string $navigationGroup = 'My Organization';
-
     protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
+    //protected static ?int $navigationSort = 31;
     public static function getModelLabel(): string
     {
         return __('general.branche');

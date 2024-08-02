@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 class RoleResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $recordTitleAttribute = 'name';
-
+    //protected static ?int $navigationSort = 63;
     
     public static function getPermissionPrefixes(): array
     {
