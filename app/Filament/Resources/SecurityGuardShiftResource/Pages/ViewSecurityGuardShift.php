@@ -16,34 +16,71 @@ class ViewSecurityGuardShift extends ViewRecord
     {
         return $infolist
             ->schema([
-                Infolists\Components\Section::make('Data Primary')
+                Infolists\Components\Section::make(__('general.user_data'))
                     ->schema([
                         TextEntry::make('user.name'),
                         TextEntry::make('branche.name'),
-                    ]),
-                Infolists\Components\Fieldset::make('detail_in')
+                    ])->columns(2),
+                Infolists\Components\Section::make(__('general.detail_in'))
                     ->relationship('detail_in')
                     ->schema([
-                        TextEntry::make('detail.date_time'),
+                        Infolists\Components\Grid::make([
+                            'default' => 3,
+                        ])
+                            ->schema([
+                                TextEntry::make('detail.date_time')
+                                    ->label(__('general.date_time')),
+                                TextEntry::make('detail.latitude')
+                                    ->label(__('general.latitude')),
+                                TextEntry::make('detail.longitude')
+                                    ->label(__('general.longitude')),
+                            ]),
                         TextEntry::make('detail.detail')
+                            ->label(__('general.detail'))
                             ->columnSpanFull(),
-                        TextEntry::make('detail.latitude'),
-                        TextEntry::make('detail.longitude'),
-
-                        Infolists\Components\ImageEntry::make('detail.img1_url')
-                            ->defaultImageUrl(''),
-                    ]),
-                    Infolists\Components\Fieldset::make('detail_out')
+                        Infolists\Components\Grid::make([
+                            'default' => 2,
+                        ])
+                            ->schema([
+                                Infolists\Components\ImageEntry::make('detail.img1_url')
+                                    ->label(__('general.photo'))
+                                    ->defaultImageUrl(''),
+                                Infolists\Components\ImageEntry::make('detail.img2_url')
+                                    ->label(__('general.photo'))
+                                    ->defaultImageUrl(''),
+                            ]),
+                    ])
+                    ->collapsed(),
+                Infolists\Components\Section::make(__('general.detail_out'))
                     ->relationship('detail_out')
                     ->schema([
-                        TextEntry::make('detail.date_time'),
+                        Infolists\Components\Grid::make([
+                            'default' => 3,
+                        ])
+                            ->schema([
+                                TextEntry::make('detail.date_time')
+                                    ->label(__('general.date_time')),
+                                TextEntry::make('detail.latitude')
+                                    ->label(__('general.latitude')),
+                                TextEntry::make('detail.longitude')
+                                    ->label(__('general.longitude')),
+                            ]),
                         TextEntry::make('detail.detail')
+                            ->label(__('general.detail'))
                             ->columnSpanFull(),
-                        TextEntry::make('detail.latitude'),
-                        TextEntry::make('detail.longitude'),
-                        Infolists\Components\ImageEntry::make('detail.img1_url')
-                            ->defaultImageUrl(''),
-                    ]),
+                        Infolists\Components\Grid::make([
+                            'default' => 2,
+                        ])
+                            ->schema([
+                                Infolists\Components\ImageEntry::make('detail.img1_url')
+                                    ->label(__('general.photo'))
+                                    ->defaultImageUrl(''),
+                                Infolists\Components\ImageEntry::make('detail.img2_url')
+                                    ->label(__('general.photo'))
+                                    ->defaultImageUrl(''),
+                            ]),
+                    ])
+                    ->collapsed(),
             ]);
     }
 }

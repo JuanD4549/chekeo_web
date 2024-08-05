@@ -16,11 +16,11 @@ class TestSeeder extends Seeder
     {
         DB::table('enterprises')->insert([
             'name' => 'DigitalTempo',
-            'ruc'=>'123456789',
-            'cellphone'=>'0978657557',
-            'address'=>'Quito',
-            'legal_representative'=>'Jorge Salazar',
-            'email'=>'digitaltempo@gmail.com',
+            'ruc' => '123456789',
+            'cellphone' => '0978657557',
+            'address' => 'Quito',
+            'legal_representative' => 'Jorge Salazar',
+            'email' => 'digitaltempo@gmail.com',
         ]);
         //3
         DB::table('users')->insert([
@@ -103,45 +103,21 @@ class TestSeeder extends Seeder
         //Calendar
         //1
         DB::table('calendars')->insert([
-            'day' => 'monday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
-        ]);
-        //2
-        DB::table('calendars')->insert([
-            'day' => 'tuesday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
-        ]);
-        //3
-        DB::table('calendars')->insert([
-            'day' => 'wednesday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
-        ]);
-        //4
-        DB::table('calendars')->insert([
-            'day' => 'thursday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
-        ]);
-        //5
-        DB::table('calendars')->insert([
-            'day' => 'friday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
-        ]);
-        //6
-        DB::table('calendars')->insert([
-            'day' => 'saturday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
-        ]);
-        //7
-        DB::table('calendars')->insert([
-            'day' => 'sunday',
-            'time_in' => '08:30',
-            'time_out' => '17:30',
+            'monday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+            'tuesday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+            'wednesday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+            'thursday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+            'friday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+            'saturday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+            'sunday' => json_encode(['time_in' => '08:30',
+                'time_out' => '17:30']),
+
         ]);
         //
         DB::table('branche_calendar')->insert([

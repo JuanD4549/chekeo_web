@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 class CreateSecurityGuardShift extends CreateRecord
 {
     protected static string $resource = SecurityGuardShiftResource::class;
-
+    protected static bool $canCreateAnother=false;
     protected function handleRecordCreation(array $data): Model
     {
         $data['user_id'] = Auth::user()->id;
@@ -33,30 +33,34 @@ class CreateSecurityGuardShift extends CreateRecord
         return static::getModel()::create($data);
     }
 
-    protected function beforeFill(): void
+    protected function beforeCreate(): void
     {
-        $branche = Auth::user()['branche'];
-        //dd(count($branche['calendars']));
-        if ($branche == null) {
-            Notification::make()
-                ->title('None Branche')
-                ->danger()
-                ->color('danger')
-                ->duration(5000)
-                ->send();
-        }else if(count($branche['calendars'])==0 || count(Auth::user()['calendars'])==0){
-            Notification::make()
-                ->title('None Calendar')
-                ->danger()
-                ->color('danger')
-                ->duration(5000)
-                ->send();
-        }
+        //$branche = Auth::user()['branche'];
+        ////dd(count($branche['calendars']));
+        //if ($branche == null) {
+        //    Notification::make()
+        //        ->title('None Branche')
+        //        ->danger()
+        //        ->color('danger')
+        //        ->duration(5000)
+        //        ->send();
+        //    $this->halt();
+        //}
+        //else if(count($branche['calendars'])==0 || count(Auth::user()['calendars'])==0){
+        //    Notification::make()
+        //        ->title('None Calendar')
+        //        ->danger()
+        //        ->color('danger')
+        //        ->duration(5000)
+        //        ->send();
+        //    $this->halt();
+        //}
     }
 
     public function afterCreate(): void
     {
         //dd($this->record['id']);
+        //Save detail
         $detail = new Detail();
         $detail_form = $this->form->getState();
         //dd($detail_form['detail']);
@@ -67,12 +71,15 @@ class CreateSecurityGuardShift extends CreateRecord
         $name_foto = (new Logica())->saveFoto($detail_form['img1_url'], 'storage/turns/');
         $detail['img1_url'] = "turns/" . $name_foto;
         $detail->save();
-
+        //Save relation detail with SecurityGuardShifts
         $detail_in = new DetailIn();
         $detail_in['detail_id'] = $detail['id'];
         $detail_in->save();
         $this->record['detail_in_id'] = $detail_in['id'];
         $this->record->save();
+        //If save with relief
+        $calendar=(new Logica())->getCalendar();
+        dd($calendar);
         //dd($this->form->getState());
     }
 
@@ -84,7 +91,6 @@ class CreateSecurityGuardShift extends CreateRecord
                     'default' => 3,
                 ])
                     ->schema([
-                        Toggle::make('relief'),
                         WebCam::make('img1_url')
                             ->required(),
                         Textarea::make('detail')

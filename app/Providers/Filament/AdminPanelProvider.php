@@ -5,15 +5,15 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\CustomDashboard;
 use App\Filament\Pages\MyLogin;
 use App\Filament\Pages\Welcome;
-use App\Filament\Resources\ConfigResource;
-use App\Filament\Resources\DataSecurityGuardShiftResource;
+use App\Filament\Resources\SecurityGuardShiftResource\Widgets\StatsOverview;
+use Awcodes\Curator\CuratorPlugin;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\FontProviders\GoogleFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Panel;
 use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
 use Hasnayeen\Themes\Http\Middleware\SetTheme;
 use Hasnayeen\Themes\ThemesPlugin;
@@ -25,6 +25,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shanerbaner82\PanelRoles\PanelRoles;
+use TomatoPHP\FilamentMediaManager\FilamentMediaManagerPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -42,6 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('imagenes/chekeo/logo_dark.svg'))
             ->brandLogoHeight('5rem')
             ->font('Poppins', provider: GoogleFontProvider::class)
+            ->viteTheme('resources/css/filament/admin/theme.css')
             //->colors([
             //    'primary' => Color::Amber,
             //    'info' => Color::Blue,
@@ -51,7 +53,7 @@ class AdminPanelProvider extends PanelProvider
             //    'warning' => Color::Orange,
             //])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            //->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Welcome::class,
                 CustomDashboard::class,
@@ -64,7 +66,7 @@ class AdminPanelProvider extends PanelProvider
             //->topNavigation()
             //->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                \App\Filament\Widgets\SecurityOverview::class,
             ])
             ->profile()
             ->middleware([
@@ -80,22 +82,22 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->spa()
             ->plugins([
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                ThemesPlugin::make(),
-                \Awcodes\Curator\CuratorPlugin::make()
-                ->label('Media')
-                ->pluralLabel('Media')
-                ->navigationIcon('heroicon-o-photo')
-                ->navigationGroup('Content')
-                ->navigationSort(3)
-                ->navigationCountBadge()
-                ->registerNavigation(false)
-                ->defaultListView('grid' || 'list')
-                ->resource(CustomMediaResource::class),
+                FilamentShieldPlugin::make(),
+                //ThemesPlugin::make(),
                 PanelRoles::make()
                     ->roleToAssign('super_admin')
                     ->restrictedRoles(['super_admin']),
-
+                //CuratorPlugin::make()
+                //    ->label('Media')
+                //    ->pluralLabel('Media')
+                //    ->navigationIcon('heroicon-o-photo')
+                //    ->navigationGroup('Content')
+                //    ->navigationSort(3)
+                //    ->navigationCountBadge()
+                //    ->defaultListView('grid' || 'list'),
+                //FilamentMediaManagerPlugin::make()
+                //    ->allowSubFolders(),
+                \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make(),
             ])
             ->authMiddleware([
                 Authenticate::class,

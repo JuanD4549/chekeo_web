@@ -1,3 +1,28 @@
 @import '/vendor/filament/filament/resources/css/theme.css';
-
 @config 'tailwind.config.js';
+.fi-sidebar-nav {
+    @apply bg-primary-500;
+}
+.text-primary-600{
+    color:#f49f1c ;
+}
+.text-gray-500{
+    color:white ;
+}
+.fi-active{
+    /*background-color:black ;*/
+}
+
+/*.fi-sidebar-item-button{
+    background-color:green;
+}*/
+
+.fi-sidebar-item-label{
+    color:black;
+}
+.fi-sidebar-item-icon{
+    color:#f49f1c ;
+    width: 30px;
+    height: 30px;
+}
+

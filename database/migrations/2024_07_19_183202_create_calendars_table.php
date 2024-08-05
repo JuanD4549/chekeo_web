@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
-            $table->enum('day',['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday','sunday']);
-            $table->time('time_in');
-            $table->time('time_out');
+            $table->json('monday')->nullable();
+            $table->json('tuesday')->nullable();
+            $table->json('wednesday')->nullable();
+            $table->json('thursday')->nullable();
+            $table->json('friday')->nullable();
+            $table->json('saturday')->nullable();
+            $table->json('sunday')->nullable();
             $table->timestamps();
         });
     }

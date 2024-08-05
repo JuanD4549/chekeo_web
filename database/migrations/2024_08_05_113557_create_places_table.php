@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calendar_guards', function (Blueprint $table) {
+        Schema::create('places', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branche_id');
-            $table->enum('type',['12','24'])->defalut('12');
-            $table->enum('day',['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday','sunday']);
-            $table->time('time_in');
-            $table->time('time_out')->nullable();
+            $table->string('name');
+            $table->integer('num_reliefs');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calendar_guards');
+        Schema::dropIfExists('places');
     }
 };

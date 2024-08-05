@@ -27,8 +27,7 @@ class ListSecurityGuardShifts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()
-               ->createAnother(false),
+            Actions\CreateAction::make(),
             //Action::make('ENtrada')
             //    ->label('Entrada')
             //    ->form([

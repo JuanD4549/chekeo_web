@@ -6,21 +6,16 @@ use Illuminate\Support\Facades\Auth;
 
 class Logica
 {
-    public function getIdSecurityGuardShifts(): ?int
+    public function getCalendar()
     {
-        $security_guard_shifts = Auth::user()->security_guard_shifts;
-        //dd($security_guard_shifts[1]->data_security_guard_shifts);
-        foreach ($security_guard_shifts as $key => $value) {
-            $data_security_guard_shifts = $value->data_security_guard_shifts;
-            //dd($count);
-            if (count($data_security_guard_shifts) == 0) {
-                //dd($data_security_guard_shifts, $value->id);
-                return 0;
-            } else if (count($data_security_guard_shifts) == 1) {
-                return $value->id;
-            }
+        $branche = Auth::user()['branche'];
+        $calendar=null;
+        if (count($branche['calendars'])>0 ){
+            $calendar=$branche['calendars'];
+        }else if(count(Auth::user()['calendars'])>0){
+            $calendar=Auth::user()['calendars'];
         }
-        return null;
+        return $calendar;
     }
     public function saveFoto($foto, $folder): ?string
     {

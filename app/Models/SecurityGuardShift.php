@@ -15,7 +15,6 @@ class SecurityGuardShift extends Model
         'branche_id',
         'detail_in_id',
         'detail_out_id',
-        'relief',
         'status',
     ];
     public function user(): BelongsTo

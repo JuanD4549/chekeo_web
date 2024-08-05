@@ -20,6 +20,11 @@ class DetailIn extends Model
         return $this->hasOne(SecurityGuardShift::class);
     }
 
+    public function relief_in(): HasOne
+    {
+        return $this->hasOne(ReliefIn::class);
+    }
+
     public function detail(): BelongsTo
     {
         return $this->belongsTo(Detail::class);
