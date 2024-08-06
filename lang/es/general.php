@@ -12,6 +12,7 @@ return [
         'time_in' => 'Hora Ingreso',
         'time_out' => 'Hora Salida',
     ],
+    'code'=>'Codigo',
     'user_data'=>'Información usuario',
     'detail_in'=>'Detalle ingreso',
     'detail_out'=>'Detalle salida',

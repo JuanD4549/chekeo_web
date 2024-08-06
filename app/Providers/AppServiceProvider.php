@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
+use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //FilamentIcon::register([
+        //    'panels::topbar.global-search.field' => 'fas-magnifying-glass',
+        //    //'panels::sidebar.group.collapse-button' => view('icons.chevron-up'),
+        //]);
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['es', 'en']); // also accepts a closure

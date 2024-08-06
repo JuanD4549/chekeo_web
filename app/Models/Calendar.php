@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Calendar extends Model
 {
@@ -13,10 +14,10 @@ class Calendar extends Model
         'time_in',
         'time_out',
     ];
-    public function users(){
+    public function users():BelongsToMany{
         return $this->belongsToMany(User::class);
     }
-    public function branches(){
+    public function branches():BelongsToMany{
         return $this->belongsToMany(Branche::class);
     }
 }
