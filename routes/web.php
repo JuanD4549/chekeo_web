@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/personal');
 });
+Route::post('/access', [\App\Http\Controllers\AccessController::class,'setIn'])->name('web.access.setIn');
+

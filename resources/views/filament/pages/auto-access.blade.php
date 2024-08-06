@@ -57,7 +57,8 @@
         },
         body: JSON.stringify(update),
         };
-        fetch('http://localhost:8000/api/admin/accesses',options)
+    console.log('{{route("api.access.setIn")}}');
+        fetch('{{route("api.access.setIn")}}',options)
             .then(data => {
                 return data.json();
             })

@@ -107,6 +107,7 @@ class AdminPanelProvider extends PanelProvider
             ->middleware([
                 SetTheme::class
             ])
+            ->darkMode(false)
             ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
             ->sidebarFullyCollapsibleOnDesktop();
