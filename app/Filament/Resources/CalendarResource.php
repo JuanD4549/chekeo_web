@@ -49,21 +49,6 @@ class CalendarResource extends Resource
     {
         return $form
             ->schema([
-                //Forms\Components\Select::make('branches')
-                //    ->label(__('general.branches'))
-                //    ->multiple()
-                //    ->options(User::all()->pluck('name', 'id'))
-                //    ->searchable()
-                //    ->preload(),
-                //Forms\Components\Select::make('users')
-                //    ->label(__('general.users'))
-                //    //->relationship('users', 'name')
-                //    ->multiple()
-                //    ->options(fn (): Collection => User::query()
-                //        ->where('charge', '!=', 'Root')
-                //        ->pluck('name', 'id'))
-                //    ->searchable()
-                //    ->preload(),
                 Section::make()
                     ->schema([
                         Fieldset::make('monday')
@@ -181,6 +166,7 @@ class CalendarResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                //Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -192,7 +178,9 @@ class CalendarResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\BranchesRelationManager::class,
+            RelationManagers\DepartmentsRelationManager::class,
+            RelationManagers\UsersRelationManager::class,
         ];
     }
 

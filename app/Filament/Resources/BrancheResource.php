@@ -46,6 +46,9 @@ class BrancheResource extends Resource
                 Section::make('Data branch')
                     ->columns(2)
                     ->schema([
+                        Forms\Components\Select::make('calendar_id')
+                            ->relationship('calendar', 'id')
+                            ->preload(),
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
@@ -53,19 +56,22 @@ class BrancheResource extends Resource
                             ->maxLength(255),
                         Forms\Components\Toggle::make('status')
                             ->default(true),
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->options(
+                                fn (): Collection => User::query()
+                                    //->where('id', '!=', $get('user_id'))
+                                    ->where('charge', 'Boss')
+                                    ->pluck('name', 'id')
+                            )
+                            ->label('Boss')
+                            ->searchable()
+                            ->preload()
+                            ->live()
+                            //->relationship('user', 'name')
+                            ->required(),
                     ]),
-                Forms\Components\Select::make('user_id')
-                    ->options(
-                        fn (): Collection => User::query()
-                            ->where('charge', 'Boss')
-                            ->pluck('name', 'id')
-                    )
-                    ->label('Boss')
-                    ->searchable()
-                    ->preload()
-                    ->live()
-                    //->relationship('user', 'name')
-                    ->required(),
+
 
             ]);
     }
@@ -111,7 +117,6 @@ class BrancheResource extends Resource
         return [
             RelationManagers\DepartmentsRelationManager::class,
             RelationManagers\UsersRelationManager::class,
-            RelationManagers\CalendarsRelationManager::class,
         ];
     }
 

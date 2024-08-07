@@ -16,14 +16,15 @@ class ListCalendars extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+
         ];
     }
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make(),
-            'Monday' => Tab::make()
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('day', 'monday')),
+            //'all' => Tab::make(),
+            //'Monday' => Tab::make()
+            //    ->modifyQueryUsing(fn (Builder $query) => $query->where('monday','!=', null)),
         ];
     }
 }

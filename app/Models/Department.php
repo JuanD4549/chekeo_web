@@ -27,4 +27,8 @@ class Department extends Model
     {
         return $this->belongsTo(Calendar::class);
     }
+    public function employees()
+    {
+        return $this->hasMany(User::class);
+    }
 }

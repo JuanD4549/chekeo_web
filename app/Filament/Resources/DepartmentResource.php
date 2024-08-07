@@ -7,6 +7,7 @@ use App\Filament\Resources\DepartmentResource\RelationManagers;
 use App\Models\Department;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -40,8 +41,10 @@ class DepartmentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('branche_id')
-                    ->relationship('department', 'name')
+                    ->relationship('branche', 'name')
                     ->required(),
+                    Forms\Components\Select::make('calendar_id')
+                    ->relationship('calendar', 'id'),
                 Forms\Components\Select::make('user_id')
                     ->label('Boss')
                     ->relationship('user', 'name')
@@ -88,7 +91,7 @@ class DepartmentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\EmployeesRelationManager::class
         ];
     }
 
