@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CalendarsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'calendars';
+    protected static string $relationship = 'calendar';
 
     public function form(Form $form): Form
     {
@@ -27,9 +27,9 @@ class CalendarsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('day')
+            ->recordTitleAttribute('monday')
             ->columns([
-                Tables\Columns\TextColumn::make('day'),
+                Tables\Columns\TextColumn::make('monday'),
             ])
             ->filters([
                 //

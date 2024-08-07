@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [\App\Http\Controllers\AuthController::class,'login']);
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::middleware('auth:sanctum')
-->group(function (){
-    Route::get('/user', function (Request $request) {
-        return $request->user();
+    ->group(function () {
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
     });
-});
-    Route::post('/access', [\App\Http\Controllers\AccessController::class,'setIn'])->name('api.access.setIn');
+Route::post('/access', [\App\Http\Controllers\AccessController::class, 'setIn'])->name('api.access.setIn');

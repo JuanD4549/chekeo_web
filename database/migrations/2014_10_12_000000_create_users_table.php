@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('department_id')->nullable();
             $table->foreignId('branche_id')->nullable();
+            $table->foreignId('calendar_id')->nullable();
             $table->string('name');
             $table->string('ci')->unique();
             $table->enum('blood_type',['O+','O-','A+','A-','B+','B-','AB+','AB-',])->default('O+')->nullable();

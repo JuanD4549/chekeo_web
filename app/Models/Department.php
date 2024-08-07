@@ -9,15 +9,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Department extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'branche_id',
         'user_id',
+        'calendar_id',
         'name',
     ];
-    public function branche(): BelongsTo{
+    public function branche(): BelongsTo
+    {
         return $this->belongsTo(Branche::class);
     }
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
+    }
+    public function calendar(): BelongsTo
+    {
+        return $this->belongsTo(Calendar::class);
     }
 }

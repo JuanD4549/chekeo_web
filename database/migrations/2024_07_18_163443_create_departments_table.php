@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('branche_id');
             $table->foreign('branche_id')->references('id')->on('branches');
             $table->foreignId('user_id');
+            $table->foreignId('calendar_id')->nullable();
             $table->string('name');
             //$table->boolean('status')->default(true);
             $table->timestamps();

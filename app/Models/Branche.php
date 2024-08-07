@@ -13,6 +13,7 @@ class Branche extends Model
     protected $fillable=[
         'enterprise_id',
         'user_id',
+        'calendar_id',
         'name',
         'address',
         'status',
@@ -30,17 +31,13 @@ class Branche extends Model
     {
         return $this->hasMany(Department::class);
     }
-    public function calendars()
+    public function calendar():BelongsTo
     {
-        return $this->belongsToMany(Calendar::class);
+        return $this->belongsTo(Calendar::class);
     }
     public function users()
     {
         return $this->hasMany(User::class);
-    }
-    public function calendar_guard()
-    {
-        return $this->hasMany(CalendarGuard::class);
     }
     public function reliefs()
     {

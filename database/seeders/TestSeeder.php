@@ -119,11 +119,7 @@ class TestSeeder extends Seeder
                 'time_out' => '17:30']),
 
         ]);
-        //
-        DB::table('branche_calendar')->insert([
-            'calendar_id' => 1,
-            'branche_id' => 1,
-        ]);
+        
         // DB::table('user')->where('id', 3)->update([
         //     'branche_id' => 1
         // ]);

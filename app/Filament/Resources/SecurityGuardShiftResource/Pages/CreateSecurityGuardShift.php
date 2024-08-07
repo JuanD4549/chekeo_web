@@ -78,8 +78,8 @@ class CreateSecurityGuardShift extends CreateRecord
         $this->record['detail_in_id'] = $detail_in['id'];
         $this->record->save();
         //If save with relief
-        $calendar=(new Logica())->getCalendar();
-        dd($calendar);
+        //$calendar=(new Logica())->getCalendar();
+        //dd($calendar);
         //dd($this->form->getState());
     }
 

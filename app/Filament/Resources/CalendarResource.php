@@ -2,11 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Funcions\Logica;
 use App\Filament\Resources\CalendarResource\Pages;
 use App\Filament\Resources\CalendarResource\RelationManagers;
 use App\Models\Calendar;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
@@ -45,39 +49,93 @@ class CalendarResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('day')
-                    ->label(__('general.table.day'))
-                    ->required()
-                    ->options([
-                        'monday' => 'Monday',
-                        'tuesday' => 'Tuesday',
-                        'wednesday' => 'Wednesday',
-                        'thursday' => 'Thursday',
-                        'friday' => 'Friday',
-                        'saturday' => 'Saturday',
-                        'sunday' => 'Sunday'
-                    ]),
-                Forms\Components\Select::make('branches')
-                    ->label(__('general.branches'))
-                    ->multiple()
-                    ->relationship('branches', 'name')
-                    ->searchable()
-                    ->preload(),
-                Forms\Components\Select::make('users')
-                    ->label(__('general.users'))
-                    ->relationship('users', 'name')
-                    ->multiple()
-                    ->options(fn (): Collection => User::query()
-                        ->where('charge', '!=','Root')
-                        ->pluck('name', 'id'))
-                    ->searchable()
-                    ->preload(),
-                Forms\Components\TimePicker::make('time_in')
-                    ->label(__('general.time_in'))
-                    ->required(),
-                Forms\Components\TimePicker::make('time_out')
-                    ->label(__('general.time_out'))
-                    ->required(),
+                //Forms\Components\Select::make('branches')
+                //    ->label(__('general.branches'))
+                //    ->multiple()
+                //    ->options(User::all()->pluck('name', 'id'))
+                //    ->searchable()
+                //    ->preload(),
+                //Forms\Components\Select::make('users')
+                //    ->label(__('general.users'))
+                //    //->relationship('users', 'name')
+                //    ->multiple()
+                //    ->options(fn (): Collection => User::query()
+                //        ->where('charge', '!=', 'Root')
+                //        ->pluck('name', 'id'))
+                //    ->searchable()
+                //    ->preload(),
+                Section::make()
+                    ->schema([
+                        Fieldset::make('monday')
+                            ->label(__('general.monday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('monday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('monday.time_out')
+                                    ->label(__('general.time_out')),
+                            ])
+                            ->columnSpan(1)
+                            ->columns(1),
+                        Fieldset::make('tuesday')
+                            ->label(__('general.tuesday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('tuesday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('tuesday.time_out')
+                                    ->label(__('general.time_out')),
+                            ])
+                            ->columnSpan(1)
+                            ->columns(1),
+                        Fieldset::make('wednesday')
+                            ->label(__('general.wednesday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('wednesday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('wednesday.time_out')
+                                    ->label(__('general.time_out')),
+                            ])
+                            ->columnSpan(1)
+                            ->columns(1),
+                        Fieldset::make('thursday')
+                            ->label(__('general.thursday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('thursday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('thursday.time_out')
+                                    ->label(__('general.time_out')),
+                            ])
+                            ->columnSpan(1)
+                            ->columns(1),
+                        Fieldset::make('friday')
+                            ->label(__('general.friday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('friday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('friday.time_out')
+                                    ->label(__('general.time_out')),
+                            ])
+                            ->columnSpan(1)
+                            ->columns(1),
+                        Fieldset::make('saturday')
+                            ->label(__('general.saturday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('saturday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('saturday.time_out')
+                                    ->label(__('general.time_out')),
+                            ])
+                            ->columnSpan(1)
+                            ->columns(1),
+                        Fieldset::make('sunday')
+                            ->label(__('general.sunday'))
+                            ->schema([
+                                Forms\Components\TimePicker::make('sunday.time_in')
+                                    ->label(__('general.time_in')),
+                                Forms\Components\TimePicker::make('sunday.time_out')
+                                    ->label(__('general.time_out')),
+                            ]),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -85,13 +143,28 @@ class CalendarResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('day')
-                    ->label(__('general.table.day'))
+                Tables\Columns\TextColumn::make('monday')
+                    ->label(__('general.monday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('time_in')
-                    ->label(__('general.table.time_in')),
-                Tables\Columns\TextColumn::make('time_out')
-                    ->label(__('general.table.time_out')),
+                Tables\Columns\TextColumn::make('tuesday')
+                    ->label(__('general.tuesday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state)),
+                Tables\Columns\TextColumn::make('wednesday')
+                    ->label(__('general.wednesday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state)),
+                Tables\Columns\TextColumn::make('thursday')
+                    ->label(__('general.thursday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state)),
+                Tables\Columns\TextColumn::make('friday')
+                    ->label(__('general.friday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state)),
+                Tables\Columns\TextColumn::make('saturday')
+                    ->label(__('general.saturday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state)),
+                Tables\Columns\TextColumn::make('sunday')
+                    ->label(__('general.sunday'))
+                    ->formatStateUsing(fn (string $state): string => (new Logica)->formateDayJson($state)),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('general.table.created_at'))
                     ->dateTime()

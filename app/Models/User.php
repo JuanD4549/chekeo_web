@@ -30,6 +30,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected $fillable = [
         'department_id',
         'branche_id',
+        'calendar_id',
         'name',
         'ci',
         'blood_type',
@@ -75,21 +76,25 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return $this->avatar_url;
     }
+
     //Relations
 
     public function security_guard_shifts(): HasMany
     {
         return $this->hasMany(SecurityGuardShift::class);
     }
-    public function calendars():BelongsToMany
+
+    public function calendar(): BelongsTo
     {
-        return $this->belongsToMany(Calendar::class);
+        return $this->belongsTo(Calendar::class);
     }
-    public function branche():BelongsTo
+
+    public function branche(): BelongsTo
     {
         return $this->belongsTo(Branche::class);
     }
-    public function department():BelongsTo
+
+    public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
     }

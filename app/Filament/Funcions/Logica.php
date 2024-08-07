@@ -2,20 +2,20 @@
 
 namespace App\Filament\Funcions;
 
+use App\Models\Access;
+use App\Models\User;
+use Carbon\Carbon;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Logica
 {
-    public function getCalendar()
+    public function formateDayJson($day): string
     {
-        $branche = Auth::user()['branche'];
-        $calendar=null;
-        if (count($branche['calendars'])>0 ){
-            $calendar=$branche['calendars'];
-        }else if(count(Auth::user()['calendars'])>0){
-            $calendar=Auth::user()['calendars'];
-        }
-        return $calendar;
+        //dd($day);
+        $obj = json_decode($day);
+        //dd($obj->time_in);
+        return $obj->time_in.' - '.$obj->time_out;
     }
     public function saveFoto($foto, $folder): ?string
     {
@@ -34,5 +34,15 @@ class Logica
         }
 
         return null;
+    }
+    public function saveAccessIn(string $brance, User $user,)
+    {
+        $calendar=(new CalendarFuncion)->getCalendar($user);
+        dd($calendar['monday']);
+        $access = new Access();
+        $access['branche_id'] = $brance;
+        $access['user_id'] = $user->id;
+        $access['date_time_in'] = Carbon::now();
+        $access->save();
     }
 }

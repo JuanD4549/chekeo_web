@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('enterprise_id');
             $table->foreign('enterprise_id')->references('id')->on('enterprises');
             $table->foreignId('user_id');
+            $table->foreignId('calendar_id')->nullable();
             $table->string('name');
             $table->string('address')->nullable();
             $table->boolean('status')->default(true);
