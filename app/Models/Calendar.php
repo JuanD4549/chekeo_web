@@ -10,6 +10,7 @@ class Calendar extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'range',
         'monday',
         'tuesday',
         'wednesday',

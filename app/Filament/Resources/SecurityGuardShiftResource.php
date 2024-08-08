@@ -44,7 +44,7 @@ class SecurityGuardShiftResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
-                Forms\Components\Select::make('s')
+                Forms\Components\Select::make('branche_id')
                     ->relationship('branche', 'name')
                     ->required(),
                 Forms\Components\Toggle::make('status')

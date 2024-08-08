@@ -5,6 +5,7 @@ namespace App\Filament\Funcions;
 use App\Models\Access;
 use App\Models\User;
 use Carbon\Carbon;
+use DateTime;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class Logica
         //dd($day);
         $obj = json_decode($day);
         //dd($obj->time_in);
-        return $obj->time_in.' - '.$obj->time_out;
+        return $obj->time_in . ' - ' . $obj->time_out;
     }
     public function saveFoto($foto, $folder): ?string
     {
@@ -35,14 +36,33 @@ class Logica
 
         return null;
     }
-    public function saveAccessIn(string $brance, User $user,)
+
+    public function saveAccessIn(string $brance, User $user,): ?string
     {
-        $calendar=(new CalendarFuncion)->getCalendar($user);
-        dd($calendar['monday']);
-        $access = new Access();
-        $access['branche_id'] = $brance;
-        $access['user_id'] = $user->id;
-        $access['date_time_in'] = Carbon::now();
-        $access->save();
+        $calendar = (new CalendarFuncion)->getCalendar($user);
+        //dd($calendar->monday);
+        if ($calendar != null) {
+            $day = json_decode($calendar[strtolower(date("l"))], true);
+            //dd($day);
+            if ($day['time_in'] != null) {
+                $horaActual = new DateTime();
+                $horaIngreso = new DateTime($day['time_in']);
+
+                $interval = $horaIngreso->diff($horaActual);
+                $totalMin = ($interval->h * 60) + $interval->m;
+                if ($totalMin <= $calendar->range) {
+                    $access = new Access();
+                    $access['branche_id'] = $brance;
+                    $access['user_id'] = $user->id;
+                    $access['date_time_in'] = Carbon::now();
+                    $access->save();
+                    return 'Ingreso';
+                }
+                return 'Fuera de horario';
+                //dd($totalMin);
+
+            }
+        }
+        return 'Sin horario Asignado';
     }
 }

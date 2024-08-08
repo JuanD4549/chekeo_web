@@ -21,4 +21,7 @@ Route::middleware('auth:sanctum')
             return $request->user();
         });
     });
-Route::post('/access', [\App\Http\Controllers\AccessController::class, 'setIn'])->name('api.access.setIn');
+Route::prefix('access')->group(function () {
+    Route::post('/set-in', [\App\Http\Controllers\AccessController::class, 'setIn'])->name('api.access.setIn');
+    Route::post('/set-out', [\App\Http\Controllers\AccessController::class, 'setOut'])->name('api.access.setOut');
+});

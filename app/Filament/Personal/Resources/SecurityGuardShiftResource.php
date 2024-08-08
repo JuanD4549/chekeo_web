@@ -4,41 +4,46 @@ namespace App\Filament\Personal\Resources;
 
 use App\Filament\Personal\Resources\SecurityGuardShiftResource\Pages;
 use App\Filament\Personal\Resources\SecurityGuardShiftResource\RelationManagers;
+use App\Forms\Components\Latitude;
+use App\Forms\Components\Longitude;
+use App\Forms\Components\WebCam;
 use App\Models\SecurityGuardShift;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
 
 class SecurityGuardShiftResource extends Resource
 {
     protected static ?string $model = SecurityGuardShift::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    public static function getPermissionPrefixes(): array
-    {
-        return [
-            'view',
-            'view_any',
-            'create',
-            'update',
-            'delete',
-            'delete_any',
-        ];
-    }
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->where('user_id',Auth::user()->id)->orderBy('id','DESC');
-    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Grid::make([
+                    'default' => 3,
+                ])
+                    ->schema([
+                        WebCam::make('img1_url')
+                            ->required(),
+                        Textarea::make('detail')
+                            ->rows(5),
+                        DateTimePicker::make('date_time')
+                            ->default(Carbon::now())
+                            ->disabled(true),
+                        Latitude::make('latitude'),
+                        Longitude::make('longitude'),
+                    ]),
             ]);
     }
 
@@ -49,26 +54,20 @@ class SecurityGuardShiftResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('date_time_in')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('date_time_out')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('turn')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('latitude')
+                Tables\Columns\TextColumn::make('branche.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
+                Tables\Columns\TextColumn::make('place_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('img1_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('img2_url')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('detail_in.id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('detail_out.id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('status')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

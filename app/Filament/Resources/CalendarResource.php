@@ -11,6 +11,7 @@ use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
@@ -49,6 +50,8 @@ class CalendarResource extends Resource
     {
         return $form
             ->schema([
+                TextInput::make('range')
+                ->integer(),
                 Section::make()
                     ->schema([
                         Fieldset::make('monday')

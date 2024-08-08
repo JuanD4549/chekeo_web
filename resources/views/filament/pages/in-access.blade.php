@@ -115,7 +115,7 @@
                 },
                 body: JSON.stringify(update),
             };
-            console.log('{{ route('api.access.setIn') }}');
+            //console.log('{{ route('api.access.setIn') }}');
             fetch('{{ route('api.access.setIn') }}', options)
                 .then(response => {
                     //console.log(response);

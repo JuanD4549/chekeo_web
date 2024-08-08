@@ -130,11 +130,6 @@ class EmployeeResource extends Resource
                 Section::make('Professional Data')
                     ->columns(3)
                     ->schema([
-                        Select::make('roles')
-                            ->multiple()
-                            ->relationship('roles', 'name')
-                            ->preload()
-                            ->searchable(),
                         Select::make('branche_id')
                             ->relationship('branche', 'name')
                             ->preload()
@@ -178,11 +173,10 @@ class EmployeeResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('branche.name'),
-                TextColumn::make('employee.name'),
+                TextColumn::make('department.name'),
                 TextColumn::make('charge'),
                 IconColumn::make('status')
                     ->boolean(),
-                TextColumn::make('roles.name'),
             ])
             ->filters([
                 //
@@ -212,7 +206,7 @@ class EmployeeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\CalendarsRelationManager::class,
+            //
         ];
     }
 

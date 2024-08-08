@@ -1,14 +1,20 @@
-
-<style>
+<div>
+    <style>
     body {
         min-height: 100vh;
         min-width: 100vh;
     }
+    .text-gray-950 {
+        --tw-text-opacity: 1;
+        color: rgb(255 255 255);
+    }
     .fi-body {
+        background-color:white;
         background-repeat: no-repeat;
         background-position: left center;
-        background-size: contain;
-        background-image: url({{ asset("imagenes/chekeo/back_5.png")}});
+        //width: ;
+        background-size: 135vh;
+        background-image: url({{ asset("imagenes/chekeo/back.svg")}});
     }
     .fi-simple-layout {
     / / height: 100 vh;
@@ -43,10 +49,10 @@
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 25vh;
+        margin-bottom: 3em;
+        width: 35vh;
     }
 </style>
-<x-filament-panels::page.simple>
     <div class="MyImgContainer">
         <img class="myImg" src={{ asset('storage/emprise/logo_empresa.png') }} alt="">
     </div>
@@ -72,4 +78,4 @@
 
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_AFTER,
         scopes: $this->getRenderHookScopes()) }}
-</x-filament-panels::page.simple>
+</div>

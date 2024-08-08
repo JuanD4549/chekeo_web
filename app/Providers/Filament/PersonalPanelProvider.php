@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Personal\Pages\CustomLogin;
+use Filament\FontProviders\GoogleFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -27,10 +28,14 @@ class PersonalPanelProvider extends PanelProvider
             ->id('personal')
             ->path('personal')
             ->login(CustomLogin::class)
-           
-            ->colors([
-                'primary' => Color::Amber,
-            ])
+            ->brandLogo(asset('imagenes/chekeo/logo_ligth.svg'))
+            ->favicon(asset('imagenes/chekeo/icon16.svg'))
+            ->brandLogoHeight('5rem')
+            ->font('Poppins', provider: GoogleFontProvider::class)
+            ->darkMode(false)
+            ->databaseNotifications()
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarFullyCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Personal/Resources'), for: 'App\\Filament\\Personal\\Resources')
             ->discoverPages(in: app_path('Filament/Personal/Pages'), for: 'App\\Filament\\Personal\\Pages')
             ->pages([

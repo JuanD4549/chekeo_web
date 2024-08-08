@@ -37,6 +37,10 @@ class AccessResource extends Resource
         return __('general.accesses');
     }
 
+    //public static function getNavigationParentItem(): ?string
+    //{
+    //    return __('general.menu.access');
+    //}
     public static function getNavigationGroup(): ?string
     {
         return __('general.menu.security');
@@ -49,37 +53,20 @@ class AccessResource extends Resource
                 Forms\Components\Select::make('branche_id')
                     //->default(Auth::user()->branche_id)
                     ->relationship('branche', 'name')
+                    ->disabledOn('edit')
                     ->required(),
                 Forms\Components\Select::make('user_id')
-                    ->autofocus()
-                    ->relationship('user','name')
-                    ->searchable(['name','ci'])
-                    //->getSearchResultsUsing(function (string $search,Forms\Set $set) {
-                    //    //dd();
-                    //    $user = User::select('id')->where('name', 'like', "%{$search}%")->limit(5)->pluck('id')->first();
-                    //    //dd(Auth::user()->branche_id);
-                    //    if ($user != null) {
-                    //        $access = new Access();
-                    //        $access['user_id'] = $user;
-                    //        $access['branche_id'] = Auth::user()->branche_id;
-                    //        $access['date_time_in'] = Carbon::now();
-                    //        $access->save();
-                    //        
-                    //        return [$user => $search];
-                    //    }
-                    //    $set('user_id',null);
-                    //    $search=null;
-                    //    return [];
-                    //})
-                    //->afterStateUpdated(function (Forms\Set $set) {
-                    //    
-                    //})
-                    //->searchDebounce(500)
+                    //->autofocus()
+                    ->relationship('user', 'name')
+                    ->searchable(['name', 'ci'])
+                    ->disabledOn('edit')
                     ->required(),
                 Forms\Components\DateTimePicker::make('date_time_in')
                     ->default(Carbon::now())
+                    ->disabledOn('edit')
                     ->required(),
-                Forms\Components\DateTimePicker::make('date_time_out'),
+                Forms\Components\DateTimePicker::make('date_time_out')
+                    ->hiddenOn('create'),
             ]);
     }
 
