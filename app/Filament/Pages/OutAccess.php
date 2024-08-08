@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class OutAccess extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'icon-access-out';
 
     protected static string $view = 'filament.pages.out-access';
 

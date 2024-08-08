@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Htmlable;
 
 class InAccess extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'icon-access-in';
 
     protected static string $view = 'filament.pages.in-access';
     //protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::End;

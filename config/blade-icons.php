@@ -15,9 +15,9 @@ return [
 
     'sets' => [
 
-         'default' => [
-        
-             /*
+        'default' => [
+
+            /*
              |-----------------------------------------------------------------
              | Icons Path
              |-----------------------------------------------------------------
@@ -29,10 +29,10 @@ return [
              | Relative to the disk root when the disk option is set.
              |
              */
-        
-             'path' => 'public/storage/resources/svg',
-        
-             /*
+
+            'path' => 'public/storage/resources/svg',
+
+            /*
              |-----------------------------------------------------------------
              | Filesystem Disk
              |-----------------------------------------------------------------
@@ -42,10 +42,10 @@ return [
              | starts relatively from the disk root.
              |
              */
-        
-             'disk' => '',
-        
-             /*
+
+            'disk' => '',
+
+            /*
              |-----------------------------------------------------------------
              | Default Prefix
              |-----------------------------------------------------------------
@@ -55,10 +55,10 @@ return [
              | to every icon name. It's required and needs to be unique.
              |
              */
-        
-             'prefix' => 'icon',
-        
-             /*
+
+            'prefix' => 'icon',
+
+            /*
              |-----------------------------------------------------------------
              | Fallback Icon
              |-----------------------------------------------------------------
@@ -67,10 +67,10 @@ return [
              | icon when an icon in this set cannot be found.
              |
              */
-        
-             'fallback' => '',
-        
-             /*
+
+            'fallback' => '',
+
+            /*
              |-----------------------------------------------------------------
              | Default Set Classes
              |-----------------------------------------------------------------
@@ -79,10 +79,10 @@ return [
              | will be applied by default to all icons within this set.
              |
              */
-        
-             'class' => '',
-        
-             /*
+
+            'class' => '',
+
+            /*
              |-----------------------------------------------------------------
              | Default Set Attributes
              |-----------------------------------------------------------------
@@ -91,13 +91,13 @@ return [
              | will be applied by default to all icons within this set.
              |
              */
-        
-             'attributes' => [
-                 // 'width' => 50,
-                 // 'height' => 50,
-             ],
-        
-         ],
+
+            'attributes' => [
+                // 'width' => 50,
+                // 'height' => 50,
+            ],
+
+        ],
 
     ],
 

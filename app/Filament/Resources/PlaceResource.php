@@ -2,70 +2,71 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SecurityGuardShiftResource\Pages;
-use App\Models\SecurityGuardShift;
+use App\Filament\Resources\PlaceResource\Pages;
+use App\Filament\Resources\PlaceResource\RelationManagers;
+use App\Models\Place;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SecurityGuardShiftResource extends Resource
+class PlaceResource extends Resource
 {
-    protected static ?string $model = SecurityGuardShift::class;
+    protected static ?string $model = Place::class;
 
-    protected static ?string $navigationIcon = 'icon-guard';
-    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationIcon = 'icon-place';
 
     public static function getModelLabel(): string
     {
-        return __('general.security_guard_shift');
+        return __('general.place');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.security_guard_shifts');
+        return __('general.places');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.security_guard_shift');
+        return __('general.places');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu.my_organization');
     }
-
+    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
                 Forms\Components\Select::make('branche_id')
                     ->relationship('branche', 'name')
                     ->required(),
-                Forms\Components\Toggle::make('status')
-                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('num_reliefs')
+                    ->required()
+                    ->numeric(),
             ]);
-
     }
-
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('branche.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('num_reliefs')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -80,10 +81,6 @@ class SecurityGuardShiftResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
-            ])
-            ->headerActions([
-                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -95,18 +92,16 @@ class SecurityGuardShiftResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //RelationManagers\DataSecurityGuardShiftsRelationManager::class,
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSecurityGuardShifts::route('/'),
-            'create' => Pages\CreateSecurityGuardShift::route('/create'),
-            'view' => Pages\ViewSecurityGuardShift::route('/{record}'),
-            'edit' => Pages\EditSecurityGuardShift::route('/{record}/edit'),
+            'index' => Pages\ListPlaces::route('/'),
+            'create' => Pages\CreatePlace::route('/create'),
+            'edit' => Pages\EditPlace::route('/{record}/edit'),
         ];
     }
-
 }
