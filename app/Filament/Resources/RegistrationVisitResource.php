@@ -17,6 +17,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RegistrationVisitResource extends Resource
@@ -91,10 +92,11 @@ class RegistrationVisitResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('branche.name')
+                    ->numeric()
+                    //->url(true)
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('visit.name')
@@ -109,10 +111,6 @@ class RegistrationVisitResource extends Resource
                 Tables\Columns\TextColumn::make('date_time_out')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('img1_url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('img2_url')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -125,12 +123,20 @@ class RegistrationVisitResource extends Resource
             ->filters([
                 //
             ])
+            //->recordUrl(
+            //    //fn (Model $record): string => route('posts.edit', ['record' => $record]),
+            //    false
+            //)
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->label('close')
+                ->disabled(fn($record)=>$record->date_time_out!=null?true:false)
+                //->hidden(fn($record)=>$record->date_time_out!=null?true:false),
             ])
+            //->paginated(false)
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
