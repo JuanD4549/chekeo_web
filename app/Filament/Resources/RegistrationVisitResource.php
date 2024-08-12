@@ -26,6 +26,25 @@ class RegistrationVisitResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.registration_visit');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.registration_visits');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.registration_visits');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu.security');
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -101,6 +120,7 @@ class RegistrationVisitResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('visit.name')
                     ->numeric()
+                    ->searchable(['name','ci'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('visit_car.license_plate')
                     ->numeric()
@@ -129,8 +149,8 @@ class RegistrationVisitResource extends Resource
             //)
             ->actions([
                 Tables\Actions\EditAction::make()
-                ->label('close')
-                ->disabled(fn($record)=>$record->date_time_out!=null?true:false)
+                    ->label('close')
+                    ->disabled(fn($record) => $record->date_time_out != null ? true : false)
                 //->hidden(fn($record)=>$record->date_time_out!=null?true:false),
             ])
             //->paginated(false)

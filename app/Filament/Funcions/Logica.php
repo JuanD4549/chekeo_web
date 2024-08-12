@@ -23,6 +23,10 @@ class Logica
         try {
             $img = $foto;
             $folderPath = $folder;
+            if (!file_exists($folderPath)) {
+                mkdir($folderPath);
+                //dd($resultado);
+            }
             $image_parts = explode(";base64,", $img);
             $image_base64 = base64_decode($image_parts[1]);
             $fileName1 = date("d.m.y") . "." . time() . uniqid() . '.png';
