@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('new_registrations', function (Blueprint $table) {
+        Schema::create('catalog_novelties', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('new_registrations');
+        Schema::dropIfExists('catalog_novelties');
     }
 };
