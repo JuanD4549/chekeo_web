@@ -6,6 +6,8 @@ use App\Filament\Resources\RegistrationVisitResource\Pages;
 use App\Filament\Resources\RegistrationVisitResource\RelationManagers;
 use App\Forms\Components\WebCam;
 use App\Models\RegistrationVisit;
+use App\Models\User;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -27,37 +29,61 @@ class RegistrationVisitResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->live()
-                    ->disabledOn('edit')
-                    ->afterStateUpdated(function (Get $get, Set $set) {})
-                    ->required(),
-                TextInput::make('phone')
-                    ->live(),
-                TextInput::make('mail')
-                    ->live(),
                 Forms\Components\Select::make('branche_id')
                     ->relationship('branche', 'name')
                     ->disabledOn('edit')
                     ->required(),
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->live()
+                    ->disabledOn('edit')
+                    ->afterStateUpdated(function (Get $get, Set $set) {
+                        $user = User::find($get('user_id'));
+                        $set('phone', $user->cellphone ?? 'Sin celular');
+                        $set('mail', $user->email ?? 'Sin correo');
+                    })
+                    ->required(),
+                TextInput::make('phone')
+                    ->hidden(fn(Get $get) => $get('user_id') == null ? true : false)
+                    ->disabled(true)
+                    ->live(),
+                TextInput::make('mail')
+                    ->hidden(fn(Get $get) => $get('user_id') == null ? true : false)
+                    ->disabled(true)
+                    ->live(),
                 Forms\Components\Select::make('visit_id')
                     ->relationship('visit', 'name')
+                    ->searchable(['name', 'ci'])
                     ->disabledOn('edit')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->required(),
+                        Forms\Components\TextInput::make('cellphone')
+                            ->required(),
+                        Forms\Components\TextInput::make('info_visit')
+                            ->required(),
+                    ])
                     ->required(),
-                Forms\Components\Toggle::make('state_car')
-                    ->disabledOn('edit')
-                    ->live(),
                 Forms\Components\Select::make('visit_car_id')
                     ->disabledOn('edit')
-                    ->hidden(fn(Get $get)=>$get('state_car'))
-                    ->relationship('visit_car', 'id'),
+                    //->hidden(fn(Get $get) => !$get('state_car'))
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('license_plate')
+                            ->required()
+                    ])
+                    ->relationship('visit_car', 'license_plate'),
                 Forms\Components\DateTimePicker::make('date_time_in')
-                    ->disabledOn('edit')
+                    ->disabled(true)
+                    ->default(Carbon::now())
                     ->required(),
                 Forms\Components\DateTimePicker::make('date_time_out')
+                    ->disabled(true)
+                    ->default(Carbon::now())
                     ->hiddenOn('create'),
-                WebCam::make('img1_url'),
+                WebCam::make('img1_url')
+                    ->disabled(false),
             ]);
     }
 
