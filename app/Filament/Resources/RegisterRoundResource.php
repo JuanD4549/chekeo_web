@@ -21,7 +21,7 @@ class RegisterRoundResource extends Resource
 {
     protected static ?string $model = RegisterRound::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'icon-change-avatar-4';
 
     public static function getModelLabel(): string
     {

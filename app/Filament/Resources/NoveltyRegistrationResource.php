@@ -21,7 +21,7 @@ class NoveltyRegistrationResource extends Resource
 {
     protected static ?string $model = NoveltyRegistration::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'icon-new-2';
 
     public static function getModelLabel(): string
     {

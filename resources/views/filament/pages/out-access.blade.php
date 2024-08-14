@@ -4,9 +4,42 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
-            justify-content: space-around;
+            margin-top: 2vh;
+            justify-content: center;
             align-items: center;
-            align-content: stretch;
+            //align-content: center;
+        }
+
+        .flex-container2 {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            //align-items: center;
+            //align-content: center;
+        }
+
+        .flex-items2:nth-child(1) {
+            display: block;
+            flex-grow: 0;
+            flex-shrink: 1;
+            flex-basis: auto;
+            align-self: auto;
+            order: 0;
+            //margin-right: 15px;
+            // width: 80vh;
+        }
+
+        .flex-items2:nth-child(2) {
+            display: block;
+            flex-grow: 0;
+            flex-shrink: 1;
+            flex-basis: auto;
+            align-self: auto;
+            order: 0;
+            //margin-left: 15px;
+            width: 45vh;
+            align-content: center;
         }
 
         .flex-items:nth-child(1) {
@@ -16,7 +49,8 @@
             flex-basis: auto;
             align-self: auto;
             order: 0;
-            width: 80vh;
+            margin-right: 15px;
+            // width: 80vh;
         }
 
         .flex-items:nth-child(2) {
@@ -26,42 +60,45 @@
             flex-basis: auto;
             align-self: auto;
             order: 0;
-            width: 80vh;
+            margin-left: 15px;
+            //width: 80vh;
         }
     </style>
     <div class="flex-container">
         <div class="flex-items">
-            <x-filament::fieldset>
-                <x-slot name="label">
-                    {{ __('general.data_in') }}
+            <x-filament::section style="width: 50vh; border:1px solid #f49f1c">
+                <x-slot name="heading">
+                    <strong> {{ __('general.data_out') }} </strong>
                 </x-slot>
-                {{ __('general.code') }}
-                <x-filament::input.wrapper>
+                <strong>{{ __('general.code') }}</strong>
+                <x-filament::input.wrapper style="border:1px solid #2a55c8">
                     <x-filament::input type="text" onchange="searchEmployee(this.value)" id='input_code' />
                 </x-filament::input.wrapper>
-                {{ __('general.date_time') }}
-                <x-filament::input.wrapper disabled>
+                </br>
+                <strong> {{ __('general.date_time') }} </strong>
+                <x-filament::input.wrapper disabled style="border:1px solid #2a55c8">
                     <x-filament::input type="dateTime" id='date_time' disabled />
                 </x-filament::input.wrapper>
-            </x-filament::fieldset>
+                </x-filament::fieldset>
         </div>
         <div class="flex-items">
-            <x-filament::section>
-                <x-slot name="heading">
-                    User details
+            <x-filament::section style="width: 90vh; border:1px solid #f49f1c">
+                <x-slot name="heading"  >
+                    <strong> {{ __('general.data_user') }}</strong>
                 </x-slot>
-                <div class="flex-container">
-                    <div class="flex-items">
-                        <x-filament::avatar src="{{ url('imagenes/chekeo/guard.svg') }}" alt="Dan Harrin" id='avatar'
+                <div class="flex-container2">
+                    <div class="flex-items2">
+                        <x-filament::avatar src="{{ url('imagenes/chekeo/avatar_1.svg') }}" alt="Guard" id='avatar'
                             style="width: 200px; height: 200px;" />
                     </div>
-                    <div class="flex-items">
-                        {{ __('general.name') }}
-                        <x-filament::input.wrapper disabled>
+                    <div class="flex-items2">
+                        <strong>{{ __('general.name') }}</strong>
+                        <x-filament::input.wrapper disabled style="border:1px solid #2a55c8">
                             <x-filament::input type="dateTime" id='name' disabled />
                         </x-filament::input.wrapper>
-                        {{ __('general.access') }}
-                        <x-filament::input.wrapper disabled>
+                        </br>
+                        <strong>{{ __('general.access') }}</strong>
+                        <x-filament::input.wrapper disabled style="border:1px solid #2a55c8">
                             <x-filament::input type="dateTime" id='access' disabled />
                         </x-filament::input.wrapper>
                     </div>
@@ -71,7 +108,6 @@
     </div>
     <script>
         document.getElementById("input_code").focus();
-
         let fechaActual = new Date();
         let day = fechaActual.getDay();
         let date = fechaActual.getDate();
@@ -88,7 +124,7 @@
             min = checkTime(min);
             sec = checkTime(sec);
 
-            document.getElementById("date_time").value = fomartoDate + " " + hr + ":" + min;
+            document.getElementById("date_time").value = fomartoDate + "     " + hr + ":" + min;
             var time = setTimeout(function() {
                 startTime()
             }, 500);
@@ -105,7 +141,7 @@
     </script>
     <script>
         function searchEmployee(code) {
-            var defaultIMG = "{{ url('imagenes/chekeo/guard.svg') }}"
+            var defaultIMG = "{{ url('imagenes/chekeo/avatar_1.svg') }}"
             //console.log(defaultIMG);
 
             // clearData();
@@ -119,7 +155,7 @@
                 },
                 body: JSON.stringify(update),
             };
-            //console.log('{{ route('api.access.setOut') }}');
+            //console.log('{{ route('api.access.setIn') }}');
             fetch('{{ route('api.access.setOut') }}', options)
                 .then(response => {
                     //console.log(response);

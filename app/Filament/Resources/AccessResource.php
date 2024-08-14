@@ -20,7 +20,7 @@ class AccessResource extends Resource
 {
     protected static ?string $model = Access::class;
 
-    protected static ?string $navigationIcon = 'heroicon-m-clipboard-document-check';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     public static function getModelLabel(): string
     {
@@ -43,7 +43,7 @@ class AccessResource extends Resource
     //}
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu.my_sources');
     }
 
     public static function form(Form $form): Form

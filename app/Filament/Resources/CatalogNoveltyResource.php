@@ -17,7 +17,7 @@ class CatalogNoveltyResource extends Resource
 {
     protected static ?string $model = CatalogNovelty::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     public static function getModelLabel(): string
     {
@@ -36,7 +36,7 @@ class CatalogNoveltyResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu.my_sources');
     }
 
     public static function form(Form $form): Form

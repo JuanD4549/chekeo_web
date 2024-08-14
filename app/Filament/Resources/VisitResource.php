@@ -36,7 +36,7 @@ class VisitResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu.my_sources');
     }
 
     public static function form(Form $form): Form

@@ -99,7 +99,7 @@ class AdminPanelProvider extends PanelProvider
                 //    ->defaultListView('grid' || 'list'),
                 //FilamentMediaManagerPlugin::make()
                 //    ->allowSubFolders(),
-                \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make(),
+                //\TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make(),
             ])
             ->authMiddleware([
                 Authenticate::class,

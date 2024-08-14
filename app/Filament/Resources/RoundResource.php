@@ -17,7 +17,7 @@ class RoundResource extends Resource
 {
     protected static ?string $model = Round::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     public static function getModelLabel(): string
     {
@@ -36,7 +36,7 @@ class RoundResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu.my_sources');
     }
 
     public static function form(Form $form): Form

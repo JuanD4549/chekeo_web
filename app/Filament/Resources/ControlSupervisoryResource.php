@@ -18,7 +18,7 @@ class ControlSupervisoryResource extends Resource
 {
     protected static ?string $model = ControlSupervisory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'icon-check-people';
 
     public static function getModelLabel(): string
     {
