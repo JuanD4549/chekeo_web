@@ -19,6 +19,26 @@ class NoveltyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.novelty');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.novelties');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.novelties');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu.security');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
