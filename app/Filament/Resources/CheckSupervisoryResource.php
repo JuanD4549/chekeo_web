@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CatalogNoveltyResource\Pages;
-use App\Filament\Resources\CatalogNoveltyResource\RelationManagers;
-use App\Models\CatalogNovelty;
+use App\Filament\Resources\CheckSupervisoryResource\Pages;
+use App\Filament\Resources\CheckSupervisoryResource\RelationManagers;
+use App\Models\CheckSupervisory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,31 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CatalogNoveltyResource extends Resource
+class CheckSupervisoryResource extends Resource
 {
-    protected static ?string $model = CatalogNovelty::class;
+    protected static ?string $model = CheckSupervisory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function getModelLabel(): string
-    {
-        return __('general.catalog_novelty');
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return __('general.catalog_novelties');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('general.catalog_novelties');
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return __('general.menu.security');
-    }
 
     public static function form(Form $form): Form
     {
@@ -46,12 +26,6 @@ class CatalogNoveltyResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\Repeater::make('qualifications')
-                    ->relationship('novelties')
-                    ->simple(
-                        Forms\Components\TextInput::make('name')
-                            ->required(),
-                    )
             ]);
     }
 
@@ -93,9 +67,9 @@ class CatalogNoveltyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCatalogNovelties::route('/'),
-            'create' => Pages\CreateCatalogNovelty::route('/create'),
-            'edit' => Pages\EditCatalogNovelty::route('/{record}/edit'),
+            'index' => Pages\ListCheckSupervisories::route('/'),
+            'create' => Pages\CreateCheckSupervisory::route('/create'),
+            'edit' => Pages\EditCheckSupervisory::route('/{record}/edit'),
         ];
     }
 }

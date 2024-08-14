@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CatalogNovelty extends Model
+class CheckSupervisory extends Model
 {
     use HasFactory;
 
@@ -14,8 +13,4 @@ class CatalogNovelty extends Model
         'name',
     ];
 
-    public function novelties(): HasMany
-    {
-        return $this->hasMany(Novelty::class);
-    }
 }

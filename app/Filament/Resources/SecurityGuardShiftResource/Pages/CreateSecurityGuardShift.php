@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Auth;
 class CreateSecurityGuardShift extends CreateRecord
 {
     protected static string $resource = SecurityGuardShiftResource::class;
-    protected static bool $canCreateAnother=false;
+
+    protected static bool $canCreateAnother = false;
+
     protected function handleRecordCreation(array $data): Model
     {
         $data['user_id'] = Auth::user()->id;
@@ -108,5 +110,4 @@ class CreateSecurityGuardShift extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
-
 }

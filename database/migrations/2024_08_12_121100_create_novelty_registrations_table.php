@@ -16,10 +16,12 @@ return new class extends Migration
             $table->foreignId('branche_id');
             $table->foreignId('user_id');
             $table->foreignId('user_notificad_id');
-            $table->foreignId('catalog_novelty_id');
-            $table->text('detail_created');
-            $table->dateTime('date_time_close');
-            $table->text('detail_closed');
+            $table->foreignId('novelty_id');
+            $table->text('detail_created')->nullable();
+            $table->dateTime('date_time_close')->nullable();
+            $table->text('detail_closed')->nullable();
+            $table->double('latitude');
+            $table->double('longitude');
             $table->string('img1_url')->nullable();
             $table->string('img2_url')->nullable();
             $table->string('img3_url')->nullable();

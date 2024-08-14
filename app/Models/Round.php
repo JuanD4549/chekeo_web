@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Round extends Model
 {
@@ -16,8 +16,8 @@ class Round extends Model
         'img1_url',
     ];
 
-    public function register_round(): BelongsToMany
+    public function register_round(): BelongsTo
     {
-        return $this->belongsToMany(RegisterRound::class);
+        return $this->belongsTo(RegisterRound::class);
     }
 }

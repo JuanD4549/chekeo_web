@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class NoveltyRegistration extends Model
+class ControlSupervisory extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'branche_id',
         'user_id',
-        'user_notificad_id',
-        'novelty_id',
-        'detail_created',
-        'latitude',
-        'longitude',
-        'date_time_close',
+        'date_time_closed',
         'detail_closed',
-        'img1_url',
-        'img2_url',
-        'img3_url',
-        'img4_url',
     ];
+
     public function branche(): BelongsTo
     {
         return $this->belongsTo(Branche::class);
@@ -33,14 +27,9 @@ class NoveltyRegistration extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function user_notificad(): BelongsTo
+    public function detail_control_supervisories():HasMany
     {
-        return $this->belongsTo(User::class, 'user_notificad_id', 'id');
+        return $this->hasMany(DetailControlSupervisory::class);
     }
 
-    public function novelty(): BelongsTo
-    {
-        return $this->belongsTo(Novelty::class);
-    }
 }

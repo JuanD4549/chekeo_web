@@ -2,14 +2,11 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RegisterRoundResource\Pages;
-use App\Filament\Resources\RegisterRoundResource\RelationManagers;
-use App\Forms\Components\Latitude;
-use App\Forms\Components\Longitude;
-use App\Forms\Components\WebCam;
-use App\Models\RegisterRound;
+use App\Filament\Resources\ControlSupervisoryResource\Pages;
+use App\Filament\Resources\ControlSupervisoryResource\RelationManagers;
+use App\Models\CheckSupervisory;
+use App\Models\ControlSupervisory;
 use Filament\Forms;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,31 +14,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RegisterRoundResource extends Resource
+class ControlSupervisoryResource extends Resource
 {
-    protected static ?string $model = RegisterRound::class;
+    protected static ?string $model = ControlSupervisory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function getModelLabel(): string
-    {
-        return __('general.register_round');
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return __('general.register_rounds');
-    }
-
-    public static function getNavigationLabel(): string
-    {
-        return __('general.register_rounds');
-    }
-
-    public static function getNavigationGroup(): ?string
-    {
-        return __('general.menu.security');
-    }
 
     public static function form(Form $form): Form
     {
@@ -49,42 +26,29 @@ class RegisterRoundResource extends Resource
             ->schema([
                 Forms\Components\Select::make('branche_id')
                     ->relationship('branche', 'name')
-                    ->disabledOn('edit')
-                    ->preload()
-                    ->required(),
-                Forms\Components\Select::make('place_id')
-                    ->relationship('place', 'name')
-                    ->preload()
-                    ->disabledOn('edit')
                     ->required(),
                 Forms\Components\Select::make('user_id')
-                    ->searchable(['name', 'ci'])
                     ->relationship('user', 'name')
-                    ->disabledOn('edit')
                     ->required(),
-                Forms\Components\DateTimePicker::make('date_time_closed')
-                    ->hiddenOn('create'),
-                Forms\Components\Textarea::make('detail_close')
-                    ->hiddenOn('create')
+                Forms\Components\DateTimePicker::make('date_time_closed'),
+                Forms\Components\Textarea::make('detail_closed')
                     ->columnSpanFull(),
-                Forms\Components\Repeater::make('rounds')
-                    ->relationship('rounds')
+                Forms\Components\Repeater::make('detail_control_supervisories')
+                    ->relationship('detail_control_supervisories')
                     //->disabled(true)
                     ->schema([
-                        Latitude::make('latitude')
-                            ->required(),
-                        Longitude::make('longitude')
-                            ->required(),
-                        //WebCam::make('img1_url')
-                        //->required(),
-                        Forms\Components\FileUpload::make('img1_url')
-                        // ...
+                        Forms\Components\Select::make('place_id')
+                        ->relationship('place', 'name')
+                        ->required(),
+                        Forms\Components\CheckboxList::make('list_checked')
+                            ->options(fn() => CheckSupervisory::pluck('name', 'id')),
                     ])
                     ->addActionLabel('Add point')
                     //->addable(false)
                     ->deletable(false)
                     ->reorderable(false)
-                    ->grid(2)
+                    ->grid(2),
+                //Forms\Components\TextInput::make('list_checked'),
             ]);
     }
 
@@ -93,9 +57,6 @@ class RegisterRoundResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('place.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
@@ -137,10 +98,10 @@ class RegisterRoundResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRegisterRounds::route('/'),
-            'create' => Pages\CreateRegisterRound::route('/create'),
-            'view' => Pages\ViewRegisterRound::route('/{record}'),
-            'edit' => Pages\EditRegisterRound::route('/{record}/edit'),
+            'index' => Pages\ListControlSupervisories::route('/'),
+            'create' => Pages\CreateControlSupervisory::route('/create'),
+            'view' => Pages\ViewControlSupervisory::route('/{record}'),
+            'edit' => Pages\EditControlSupervisory::route('/{record}/edit'),
         ];
     }
 }

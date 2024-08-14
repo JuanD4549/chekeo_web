@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CatalogNoveltyResource\Pages;
-use App\Filament\Resources\CatalogNoveltyResource\RelationManagers;
-use App\Models\CatalogNovelty;
+use App\Filament\Resources\RoundResource\Pages;
+use App\Filament\Resources\RoundResource\RelationManagers;
+use App\Models\Round;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,25 +13,25 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CatalogNoveltyResource extends Resource
+class RoundResource extends Resource
 {
-    protected static ?string $model = CatalogNovelty::class;
+    protected static ?string $model = Round::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getModelLabel(): string
     {
-        return __('general.catalog_novelty');
+        return __('general.round');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.catalog_novelties');
+        return __('general.rounds');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.catalog_novelties');
+        return __('general.rounds');
     }
 
     public static function getNavigationGroup(): ?string
@@ -43,15 +43,18 @@ class CatalogNoveltyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\Select::make('register_round_id')
+                    ->relationship('register_round', 'user_id')
+                    ->required(),
+                Forms\Components\TextInput::make('latitude')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('longitude')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('img1_url')
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\Repeater::make('qualifications')
-                    ->relationship('novelties')
-                    ->simple(
-                        Forms\Components\TextInput::make('name')
-                            ->required(),
-                    )
             ]);
     }
 
@@ -59,7 +62,16 @@ class CatalogNoveltyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('register_round_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('latitude')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('longitude')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('img1_url')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -74,6 +86,7 @@ class CatalogNoveltyResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -93,9 +106,10 @@ class CatalogNoveltyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCatalogNovelties::route('/'),
-            'create' => Pages\CreateCatalogNovelty::route('/create'),
-            'edit' => Pages\EditCatalogNovelty::route('/{record}/edit'),
+            'index' => Pages\ListRounds::route('/'),
+            'create' => Pages\CreateRound::route('/create'),
+            'view' => Pages\ViewRound::route('/{record}'),
+            'edit' => Pages\EditRound::route('/{record}/edit'),
         ];
     }
 }

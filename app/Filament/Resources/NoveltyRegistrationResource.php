@@ -4,8 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\NoveltyRegistrationResource\Pages;
 use App\Filament\Resources\NoveltyRegistrationResource\RelationManagers;
+use App\Forms\Components\Latitude;
+use App\Forms\Components\Longitude;
+use App\Models\CatalogNovelty;
+use App\Models\Novelty;
 use App\Models\NoveltyRegistration;
-use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -20,50 +23,64 @@ class NoveltyRegistrationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.registration_novelty');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.registration_novelties');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.registration_novelties');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu.security');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('branche_id')
                     ->relationship('branche', 'name')
-                    ->disabledOn('edit')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
-                    ->disabledOn('edit')
                     ->required(),
                 Forms\Components\Select::make('user_notificad_id')
-                    ->label('Notificar a')
-                    ->relationship('user', 'name')
-                    ->disabledOn('edit')
+                    ->relationship('user_notificad', 'name')
                     ->required(),
-                Forms\Components\Select::make('catalog_novelty_id')
-                    ->searchable()
-                    ->preload()
-                    ->relationship('catalog_novelty', 'name')
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                    ])
-                    ->disabledOn('edit')
+                Forms\Components\Select::make('novelty_id')
+                    //->relationship('novelties', 'name')
+                    ->options(function () {
+                        $catalogo_novelty = CatalogNovelty::where('name', 'Seguridad')->first();
+                        return Novelty::where('catalog_novelty_id', $catalogo_novelty->id ?? 0)->pluck('name', 'id');
+                    })
                     ->required(),
+                Latitude::make('latitude'),
+                Longitude::make('longitude'),
                 Forms\Components\Textarea::make('detail_created')
-                    ->disabledOn('edit')
-                    ->maxLength(500),
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('date_time_close')
-                    ->default(Carbon::now())
                     ->hiddenOn('create'),
                 Forms\Components\Textarea::make('detail_closed')
                     ->hiddenOn('create')
-                    ->maxLength(500),
-                Forms\Components\FileUpload::make('img1_url')
-                    ->disabledOn('edit')
-                    ->image(),
-                Forms\Components\FileUpload::make('img2_url')
-                    ->image()
-                    ->disabledOn('edit')
-                    ->imageEditor(),
-                Forms\Components\FileUpload::make('img3_url')
-                    ->disabledOn('edit'),
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('img1_url')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('img2_url')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('img3_url')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('img4_url')
+                    ->maxLength(255),
             ]);
     }
 
@@ -80,16 +97,16 @@ class NoveltyRegistrationResource extends Resource
                 Tables\Columns\TextColumn::make('user_notificad.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('catalog_novelty.name')
+                Tables\Columns\TextColumn::make('novelty.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable(),
-                //->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('date_time_close')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -100,8 +117,7 @@ class NoveltyRegistrationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()
-                    ->hidden(fn($record) => $record->date_time_close != null),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
