@@ -6,6 +6,7 @@ use App\Filament\Resources\ControlSupervisoryResource\Pages;
 use App\Filament\Resources\ControlSupervisoryResource\RelationManagers;
 use App\Models\CheckSupervisory;
 use App\Models\ControlSupervisory;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,22 +23,22 @@ class ControlSupervisoryResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.control_supervisory');
+        return __('general.pages.control_supervisory');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.control_supervisories');
+        return __('general.pages.control_supervisory');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.control_supervisories');
+        return __('general.pages.control_supervisory');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu_category.security');
     }
 
 
@@ -45,30 +46,57 @@ class ControlSupervisoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('branche_id')
-                    ->relationship('branche', 'name')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('date_time_closed'),
-                Forms\Components\Textarea::make('detail_closed')
-                    ->columnSpanFull(),
-                Forms\Components\Repeater::make('detail_control_supervisories')
-                    ->relationship('detail_control_supervisories')
-                    //->disabled(true)
+                Forms\Components\Fieldset::make('')
                     ->schema([
-                        Forms\Components\Select::make('place_id')
-                        ->relationship('place', 'name')
-                        ->required(),
-                        Forms\Components\CheckboxList::make('list_checked')
-                            ->options(fn() => CheckSupervisory::pluck('name', 'id')),
+                        Forms\Components\Select::make('branche_id')
+                            ->label(__('general.pages.branche'))
+                            ->relationship('branche', 'name')
+                            ->disabledOn('edit')
+                            ->required(),
+                        Forms\Components\Select::make('user_id')
+                            ->label(__('general.pages.employee'))
+                            ->label(__('general.pages.employee'))
+                            ->relationship('user', 'name')
+                            ->disabledOn('edit')
+                            ->required(),
+                    ]),
+                Forms\Components\Section::make(__('general.form.control_place'))
+                    ->columnSpanFull()
+                    ->schema([
+                        Forms\Components\Repeater::make('detail_control_supervisories')
+                            ->label('')
+                            ->relationship('detail_control_supervisories')
+                            ->disabledOn('edit')
+                            //->disabled(true)
+                            ->schema([
+                                Forms\Components\Select::make('place_id')
+                                    ->label(__('general.pages.place'))
+                                    ->relationship('place', 'name')
+                                    ->required(),
+                                Forms\Components\CheckboxList::make('list_checked')
+                                    ->label(__('general.form.list_check'))
+                                    ->options(fn() => CheckSupervisory::pluck('name', 'id')),
+                            ])
+                            ->addActionLabel(__('general.add.add_place'))
+                            //->addable(false)
+                            ->deletable(false)
+                            ->reorderable(false)
+                            ->grid(3),
+                    ]),
+
+                Forms\Components\Section::make('')
+                    //->description('Prevent abuse by limiting the number of requests per period')
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('date_time_closed')
+                            ->label(__('general.date.date_time_closing'))
+                            ->default(Carbon::now()),
+                        Forms\Components\Textarea::make('detail_closed')
+                            ->label(__('general.detail.detail_closed'))
+                            //->hiddenOn('create')
+                            ->columnSpanFull(),
                     ])
-                    ->addActionLabel('Add point')
-                    //->addable(false)
-                    ->deletable(false)
-                    ->reorderable(false)
-                    ->grid(2),
+                    ->hiddenOn('create'),
+
                 //Forms\Components\TextInput::make('list_checked'),
             ]);
     }
@@ -78,20 +106,26 @@ class ControlSupervisoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
+                    ->label(__('general.pages.branche'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('general.pages.employee'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_time_closed')
-                    ->dateTime()
+                ->label(__('general.date.date_time_closing'))
+                    ->label(__('general.date.date_time_closing'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -31,50 +31,46 @@ class UserResource extends Resource
     //protected static ?int $navigationSort = 62;
     public static function getModelLabel(): string
     {
-        return __('general.user');
+        return __('general.pages.user');
     }
     public static function getPluralModelLabel(): string
     {
-        return __('general.users');
+        return __('general.pages.users');
     }
     public static function getNavigationLabel(): string
     {
-        return __('general.user');
+        return __('general.pages.user');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.settings');
+        return __('general.menu_category.settings');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('User Data')
-                    ->columns(2)
+                Section::make(__('general.data.data_employee'))
+                    ->columns(3)
                     ->schema([
+                        FileUpload::make('avatar_url')
+                            ->label(__('general.form.photo', ['number' => '']))
+                            ->directory('users')
+                            ->avatar(),
                         TextInput::make('email')
+                            ->label(__('general.form.mail'))
                             ->email()
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('password')
-                            ->password()
-                            ->required()
-                            ->hiddenOn('edit'),
-                        Toggle::make('status')
-                            ->default(true),
-                    ]),
-                Section::make('Personal Data')
-                    ->description('Prevent abuse by limiting the number of requests per period')
-                    ->columns(2)
-                    ->schema([
-                        FileUpload::make('avatar_url')
-                            ->directory('users')
-                            ->avatar(),
                         TextInput::make('name')
+                            ->label(__('general.form.name'))
                             ->required()
                             ->maxLength(255),
+                        Toggle::make('status')
+                            ->label(__('general.form.status'))
+                            ->default(true),
                         Select::make('blood_type')
+                            ->label(__('general.form.blood_type'))
                             ->options([
                                 'O+' => 'O+',
                                 'O-' => 'O-',
@@ -86,6 +82,7 @@ class UserResource extends Resource
                                 'AB-' => 'AB-',
                             ]),
                         Select::make('drive_license')
+                            ->label(__('general.form.drive_license'))
                             ->options([
                                 'A' => 'A',
                                 'B' => 'B',
@@ -100,19 +97,26 @@ class UserResource extends Resource
                                 'G' => 'G'
                             ]),
                         TextInput::make('cellphone')
+                            ->label(__('general.form.cellphone'))
                             ->maxLength(10),
                         TextInput::make('phone')
+                            ->label(__('general.form.phone'))
                             ->maxLength(10),
                         TextInput::make('address')
+                            ->label(__('general.form.address'))
                             ->maxLength(255),
                         TextInput::make('country')
+                            ->label(__('general.form.country'))
                             ->maxLength(255),
                         TextInput::make('province')
+                            ->label(__('general.form.province'))
                             ->maxLength(255),
                         TextInput::make('city')
+                            ->label(__('general.form.city'))
                             ->maxLength(255),
                     ]),
-                Section::make('Professional Data')
+
+                Section::make('')
                     ->columns(3)
                     ->schema([
                         Select::make('roles')
@@ -120,38 +124,47 @@ class UserResource extends Resource
                             ->relationship('roles', 'name')
                             ->preload()
                             ->searchable(),
+                        TextInput::make('password')
+                            ->label(__('general.form.password'))
+                            ->password()
+                            ->required()
+                            ->hiddenOn('edit'),
                         Select::make('branche_id')
                             ->relationship('branche', 'name')
                             ->preload()
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(fn (Set $set) => $set('department_id', null)),
+                            ->afterStateUpdated(fn(Set $set) => $set('department_id', null)),
                         Select::make('department_id')
+                            ->label(__('general.pages.department'))
+                            ->disabled(fn(Get $get): bool => $get('branche_id') == null)
+                            ->required(fn(Get $get): bool => $get('branche_id') != null)
                             ->options(
-                                fn (Get $get): Collection => Department::query()
+                                fn(Get $get): Collection => Department::query()
                                     ->where('id', $get('branche_id'))
                                     ->pluck('name', 'id')
-                            )
-                            ->searchable()
-                            ->preload()
-                        //->relationship('user', 'name')
-                        ,
+                            ),
                         TextInput::make('charge')
+                            ->label(__('general.form.charge'))
                             ->maxLength(255),
-                        DateTimePicker::make('date_in'),
+                        DateTimePicker::make('date_in')
+                            ->label(__('general.date.date_in')),
                         TextInput::make('enterprise_mail')
+                            ->label(__('general.form.enterprise_mail'))
                             ->email()
                             ->maxLength(255),
                         TextInput::make('enterpriser_phone')
+                            ->label(__('general.form.enterprise_phone'))
                             ->required()
                             ->maxLength(255),
                         TextInput::make('enterpriser_phone_ext')
-                            ->label('Extension')
+                            ->label(__('general.form.enterprise_phone_ext'))
                             ->maxLength(10),
                         Select::make('type_user')
+                            ->label(__('general.form.type_employee'))
                             ->options([
-                                'fixed' => 'Fixed',
-                                'external' => 'External'
+                                'fixed' => __('general.select.fixed'),
+                                'external' => __('general.select.external')
                             ]),
                     ]),
             ]);
@@ -161,11 +174,21 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('branche.name'),
-                TextColumn::make('department.name'),
-                TextColumn::make('charge'),
+                TextColumn::make('name')
+                    ->label(__('general.form.name'))
+                    ->searchable(),
+                TextColumn::make('branche.name')
+                    ->label(__('general.pages.branche'))
+                    ->searchable(),
+                TextColumn::make('department.name')
+                    ->label(__('general.pages.department'))
+                    ->searchable(),
+                TextColumn::make('charge')
+                    ->label(__('general.form.charge'))
+                    ->searchable(),
                 IconColumn::make('status')
+                    ->label(__('general.form.status'))
+                    ->sortable()
                     ->boolean(),
                 TextColumn::make('roles.name'),
             ])

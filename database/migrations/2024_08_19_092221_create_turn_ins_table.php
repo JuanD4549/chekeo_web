@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('representative_user', function (Blueprint $table) {
-            $table->foreignId('user_id');
-            $table->foreignId('representative_id');
+        Schema::create('turn_ins', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('representative_user');
+        Schema::dropIfExists('turn_ins');
     }
 };

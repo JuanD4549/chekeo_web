@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoundResource\Pages;
 use App\Filament\Resources\RoundResource\RelationManagers;
+use App\Forms\Components\Latitude;
+use App\Forms\Components\Longitude;
 use App\Models\Round;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -21,22 +23,22 @@ class RoundResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.round');
+        return __('general.pages.round');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.rounds');
+        return __('general.pages.rounds');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.rounds');
+        return __('general.pages.rounds');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_sources');
+        return __('general.menu_category.my_sources');
     }
 
     public static function form(Form $form): Form
@@ -44,17 +46,18 @@ class RoundResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('register_round_id')
-                    ->relationship('register_round', 'user_id')
+                    ->label(__('general.pages.round'))
+                    ->relationship('register_round', 'id')
+                    //->searchable(['id'])
                     ->required(),
-                Forms\Components\TextInput::make('latitude')
+                Latitude::make('latitude')
+                    ->label(__('general.gps.latitude')),
+                Longitude::make('longitude')
+                    ->label(__('general.gps.longitude')),
+
+                Forms\Components\FileUpload::make('img1_url')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('longitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('img1_url')
-                    ->required()
-                    ->maxLength(255),
+                    ->image(),
             ]);
     }
 
@@ -63,22 +66,24 @@ class RoundResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('register_round_id')
-                    ->numeric()
+                    ->label(__('general.pages.round'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('latitude')
+                    ->label(__('general.gps.latitude'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('longitude')
+                    ->label(__('general.gps.longitude'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('img1_url')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

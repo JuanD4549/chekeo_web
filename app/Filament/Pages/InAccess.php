@@ -18,25 +18,25 @@ class InAccess extends Page
     protected static ?string $model = Access::class;
     public function getTitle(): string | Htmlable
     {
-        return __('general.in_access');
+        return __('general.pages.in_access');
     }
     public static function getModelLabel(): string
     {
-        return __('general.in_access');
+        return __('general.pages.in_access');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.in_accesses');
+        return __('general.pages.in_accesses');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.in_accesses');
+        return __('general.pages.in_accesses');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu_category.security');
     }
     //public static function getNavigationParentItem(): ?string
     //{

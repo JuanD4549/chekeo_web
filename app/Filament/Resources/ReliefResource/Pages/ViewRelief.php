@@ -24,15 +24,19 @@ class ViewRelief extends ViewRecord
     {
         return $infolist
             ->schema([
+                Infolists\Components\Section::make('')
+                    ->schema([
+                        TextEntry::make('branche.name')
+                            ->label(__('general.pages.branche')),
+                        TextEntry::make('place.name')
+                            ->label(__('general.pages.place')),
+                    ])->columns(2),
                 Infolists\Components\Tabs::make('Information')
                     ->tabs([
-                        Infolists\Components\Tabs\Tab::make('First Turn')
+                        Infolists\Components\Tabs\Tab::make(__('general.form.in'))
                             ->schema([
-                                Infolists\Components\Section::make(__('general.user_data'))
-                                    ->schema([
-                                        TextEntry::make('relief_in.user.name'),
-                                        TextEntry::make('branche.name'),
-                                    ])->columns(2),
+                                TextEntry::make('relief_in.user.name')
+                                    ->label(__('general.pages.employee')),
                                 Infolists\Components\Section::make(__('general.detail'))
                                     ->relationship('relief_in.detail_in')
                                     ->schema([
@@ -41,36 +45,33 @@ class ViewRelief extends ViewRecord
                                         ])
                                             ->schema([
                                                 TextEntry::make('detail.date_time')
-                                                    ->label(__('general.date_time')),
+                                                    ->label(__('general.date.date_time')),
                                                 TextEntry::make('detail.latitude')
-                                                    ->label(__('general.latitude')),
+                                                    ->label(__('general.gps.latitude')),
                                                 TextEntry::make('detail.longitude')
-                                                    ->label(__('general.longitude')),
+                                                    ->label(__('general.gps.longitude')),
                                             ]),
                                         TextEntry::make('detail.detail')
-                                            ->label(__('general.detail'))
+                                            ->label(__('general.detail.detail'))
                                             ->columnSpanFull(),
                                         Infolists\Components\Grid::make([
                                             'default' => 2,
                                         ])
                                             ->schema([
                                                 Infolists\Components\ImageEntry::make('detail.img1_url')
-                                                    ->label(__('general.photo'))
+                                                    ->label(__('general.form.photo', ['number' => '#1']))
                                                     ->defaultImageUrl(''),
                                                 Infolists\Components\ImageEntry::make('detail.img2_url')
-                                                    ->label(__('general.photo'))
+                                                    ->label(__('general.form.photo', ['number' => '#2']))
                                                     ->defaultImageUrl(''),
                                             ]),
                                     ]),
                             ]),
-                        Infolists\Components\Tabs\Tab::make('Second Turn')
+                        Infolists\Components\Tabs\Tab::make(__('general.form.out'))
                             ->schema([
-                                Infolists\Components\Section::make(__('general.user_data'))
-                                    ->schema([
-                                        TextEntry::make('relief_out.user.name'),
-                                        TextEntry::make('branche.name'),
-                                    ])->columns(2),
-                                Infolists\Components\Section::make(__('general.detail_in'))
+                                TextEntry::make('relief_out.user.name')
+                                    ->label(__('general.pages.employee')),
+                                Infolists\Components\Section::make('')
                                     ->relationship('relief_out.detail_out')
                                     ->schema([
                                         Infolists\Components\Grid::make([
@@ -78,24 +79,24 @@ class ViewRelief extends ViewRecord
                                         ])
                                             ->schema([
                                                 TextEntry::make('detail.date_time')
-                                                    ->label(__('general.date_time')),
+                                                    ->label(__('general.date.date_time')),
                                                 TextEntry::make('detail.latitude')
-                                                    ->label(__('general.latitude')),
+                                                    ->label(__('general.gps.latitude')),
                                                 TextEntry::make('detail.longitude')
-                                                    ->label(__('general.longitude')),
+                                                    ->label(__('general.gps.longitude')),
                                             ]),
                                         TextEntry::make('detail.detail')
-                                            ->label(__('general.detail'))
+                                            ->label(__('general.detail.detail'))
                                             ->columnSpanFull(),
                                         Infolists\Components\Grid::make([
                                             'default' => 2,
                                         ])
                                             ->schema([
                                                 Infolists\Components\ImageEntry::make('detail.img1_url')
-                                                    ->label(__('general.photo'))
+                                                    ->label(__('general.form.photo',['number'=>'#1']))
                                                     ->defaultImageUrl(''),
                                                 Infolists\Components\ImageEntry::make('detail.img2_url')
-                                                    ->label(__('general.photo'))
+                                                    ->label(__('general.form.photo',['number'=>'#2']))
                                                     ->defaultImageUrl(''),
                                             ]),
                                     ]),

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('branche_id');
             $table->string('name');
-            $table->integer('num_reliefs');
+            $table->boolean('type')->default(false);
             $table->timestamps();
         });
     }

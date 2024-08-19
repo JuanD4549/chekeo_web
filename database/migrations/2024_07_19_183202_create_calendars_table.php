@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('range')->default(0);
             $table->json('monday')->nullable();
             $table->json('tuesday')->nullable();
             $table->json('wednesday')->nullable();

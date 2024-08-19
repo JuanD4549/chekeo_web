@@ -12,14 +12,20 @@ class Relief extends Model
 
     protected $fillable = [
         'branche_id',
+        'place_id',
         'relief_in_id',
         'relief_out_id',
         'status'
     ];
-
+    
     public function branche(): BelongsTo
     {
         return $this->belongsTo(Branche::class);
+    }
+
+    public function place(): BelongsTo
+    {
+        return $this->belongsTo(Place::class);
     }
 
     public function relief_in(): BelongsTo

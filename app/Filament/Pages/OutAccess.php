@@ -16,25 +16,25 @@ class OutAccess extends Page
 
     public function getTitle(): string | Htmlable
     {
-        return __('general.out_access');
+        return __('general.pages.out_access');
     }
     public static function getModelLabel(): string
     {
-        return __('general.out_access');
+        return __('general.pages.out_access');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.out_accesses');
+        return __('general.pages.out_accesses');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.out_accesses');
+        return __('general.pages.out_accesses');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu_category.security');
     }
 }

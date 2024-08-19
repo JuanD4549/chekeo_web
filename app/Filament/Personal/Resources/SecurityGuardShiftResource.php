@@ -35,14 +35,19 @@ class SecurityGuardShiftResource extends Resource
                 ])
                     ->schema([
                         WebCam::make('img1_url')
+                            ->label(__('general.form.photo'))
                             ->required(),
                         Textarea::make('detail')
+                            ->label(__('general.detail.detail'))
                             ->rows(5),
-                        DateTimePicker::make('date_time')
+                       DateTimePicker::make('date_time')
+                            ->label(__('general.date.date_time'))
                             ->default(Carbon::now())
                             ->disabled(true),
-                        Latitude::make('latitude'),
-                        Longitude::make('longitude'),
+                        Latitude::make('latitude')
+                                    ->label(__('general.gps.latitude')),
+                        Latitude::make('longitude')
+                                    ->label(__('general.gps.longitude')),
                     ]),
             ]);
     }
@@ -52,10 +57,10 @@ class SecurityGuardShiftResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                ->label(__('general.pages.employee'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
+                    ->label(__('general.pages.branche'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('place_id')
                     ->numeric()
@@ -66,14 +71,17 @@ class SecurityGuardShiftResource extends Resource
                 Tables\Columns\TextColumn::make('detail_out.id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('status')
+                 Tables\Columns\IconColumn::make('status')
+                    ->label(__('general.form.status'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -60,9 +60,9 @@ class AdminPanelProvider extends PanelProvider
                 CustomDashboard::class,
             ])
             ->navigationGroups([
-                __('general.menu.security'),
-                __('general.menu.my_organization'),
-                __('general.menu.settings'),
+                __('general.menu_category.security'),
+                __('general.menu_category.my_organization'),
+                __('general.menu_category.settings'),
             ])
             //->topNavigation()
             //->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')

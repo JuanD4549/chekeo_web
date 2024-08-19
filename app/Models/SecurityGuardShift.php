@@ -13,24 +13,32 @@ class SecurityGuardShift extends Model
     protected $fillable = [
         'user_id',
         'branche_id',
+        'place_id',
         'detail_in_id',
         'detail_out_id',
         'status',
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
     public function branche(): BelongsTo
     {
         return $this->belongsTo(Branche::class);
     }
-    public function detail_in():BelongsTo
+
+    public function place(): BelongsTo
+    {
+        return $this->belongsTo(Place::class);
+    }
+    public function detail_in(): BelongsTo
     {
         return $this->belongsTo(DetailIn::class);
     }
-    public function detail_out():BelongsTo
-     {
-         return $this->belongsTo(DetailOut::class);
-     }
+    public function detail_out(): BelongsTo
+    {
+        return $this->belongsTo(DetailOut::class);
+    }
 }

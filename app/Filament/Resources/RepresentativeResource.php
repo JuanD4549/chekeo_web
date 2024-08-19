@@ -21,41 +21,57 @@ class RepresentativeResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.representative');
+        return __('general.pages.representative');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.representatives');
+        return __('general.pages.representatives');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.representatives');
+        return __('general.pages.representatives');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_organization');
+        return __('general.menu_category.my_organization');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ci')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cellphone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('mail')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Section::make()
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('general.form.name'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('ci')
+                            ->label(__('general.form.ci'))
+                            ->required()
+                            ->maxLength(10),
+                        Forms\Components\TextInput::make('cellphone')
+                            ->label(__('general.form.cellphone'))
+                            ->tel()
+                            ->required()
+                            ->maxLength(10),
+                        Forms\Components\TextInput::make('mail')
+                            ->label(__('general.form.mail'))
+                            ->required()
+                            ->email(),
+                        Forms\Components\Repeater::make('representativeUsers')
+                            ->relationship()
+                            ->label(__('general.form.children'))
+                            ->schema([
+                                Forms\Components\Select::make('user_id')
+                                ->relationship('user', 'name')
+                            ])
+                    ]),
+
             ]);
     }
 
@@ -64,19 +80,25 @@ class RepresentativeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ci')
+                    ->label(__('general.form.ci'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cellphone')
+                    ->label(__('general.form.cellphone'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('mail')
+                    ->label(__('general.form.mail'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

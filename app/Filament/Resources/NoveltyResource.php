@@ -21,22 +21,22 @@ class NoveltyResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.novelty');
+        return __('general.pages.novelty');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.novelties');
+        return __('general.pages.novelties');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.novelties');
+        return __('general.pages.novelties');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_sources');
+        return __('general.menu_category.my_sources');
     }
 
     public static function form(Form $form): Form
@@ -44,9 +44,11 @@ class NoveltyResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('catalog_novelty_id')
-                    ->relationship('catalog_novelty','name')
+                    ->label(__('general.pages.catalog_novelty'))
+                    ->relationship('catalog_novelty', 'name')
                     ->preload(),
                 Forms\Components\TextInput::make('name')
+                    ->label(__('general.pages.novelty'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -57,16 +59,19 @@ class NoveltyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('catalog_novelty.name')
-                    ->numeric()
+                    ->label(__('general.pages.catalog_novelty'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.pages.novelty'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

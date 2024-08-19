@@ -19,22 +19,22 @@ class SecurityGuardShiftResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.security_guard_shift');
+        return __('general.pages.security_guard_shift');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.security_guard_shifts');
+        return __('general.pages.security_guard_shifts');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.security_guard_shift');
+        return __('general.pages.security_guard_shift');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu_category.security');
     }
 
     public static function form(Form $form): Form
@@ -42,15 +42,18 @@ class SecurityGuardShiftResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
+                    ->label(__('general.pages.employee'))
                     ->relationship('user', 'name')
                     ->required(),
                 Forms\Components\Select::make('branche_id')
+                    ->label(__('general.pages.branche'))
                     ->relationship('branche', 'name')
                     ->required(),
                 Forms\Components\Toggle::make('status')
                     ->required(),
+                Forms\Components\Select::make('place_id')
+                    ->relationship('place', 'name'),
             ]);
-
     }
 
 
@@ -58,20 +61,37 @@ class SecurityGuardShiftResource extends Resource
     {
         return $table
             ->columns([
+                //Tables\Columns\TextColumn::make('branche.name')
+                //    ->label(__('general.pages.branche'))
+                //    ->sortable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->label(__('general.table.branche_place'))
+                    ->formatStateUsing(function (string $state, \App\Models\SecurityGuardShift $relief): string {
+                        //dd($relief);
+                        return $relief->branche->name . ' - ' . $relief->place->name;
+                    }),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('general.pages.employee'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
+                //Tables\Columns\IconColumn::make('status')
+                //    ->label(__('general.form.status'))
+                //    ->boolean(),
+                Tables\Columns\TextColumn::make('detail_in.detail.date_time')
+                    ->label(__('general.form.in'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
-                Tables\Columns\IconColumn::make('status')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('detail_out.detail.date_time')
+                    ->label(__('general.form.out'))
+                    ->dateTime('H:i:s / d-m-Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -79,15 +99,16 @@ class SecurityGuardShiftResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label(__('general.table.closing')),
             ])
             ->headerActions([
                 //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -108,5 +129,4 @@ class SecurityGuardShiftResource extends Resource
             'edit' => Pages\EditSecurityGuardShift::route('/{record}/edit'),
         ];
     }
-
 }

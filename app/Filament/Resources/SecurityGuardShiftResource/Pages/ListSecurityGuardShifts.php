@@ -28,47 +28,7 @@ class ListSecurityGuardShifts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            //Action::make('ENtrada')
-            //    ->label('Entrada')
-            //    ->form([
-            //        Fieldset::make('Label')
-            //            ->schema([
-            //                Toggle::make('relief'),
-            //                DateTimePicker::make('date_time')
-            //                    ->default(Carbon::now())
-            //                    ->disabled(true),
-            //                Textarea::make('detail'),
-            //            ])
-            //            ->columns(3),
-//
-            //        Fieldset::make('Location')
-            //            ->schema([
-            //                Latitude::make('latitude'),
-            //                Longitude::make('longitude'),
-            //            ]),
-            //        Fieldset::make('Location')
-            //            ->schema([
-            //                WebCam::make('img1_url')
-            //            ]),
-//
-            //    ])
-            //    ->action(function (array $data) {
-            //        $user = Auth::user();
-            //        //dd($user ,$data['relief']);
-            //        $securityGuardShift = new SecurityGuardShift();
-            //        $securityGuardShift->user_id = $user->id;
-            //        $securityGuardShift->branche_id = $user->branche_id;
-            //        $securityGuardShift->relief = $data['relief'];
-            //        $securityGuardShift->save();
-            //        //$securityGuardShift->status=true;
-            //        $dataSecurityGuardShift = new DataSecurityGuardShift();
-            //        $dataSecurityGuardShift->security_guard_shift_id = $securityGuardShift->id;
-            //        //$dataSecurityGuardShift->type = 'in';
-            //        $dataSecurityGuardShift->security_guard_shift_id = $securityGuardShift->id;
-            //        $dataSecurityGuardShift->security_guard_shift_id = $securityGuardShift->id;
-//
-            //    })
-            //  ->slideOver()
+            
         ];
     }
 }

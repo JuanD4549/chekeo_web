@@ -28,82 +28,113 @@ class RegistrationVisitResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.registration_visit');
+        return __('general.pages.registration_visit');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.registration_visits');
+        return __('general.pages.registration_visits');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.registration_visits');
+        return __('general.pages.registration_visits');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu_category.security');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('branche_id')
-                    ->relationship('branche', 'name')
+                Forms\Components\Section::make('')
+                    //->columns(2)
                     ->disabledOn('edit')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->live()
-                    ->disabledOn('edit')
-                    ->afterStateUpdated(function (Get $get, Set $set) {
-                        $user = User::find($get('user_id'));
-                        $set('phone', $user->cellphone ?? 'Sin celular');
-                        $set('mail', $user->email ?? 'Sin correo');
-                    })
-                    ->required(),
-                TextInput::make('phone')
-                    ->hidden(fn(Get $get) => $get('user_id') == null ? true : false)
-                    ->disabled(true)
-                    ->live(),
-                TextInput::make('mail')
-                    ->hidden(fn(Get $get) => $get('user_id') == null ? true : false)
-                    ->disabled(true)
-                    ->live(),
-                Forms\Components\Select::make('visit_id')
-                    ->relationship('visit', 'name')
-                    ->searchable(['name', 'ci'])
-                    ->disabledOn('edit')
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
+                    ->schema([
+                        Forms\Components\Select::make('branche_id')
+                            ->label(__('general.pages.branche'))
+                            ->relationship('branche', 'name')
                             ->required(),
-                        Forms\Components\TextInput::make('email')
+                    ]),
+                Forms\Components\Section::make(__('general.form.person_destination'))
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\Select::make('user_id')
+                            ->label(__('general.form.name'))
+                            ->relationship('user', 'name')
+                            ->live()
+                            ->afterStateUpdated(function (Get $get, Set $set) {
+                                $user = User::find($get('user_id'));
+                                $set('phone', $user->cellphone ?? 'Sin celular');
+                                $set('mail', $user->email ?? 'Sin correo');
+                            })
+                            ->disabledOn('edit')
                             ->required(),
-                        Forms\Components\TextInput::make('cellphone')
+                        TextInput::make('phone')
+                            ->label(__('general.form.phone'))
+                            ->hidden(fn(Get $get) => $get('user_id') == null ? true : false)
+                            ->disabled(true)
+                            ->live(),
+                        TextInput::make('mail')
+                            ->label(__('general.form.mail'))
+                            ->hidden(fn(Get $get) => $get('user_id') == null ? true : false)
+                            ->disabled(true)
+                            ->live(),
+                    ]),
+                Forms\Components\Section::make(__('general.detail.detail_visit'))
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('date_time_in')
+                            ->label(__('general.date.date_time_in'))
+                            ->disabled(true)
+                            ->default(Carbon::now())
                             ->required(),
-                        Forms\Components\TextInput::make('info_visit')
+                        Forms\Components\DateTimePicker::make('date_time_out')
+                            ->label(__('general.date.date_time_outup'))
+                            ->disabled(true)
+                            ->default(Carbon::now())
+                            ->hiddenOn('create'),
+                        Forms\Components\Select::make('visit_id')
+                            ->label(__('general.data.data_visit'))
+                            //->suffixIcon('heroicon-m-globe-alt')
+                            ->relationship('visit', 'name')
+                            ->searchable(['name', 'ci'])
+                            ->disabledOn('edit')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->label(__('general.form.name'))
+                                    ->required(),
+                                Forms\Components\TextInput::make('ci')
+                                    ->label(__('general.form.ci'))
+                                    ->required(),
+                                //Forms\Components\TextInput::make('email')
+                                //    ->required(),
+                                //Forms\Components\TextInput::make('cellphone')
+                                //    ->required(),
+                                Forms\Components\TextInput::make('info_visit')
+                                    ->label(__('general.form.info_visit'))
+                                    ->required(),
+                            ])
                             ->required(),
-                    ])
-                    ->required(),
-                Forms\Components\Select::make('visit_car_id')
-                    ->disabledOn('edit')
-                    //->hidden(fn(Get $get) => !$get('state_car'))
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('license_plate')
-                            ->required()
-                    ])
-                    ->relationship('visit_car', 'license_plate'),
-                Forms\Components\DateTimePicker::make('date_time_in')
-                    ->disabled(true)
-                    ->default(Carbon::now())
-                    ->required(),
-                Forms\Components\DateTimePicker::make('date_time_out')
-                    ->disabled(true)
-                    ->default(Carbon::now())
-                    ->hiddenOn('create'),
-                WebCam::make('img1_url')
-                    ->disabled(false),
+                        Forms\Components\Select::make('visit_car_id')
+                            ->label(__('general.pages.visit_car'))
+                            ->disabledOn('edit')
+                            ->searchable()
+                            //->hidden(fn(Get $get) => !$get('state_car'))
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('license_plate')
+                                    ->required()
+                            ])
+                            ->relationship('visit_car', 'license_plate'),
+                        WebCam::make('img1_url')
+                            ->label(__('general.form.photo'))
+                            ->hiddenOn('edit')
+                            ->disabled(false),
+                        
+                    ]),
+
             ]);
     }
 
@@ -112,31 +143,35 @@ class RegistrationVisitResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
+                    ->label(__('general.pages.branche'))
                     //->url(true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('general.pages.employee'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('visit.name')
-                    ->numeric()
-                    ->searchable(['name','ci'])
+                    ->label(__('general.pages.visit'))
+                    ->searchable(['name', 'ci'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('visit_car.license_plate')
-                    ->numeric()
+                    ->label(__('general.pages.visit_car'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_time_in')
-                    ->dateTime()
+                    ->label(__('general.date.date_time_in'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_time_out')
-                    ->dateTime()
+                    ->label(__('general.date.date_time_outup'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -148,8 +183,9 @@ class RegistrationVisitResource extends Resource
             //    false
             //)
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
-                    ->label('close')
+                    ->label(__('general.table.closing'))
                     ->disabled(fn($record) => $record->date_time_out != null ? true : false)
                 //->hidden(fn($record)=>$record->date_time_out!=null?true:false),
             ])
@@ -173,6 +209,7 @@ class RegistrationVisitResource extends Resource
         return [
             'index' => Pages\ListRegistrationVisits::route('/'),
             'create' => Pages\CreateRegistrationVisit::route('/create'),
+            'view' => Pages\ViewRegistrationVisit::route('/{record}'),
             'edit' => Pages\EditRegistrationVisit::route('/{record}/edit'),
         ];
     }

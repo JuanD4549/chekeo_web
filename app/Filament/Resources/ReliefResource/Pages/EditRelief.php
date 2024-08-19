@@ -15,8 +15,13 @@ use App\Models\ReliefOut;
 use Carbon\Carbon;
 use Filament\Actions;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +36,11 @@ class EditRelief extends EditRecord
         return [
             // Actions\DeleteAction::make(),
         ];
+    }
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['date_time'] = Carbon::now();
+        return $data;
     }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
@@ -85,19 +95,46 @@ class EditRelief extends EditRecord
     {
         return $form
             ->schema([
-                Grid::make([
-                    'default' => 3,
-                ])
+                Section::make('')
+                    //->columns(3)
                     ->schema([
+                        ToggleButtons::make('status')
+                            ->default('out')
+                            ->options([
+                                'in' => 'In',
+                                'out' => 'Out',
+                            ])
+                            ->grouped()
+                            ->inline(),
+                        Fieldset::make()
+                            //->columns(1)
+                            ->schema([
+                                //Select::make('place_id')
+                                //    ->label(__('general.pages.place'))
+                                //    ->relationship('place', 'name')
+                                //    ->required(),
+                                DateTimePicker::make('date_time')
+                                    ->label(__('general.date.date_time'))
+                                    ->disabled()
+                                    ->default(now()),
+                                //->disabled(true),
+                                Textarea::make('detail')
+                                    ->label(__('general.detail.detail'))
+                                    ->rows(5),
+
+                            ]),
+                        Fieldset::make(__('general.gps.location'))
+                            //->columns(1)
+                            ->schema([
+                                Latitude::make('latitude')
+                                    ->label(__('general.gps.latitude')),
+                                Latitude::make('longitude')
+                                    ->label(__('general.gps.longitude')),
+                            ]),
                         WebCam::make('img1_url')
+                            ->label(__('general.form.photo', ['number' => '']))
                             ->required(),
-                        Textarea::make('detail')
-                            ->rows(5),
-                        DateTimePicker::make('date_time')
-                            ->default(Carbon::now()),
-                        //->disabled(true),
-                        Latitude::make('latitude'),
-                        Longitude::make('longitude'),
+
                     ]),
             ]);
     }

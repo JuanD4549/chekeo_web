@@ -14,4 +14,17 @@ class Welcome extends Page
 
     protected static string $view = 'filament.pages.welcome';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.welcome');
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.welcomes');
+    }
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.welcomes');
+    }
+
 }

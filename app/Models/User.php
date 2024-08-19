@@ -103,8 +103,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->hasMany(Access::class);
     }
 
-    public function representatives(): BelongsToMany
+    public function representativeUsers(): HasMany
     {
-        return $this->belongsToMany(Representative::class);
+        return $this->hasMany(RepresentativeUser::class);
     }
 }

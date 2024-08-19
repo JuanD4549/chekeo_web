@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reliefs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branche_id');
+            $table->foreignId('place_id');
             $table->foreignId('relief_in_id')->nullable();
             $table->foreignId('relief_out_id')->nullable();
             $table->boolean('status')->default(true);

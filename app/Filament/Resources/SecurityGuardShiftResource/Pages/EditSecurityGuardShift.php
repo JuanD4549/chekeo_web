@@ -12,6 +12,7 @@ use App\Models\DetailOut;
 use Carbon\Carbon;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
@@ -27,7 +28,11 @@ class EditSecurityGuardShift extends EditRecord
             //Actions\DeleteAction::make(),
         ];
     }
-
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['date_time'] = Carbon::now();
+        return $data;
+    }
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $data['status'] = false;
@@ -63,24 +68,28 @@ class EditSecurityGuardShift extends EditRecord
     {
         return $form
             ->schema([
-                Fieldset::make('Label')
+                Fieldset::make('')
                     ->schema([
+                        Select::make('place_id')
+                            ->label(__('general.pages.place'))
+                            ->relationship('place', 'name')
+                            ->required(),
                         DateTimePicker::make('date_time')
-                            ->default(Carbon::now())
-                        //->disabled(true)
-                        ,
-                        Textarea::make('detail'),
+                            ->label(__('general.date.date_time'))
+                            ->disabled(),
+                        Textarea::make('detail')
+                            ->label(__('general.detail.detail')),
                     ]),
 
-                Fieldset::make('Location')
+                Fieldset::make(__('general.gps.location'))
                     ->schema([
-                        Latitude::make('latitude'),
-                        Longitude::make('longitude'),
+                        Latitude::make('latitude')
+                            ->label(__('general.gps.latitude')),
+                        Latitude::make('longitude')
+                            ->label(__('general.gps.longitude')),
                     ]),
-                Fieldset::make('Location')
-                    ->schema([
-                        WebCam::make('img1_url')
-                    ]),
+                WebCam::make('img1_url')
+                    ->label(__('general.form.photo',['number'=>''])),
             ]);
     }
 

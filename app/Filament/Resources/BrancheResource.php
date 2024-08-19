@@ -2,20 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BrancheResource\Pages;
-use App\Filament\Resources\BrancheResource\RelationManagers;
-use App\Models\Branche;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Filament\Forms\Components\Section;
+use App\Models\Branche;
 use Filament\Forms\Get;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
+use Filament\Forms\Components\Section;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\BrancheResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\BrancheResource\RelationManagers;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Split;
 
 class BrancheResource extends Resource
 {
@@ -25,54 +27,64 @@ class BrancheResource extends Resource
     //protected static ?int $navigationSort = 31;
     public static function getModelLabel(): string
     {
-        return __('general.branche');
+        return __('general.pages.branche');
     }
     public static function getPluralModelLabel(): string
     {
-        return __('general.branches');
+        return __('general.pages.branches');
     }
     public static function getNavigationLabel(): string
     {
-        return __('general.branche');
+        return __('general.pages.branche');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_organization');
+        return __('general.menu_category.my_organization');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Data branch')
-                    ->columns(2)
+                Section::make(__('general.data.data_branche'))
+                    //->columns(3)
                     ->schema([
-                        Forms\Components\Select::make('calendar_id')
-                            ->relationship('calendar', 'id')
-                            ->preload(),
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('address')
-                            ->maxLength(255),
-                        Forms\Components\Toggle::make('status')
-                            ->default(true),
-                        Forms\Components\Select::make('user_id')
-                            ->relationship('user', 'name')
-                            ->options(
-                                fn (): Collection => User::query()
-                                    //->where('id', '!=', $get('user_id'))
-                                    ->where('charge', 'Boss')
-                                    ->pluck('name', 'id')
-                            )
-                            ->label('Boss')
-                            ->searchable()
-                            ->preload()
-                            ->live()
-                            //->relationship('user', 'name')
-                            ->required(),
+                        Split::make([
+                            Section::make([
+                                Forms\Components\Toggle::make('status')
+                                    ->label(__('general.form.status'))
+                                    ->default(true),
+                            ])->grow(false),
+                            Section::make([
+                                Forms\Components\TextInput::make('name')
+                                    ->label(__('general.form.name'))
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('user_id')
+                                    ->label(__('general.form.boss'))
+                                    ->relationship('user', 'name')
+                                    ->options(
+                                        fn(): Collection => User::query()
+                                            //->where('id', '!=', $get('user_id'))
+                                            ->where('charge', 'Boss')
+                                            ->pluck('name', 'id')
+                                    )
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    //->relationship('user', 'name')
+                                    ->required(),
+                                Forms\Components\Select::make('calendar_id')
+                                    ->label(__('general.pages.calendar'))
+                                    ->relationship('calendar', 'id')
+                                    ->preload(),
+
+                                Forms\Components\TextInput::make('address')
+                                    ->label(__('general.form.address'))
+                                    ->maxLength(255),
+                            ])
+                                ->columns(2),
+                        ])->from('md'),
                     ]),
-
-
             ]);
     }
 
@@ -81,21 +93,25 @@ class BrancheResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('enterprise.name')
-                    ->numeric()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Boss')
+                    ->label(__('general.pages.enterprise'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('general.form.boss'))
                     ->searchable(),
                 Tables\Columns\IconColumn::make('status')
+                    ->label(__('general.form.status'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

@@ -16,71 +16,74 @@ class ViewSecurityGuardShift extends ViewRecord
     {
         return $infolist
             ->schema([
-                Infolists\Components\Section::make(__('general.user_data'))
+                Infolists\Components\Section::make('')
                     ->schema([
-                        TextEntry::make('user.name'),
-                        TextEntry::make('branche.name'),
-                    ])->columns(2),
-                Infolists\Components\Section::make(__('general.detail_in'))
-                    ->relationship('detail_in')
-                    ->schema([
-                        Infolists\Components\Grid::make([
-                            'default' => 3,
-                        ])
+                        TextEntry::make('branche.name')
+                            ->label(__('general.pages.branche')),
+                        TextEntry::make('place.name')
+                            ->label(__('general.pages.place')),
+                        TextEntry::make('user.name')
+                            ->label(__('general.pages.employee')),
+                        Infolists\Components\Section::make(__('general.detail.detail_in'))
+                            ->relationship('detail_in')
                             ->schema([
-                                TextEntry::make('detail.date_time')
-                                    ->label(__('general.date_time')),
-                                TextEntry::make('detail.latitude')
-                                    ->label(__('general.latitude')),
-                                TextEntry::make('detail.longitude')
-                                    ->label(__('general.longitude')),
+                                Infolists\Components\Grid::make([
+                                    'default' => 3,
+                                ])
+                                    ->schema([
+                                        TextEntry::make('detail.date_time')
+                                            ->label(__('general.date.date_time')),
+                                        TextEntry::make('detail.latitude')
+                                            ->label(__('general.gps.latitude')),
+                                        TextEntry::make('detail.longitude')
+                                            ->label(__('general.gps.longitude')),
+                                    ]),
+                                TextEntry::make('detail.detail')
+                                    ->label(__('general.detail.detail'))
+                                    ->columnSpanFull(),
+                                Infolists\Components\Grid::make([
+                                    'default' => 2,
+                                ])
+                                    ->schema([
+                                        Infolists\Components\ImageEntry::make('detail.img1_url')
+                                            ->label(__('general.form.photo',['number'=>'#1']))
+                                            ->defaultImageUrl(''),
+                                        Infolists\Components\ImageEntry::make('detail.img2_url')
+                                            ->label(__('general.form.photo',['number'=>'#2']))
+                                            ->defaultImageUrl(''),
+                                    ]),
                             ]),
-                        TextEntry::make('detail.detail')
-                            ->label(__('general.detail'))
-                            ->columnSpanFull(),
-                        Infolists\Components\Grid::make([
-                            'default' => 2,
-                        ])
+                        Infolists\Components\Section::make(__('general.detail.detail_out'))
+                            ->relationship('detail_out')
                             ->schema([
-                                Infolists\Components\ImageEntry::make('detail.img1_url')
-                                    ->label(__('general.photo'))
-                                    ->defaultImageUrl(''),
-                                Infolists\Components\ImageEntry::make('detail.img2_url')
-                                    ->label(__('general.photo'))
-                                    ->defaultImageUrl(''),
+                                Infolists\Components\Grid::make([
+                                    'default' => 3,
+                                ])
+                                    ->schema([
+                                        TextEntry::make('detail.date_time')
+                                            ->label(__('general.date.date_time')),
+                                        TextEntry::make('detail.latitude')
+                                            ->label(__('general.gps.latitude')),
+                                        TextEntry::make('detail.longitude')
+                                            ->label(__('general.gps.longitude')),
+                                    ]),
+                                TextEntry::make('detail.detail')
+                                    ->label(__('general.detail.detail'))
+                                    ->columnSpanFull(),
+                                Infolists\Components\Grid::make([
+                                    'default' => 2,
+                                ])
+                                    ->schema([
+                                        Infolists\Components\ImageEntry::make('detail.img1_url')
+                                            ->label(__('general.form.photo',['number'=>'#1']))
+                                            ->defaultImageUrl(''),
+                                        Infolists\Components\ImageEntry::make('detail.img2_url')
+                                            ->label(__('general.form.photo',['number'=>'#2']))
+                                            ->defaultImageUrl(''),
+                                    ]),
                             ]),
-                    ])
-                    ->collapsed(),
-                Infolists\Components\Section::make(__('general.detail_out'))
-                    ->relationship('detail_out')
-                    ->schema([
-                        Infolists\Components\Grid::make([
-                            'default' => 3,
-                        ])
-                            ->schema([
-                                TextEntry::make('detail.date_time')
-                                    ->label(__('general.date_time')),
-                                TextEntry::make('detail.latitude')
-                                    ->label(__('general.latitude')),
-                                TextEntry::make('detail.longitude')
-                                    ->label(__('general.longitude')),
-                            ]),
-                        TextEntry::make('detail.detail')
-                            ->label(__('general.detail'))
-                            ->columnSpanFull(),
-                        Infolists\Components\Grid::make([
-                            'default' => 2,
-                        ])
-                            ->schema([
-                                Infolists\Components\ImageEntry::make('detail.img1_url')
-                                    ->label(__('general.photo'))
-                                    ->defaultImageUrl(''),
-                                Infolists\Components\ImageEntry::make('detail.img2_url')
-                                    ->label(__('general.photo'))
-                                    ->defaultImageUrl(''),
-                            ]),
-                    ])
-                    ->collapsed(),
+
+                    ])->columns(3),
             ]);
     }
 }

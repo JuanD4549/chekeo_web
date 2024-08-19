@@ -9,4 +9,6 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateControlSupervisory extends CreateRecord
 {
     protected static string $resource = ControlSupervisoryResource::class;
+
+    protected static bool $canCreateAnother = false;
 }

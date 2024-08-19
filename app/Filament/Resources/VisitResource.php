@@ -21,22 +21,22 @@ class VisitResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.visit');
+        return __('general.pages.visit');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.visits');
+        return __('general.pages.visits');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.visits');
+        return __('general.pages.visits');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_sources');
+        return __('general.menu_category.my_sources');
     }
 
     public static function form(Form $form): Form
@@ -44,16 +44,20 @@ class VisitResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('general.form.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('ci')
+                    ->label(__('general.form.ci'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cellphone')
+                    ->label(__('general.form.cellphone'))
                     ->tel()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('info_visit')
+                    ->label(__('general.form.info_visit'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -64,19 +68,25 @@ class VisitResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ci')
+                    ->label(__('general.form.ci'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cellphone')
+                    ->label(__('general.form.cellphone'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('info_visit')
+                    ->label(__('general.form.info_visit'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

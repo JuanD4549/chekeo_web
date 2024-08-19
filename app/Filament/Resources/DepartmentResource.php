@@ -22,36 +22,40 @@ class DepartmentResource extends Resource
     //protected static ?int $navigationSort = 35;
     public static function getModelLabel(): string
     {
-        return __('general.department');
+        return __('general.pages.department');
     }
     public static function getPluralModelLabel(): string
     {
-        return __('general.departments');
+        return __('general.pages.departments');
     }
     public static function getNavigationLabel(): string
     {
-        return __('general.department');
+        return __('general.pages.department');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_organization');
+        return __('general.menu_category.my_organization');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('branche_id')
+                    ->label(__('general.pages.branche'))
                     ->relationship('branche', 'name')
-                    ->required(),
-                    Forms\Components\Select::make('calendar_id')
-                    ->relationship('calendar', 'id'),
-                Forms\Components\Select::make('user_id')
-                    ->label('Boss')
-                    ->relationship('user', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('user_id')
+                    ->label(__('general.pages.employee'))
+                    ->label(__('general.form.boss'))
+                    ->relationship('user', 'name')
+                    ->required(),
+                Forms\Components\Select::make('calendar_id')
+                    ->label(__('general.pages.calendar'))
+                    ->relationship('calendar', 'name'),
+
             ]);
     }
 
@@ -59,19 +63,23 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('department.name')
-                    ->searchable(),
-                    Tables\Columns\TextColumn::make('user.name')
-                    ->label('boss')
-                    ->searchable(),
+                //Tables\Columns\TextColumn::make('branche.name')
+                //->label(__('general.pages.branche'))
+                //->searchable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.pages.department'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label(__('general.form.boss'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

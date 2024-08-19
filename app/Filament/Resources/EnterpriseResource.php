@@ -22,48 +22,59 @@ class EnterpriseResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.enterprise');
+        return __('general.pages.enterprise');
     }
     public static function getPluralModelLabel(): string
     {
-        return __('general.enterprises');
+        return __('general.pages.enterprises');
     }
     public static function getNavigationLabel(): string
     {
-        return __('general.enterprise');
+        return __('general.pages.enterprise');
     }
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.settings');
+        return __('general.menu_category.settings');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('ruc')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cellphone')
-                    ->required()
-                    ->maxLength(10),
-                Forms\Components\TextInput::make('address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('legal_representative')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('img_url')
-                    ->required()
-                    ->image()
-                    ->imageEditor(),
+                Forms\Components\Section::make('')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\FileUpload::make('img_url')
+                            ->label(__('general.form.photo', ['number' => '']))
+                            ->required()
+                            ->image()
+                            ->imageEditor(),
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('general.form.name'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('ruc')
+                            ->label(__('general.form.ruc'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('cellphone')
+                            ->label(__('general.form.cellphone'))
+                            ->required()
+                            ->maxLength(10),
+                        Forms\Components\TextInput::make('address')
+                            ->label(__('general.form.address'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('legal_representative')
+                            ->label(__('general.form.legal_representative'))
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->label(__('general.form.mail'))
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                    ]),
             ]);
     }
 
@@ -72,25 +83,22 @@ class EnterpriseResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('ruc')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('cellphone')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('address')
+                    ->label(__('general.form.ruc'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('legal_representative')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('img_url')
+                    ->label(__('general.form.legal_representative'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -102,7 +110,7 @@ class EnterpriseResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

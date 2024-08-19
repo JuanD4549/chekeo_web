@@ -68,14 +68,14 @@
         <div class="flex-items">
             <x-filament::section style="width: 50vh; border:1px solid #f49f1c">
                 <x-slot name="heading">
-                    <strong> {{ __('general.data_out') }} </strong>
+                    <strong> {{ __('general.data.data_out') }} </strong>
                 </x-slot>
-                <strong>{{ __('general.code') }}</strong>
+                <strong>{{ __('general.form.code') }}</strong>
                 <x-filament::input.wrapper style="border:1px solid #2a55c8">
                     <x-filament::input type="text" onchange="searchEmployee(this.value)" id='input_code' />
                 </x-filament::input.wrapper>
                 </br>
-                <strong> {{ __('general.date_time') }} </strong>
+                <strong> {{ __('general.date.date_time') }} </strong>
                 <x-filament::input.wrapper disabled style="border:1px solid #2a55c8">
                     <x-filament::input type="dateTime" id='date_time' disabled />
                 </x-filament::input.wrapper>
@@ -84,7 +84,7 @@
         <div class="flex-items">
             <x-filament::section style="width: 90vh; border:1px solid #f49f1c">
                 <x-slot name="heading"  >
-                    <strong> {{ __('general.data_user') }}</strong>
+                    <strong> {{ __('general.data.data_user') }}</strong>
                 </x-slot>
                 <div class="flex-container2">
                     <div class="flex-items2">
@@ -92,12 +92,12 @@
                             style="width: 200px; height: 200px;" />
                     </div>
                     <div class="flex-items2">
-                        <strong>{{ __('general.name') }}</strong>
+                        <strong>{{ __('general.form.name') }}</strong>
                         <x-filament::input.wrapper disabled style="border:1px solid #2a55c8">
                             <x-filament::input type="dateTime" id='name' disabled />
                         </x-filament::input.wrapper>
                         </br>
-                        <strong>{{ __('general.access') }}</strong>
+                        <strong>{{ __('general.form.access_status') }}</strong>
                         <x-filament::input.wrapper disabled style="border:1px solid #2a55c8">
                             <x-filament::input type="dateTime" id='access' disabled />
                         </x-filament::input.wrapper>

@@ -21,22 +21,22 @@ class CatalogNoveltyResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.catalog_novelty');
+        return __('general.pages.catalog_novelty');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.catalog_novelties');
+        return __('general.pages.catalog_novelties');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.catalog_novelties');
+        return __('general.pages.catalog_novelties');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_sources');
+        return __('general.menu_category.my_sources');
     }
 
     public static function form(Form $form): Form
@@ -44,12 +44,15 @@ class CatalogNoveltyResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('general.form.name'))
                     ->required()
                     ->maxLength(255),
-                    Forms\Components\Repeater::make('qualifications')
-                    ->relationship('novelties')
+                Forms\Components\Repeater::make('novelties')
+                    ->label(__('general.pages.novelties'))
+                    ->relationship()
                     ->simple(
                         Forms\Components\TextInput::make('name')
+                            ->label(__('general.form.name'))
                             ->required(),
                     )
             ]);
@@ -60,13 +63,25 @@ class CatalogNoveltyResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('novelties.name')
+                    //->listWithLineBreaks()
+                    ->limitList(4)
+                    ->badge()
+                    //->expandableLimitedList()
+                    //->lineClamp(2)
+                    //->wrap()
+                    ->label(__('general.pages.novelties'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

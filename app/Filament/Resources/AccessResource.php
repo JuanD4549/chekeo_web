@@ -24,26 +24,26 @@ class AccessResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.access');
+        return __('general.pages.access');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.accesses');
+        return __('general.pages.accesses');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.accesses');
+        return __('general.pages.accesses');
     }
 
     //public static function getNavigationParentItem(): ?string
     //{
-    //    return __('general.menu.access');
+    //    return __('general.menu_category.access');
     //}
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_sources');
+        return __('general.menu_category.my_sources');
     }
 
     public static function form(Form $form): Form
@@ -56,6 +56,7 @@ class AccessResource extends Resource
                     ->disabledOn('edit')
                     ->required(),
                 Forms\Components\Select::make('user_id')
+                            ->label(__('general.pages.employee'))
                     //->autofocus()
                     ->relationship('user', 'name')
                     ->searchable(['name', 'ci'])
@@ -66,6 +67,7 @@ class AccessResource extends Resource
                     ->disabledOn('edit')
                     ->required(),
                 Forms\Components\DateTimePicker::make('date_time_out')
+                            ->label(__('general.date.date_time_outup'))
                     ->hiddenOn('create'),
             ]);
     }
@@ -75,23 +77,25 @@ class AccessResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
+                    ->label(__('general.pages.branche'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                ->label(__('general.pages.employee'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('date_time_in')
-                    ->dateTime()
+                 Tables\Columns\TextColumn::make('date_time_in')
+                    ->label(__('general.date.date_time_in'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('date_time_out')
-                    ->dateTime()
+                 Tables\Columns\TextColumn::make('date_time_out')
+                    ->label(__('general.date.date_time_outup'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])

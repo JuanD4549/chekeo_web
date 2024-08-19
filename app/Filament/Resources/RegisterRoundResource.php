@@ -25,66 +25,94 @@ class RegisterRoundResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.register_round');
+        return __('general.pages.guarden_round');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.register_rounds');
+        return __('general.pages.guarden_rounds');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.register_rounds');
+        return __('general.pages.guarden_rounds');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.security');
+        return __('general.menu_category.security');
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('branche_id')
-                    ->relationship('branche', 'name')
-                    ->disabledOn('edit')
-                    ->preload()
-                    ->required(),
-                Forms\Components\Select::make('place_id')
-                    ->relationship('place', 'name')
-                    ->preload()
-                    ->disabledOn('edit')
-                    ->required(),
-                Forms\Components\Select::make('user_id')
-                    ->searchable(['name', 'ci'])
-                    ->relationship('user', 'name')
-                    ->disabledOn('edit')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('date_time_closed')
-                    ->hiddenOn('create'),
-                Forms\Components\Textarea::make('detail_close')
-                    ->hiddenOn('create')
-                    ->columnSpanFull(),
-                Forms\Components\Repeater::make('rounds')
-                    ->relationship('rounds')
-                    //->disabled(true)
+                Forms\Components\Section::make('')
                     ->schema([
-                        Latitude::make('latitude')
+                        Forms\Components\Select::make('branche_id')
+                            ->label(__('general.pages.branche'))
+                            ->relationship('branche', 'name')
+                            ->preload()
                             ->required(),
-                        Longitude::make('longitude')
+                        Forms\Components\Select::make('user_id')
+                            ->label(__('general.pages.employee'))
+                            ->searchable(['name', 'ci'])
+                            ->relationship('user', 'name')
                             ->required(),
-                        //WebCam::make('img1_url')
-                        //->required(),
-                        Forms\Components\FileUpload::make('img1_url')
-                        // ...
                     ])
-                    ->addActionLabel('Add point')
-                    //->addable(false)
-                    ->deletable(false)
-                    ->reorderable(false)
-                    ->grid(2)
+                    ->disabledOn('edit')
+                    ->columns(2),
+                Forms\Components\Section::make(__('general.pages.rounds'))
+                    ->schema([
+                        Forms\Components\Repeater::make('rounds')
+                            ->label('')
+                            ->columnSpanFull()
+                            ->relationship('rounds')
+                            //->disabled(true)
+                            ->schema([
+                                Forms\Components\Select::make('place_id')
+                                    ->label(__('general.pages.place'))
+                                    //->relationship('place', 'name')
+                                    ->preload()
+                                    ->disabledOn('edit')
+                                    ->required(),
+                                Forms\Components\Fieldset::make(__('general.gps.location'))
+                                    ->schema([
+                                        Latitude::make('latitude')
+                                            ->label(__('general.gps.latitude'))
+                                            ->disabledOn('edit')
+                                            ->required(),
+                                        Longitude::make('longitude')
+                                            ->label(__('general.gps.longitude'))
+                                            ->disabledOn('edit')
+                                            ->required(),
+                                    ]),
+                                Forms\Components\FileUpload::make('img1_url')
+                                    ->disabledOn('edit')
+                                    ->label(__('general.form.image', ['number' => ''])),
+                                Forms\Components\Textarea::make('detail')
+                                    ->label(__('general.detail.detail'))
+                                    ->disabledOn('edit')
+                                    ->label(__('general.detail.detail')),
+                            ])
+                            ->addActionLabel(__('general.add.add_point'))
+                            //->addable(false)
+                            ->deletable(false)
+                            ->disabledOn('edit')
+                            ->reorderable(false)
+                            ->grid(3)
+                    ]),
+
+                Forms\Components\Section::make('')
+                    ->columns(1)
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('date_time_closed')
+                            ->label(__('general.date.date_time_closing')),
+                        Forms\Components\Textarea::make('detail_close')
+                            ->label(__('general.detail.detail_closing')),
+                    ])
+                    ->hiddenOn('create'),
+
             ]);
     }
 
@@ -93,23 +121,26 @@ class RegisterRoundResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('branche.name')
-                    ->numeric()
+                    ->label(__('general.pages.branche'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('place.name')
-                    ->numeric()
+                    ->label(__('general.pages.place'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('general.pages.employee'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_time_closed')
-                    ->dateTime()
+                    ->label(__('general.date.date_time_closing'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -118,7 +149,8 @@ class RegisterRoundResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                ->label(__('general.table.closing')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

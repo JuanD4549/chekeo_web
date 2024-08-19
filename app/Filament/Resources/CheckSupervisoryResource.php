@@ -21,22 +21,22 @@ class CheckSupervisoryResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('general.check_supervisory');
+        return __('general.pages.check_supervisory');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('general.check_supervisories');
+        return __('general.pages.check_supervisories');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('general.check_supervisories');
+        return __('general.pages.check_supervisories');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return __('general.menu.my_sources');
+        return __('general.menu_category.my_sources');
     }
 
     public static function form(Form $form): Form
@@ -44,6 +44,7 @@ class CheckSupervisoryResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('general.form.name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -54,13 +55,16 @@ class CheckSupervisoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label(__('general.table.created_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label(__('general.table.updated_at'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -72,7 +76,7 @@ class CheckSupervisoryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
