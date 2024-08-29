@@ -8,7 +8,7 @@ RUN composer require laravel/octane
 COPY .envDev .env
 RUN mkdir -p /app/storage/logs
 RUN npm install
-
+RUN npm run build
 RUN php artisan octane:install --server="swoole"
 
 CMD php artisan octane:start --server="swoole" --host="0.0.0.0"
