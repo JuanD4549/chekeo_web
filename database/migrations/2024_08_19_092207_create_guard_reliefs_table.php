@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('guard_reliefs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('place_id');
+            $table->foreignId('user_id');
+            $table->foreignId('turn_in_id');
+            $table->foreignId('turn_out_id');
             $table->timestamps();
         });
     }

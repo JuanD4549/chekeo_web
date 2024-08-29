@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Enterprise extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'ruc',
         'cellphone',
@@ -20,8 +20,8 @@ class Enterprise extends Model
         'img',
     ];
 
-    public function branches():HasMany{
+    public function branches(): HasMany
+    {
         return $this->hasMany(Branche::class);
     }
-    
 }

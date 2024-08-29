@@ -103,6 +103,7 @@ class TestSeeder extends Seeder
         //Calendar
         //1
         DB::table('calendars')->insert([
+            'name'=>'Calendar',
             'monday' => json_encode(['time_in' => '08:30',
                 'time_out' => '17:30']),
             'tuesday' => json_encode(['time_in' => '08:30',

@@ -59,6 +59,12 @@ class RegisterRoundResource extends Resource
                             ->searchable(['name', 'ci'])
                             ->relationship('user', 'name')
                             ->required(),
+                        Forms\Components\Select::make('place_id')
+                            ->label(__('general.pages.place'))
+                            ->relationship('place', 'name')
+                            ->preload()
+                            ->disabledOn('edit')
+                            ->required(),
                     ])
                     ->disabledOn('edit')
                     ->columns(2),
@@ -70,12 +76,7 @@ class RegisterRoundResource extends Resource
                             ->relationship('rounds')
                             //->disabled(true)
                             ->schema([
-                                Forms\Components\Select::make('place_id')
-                                    ->label(__('general.pages.place'))
-                                    //->relationship('place', 'name')
-                                    ->preload()
-                                    ->disabledOn('edit')
-                                    ->required(),
+
                                 Forms\Components\Fieldset::make(__('general.gps.location'))
                                     ->schema([
                                         Latitude::make('latitude')
@@ -150,7 +151,7 @@ class RegisterRoundResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
-                ->label(__('general.table.closing')),
+                    ->label(__('general.table.closing')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

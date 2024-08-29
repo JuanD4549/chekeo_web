@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\RegistrationVisit;
+use App\Models\RegisterRound;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RegistrationVisitPolicy
+class RegisterRoundPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class RegistrationVisitPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_registration::visit');
+        return $user->can('view_any_register::round');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, RegistrationVisit $registrationVisit): bool
+    public function view(User $user, RegisterRound $registerRound): bool
     {
-        return $user->can('view_registration::visit');
+        return $user->can('view_register::round');
     }
 
     /**
@@ -31,23 +31,23 @@ class RegistrationVisitPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_registration::visit');
+        return $user->can('create_register::round');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, RegistrationVisit $registrationVisit): bool
+    public function update(User $user, RegisterRound $registerRound): bool
     {
-        return $user->can('update_registration::visit');
+        return $user->can('update_register::round');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, RegistrationVisit $registrationVisit): bool
+    public function delete(User $user, RegisterRound $registerRound): bool
     {
-        return $user->can('delete_registration::visit');
+        return $user->can('delete_register::round');
     }
 
     /**
@@ -55,15 +55,15 @@ class RegistrationVisitPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_registration::visit');
+        return $user->can('delete_any_register::round');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, RegistrationVisit $registrationVisit): bool
+    public function forceDelete(User $user, RegisterRound $registerRound): bool
     {
-        return $user->can('force_delete_registration::visit');
+        return $user->can('force_delete_register::round');
     }
 
     /**
@@ -71,15 +71,15 @@ class RegistrationVisitPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_registration::visit');
+        return $user->can('force_delete_any_register::round');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, RegistrationVisit $registrationVisit): bool
+    public function restore(User $user, RegisterRound $registerRound): bool
     {
-        return $user->can('restore_registration::visit');
+        return $user->can('restore_register::round');
     }
 
     /**
@@ -87,15 +87,15 @@ class RegistrationVisitPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_registration::visit');
+        return $user->can('restore_any_register::round');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, RegistrationVisit $registrationVisit): bool
+    public function replicate(User $user, RegisterRound $registerRound): bool
     {
-        return $user->can('replicate_registration::visit');
+        return $user->can('replicate_register::round');
     }
 
     /**
@@ -103,6 +103,6 @@ class RegistrationVisitPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_registration::visit');
+        return $user->can('reorder_register::round');
     }
 }

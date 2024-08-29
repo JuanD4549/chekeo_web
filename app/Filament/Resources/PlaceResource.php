@@ -5,13 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PlaceResource\Pages;
 use App\Filament\Resources\PlaceResource\RelationManagers;
 use App\Models\Place;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PlaceResource extends Resource
@@ -49,41 +52,69 @@ class PlaceResource extends Resource
                     ->schema([
                         Forms\Components\ToggleButtons::make('type')
                             ->label(__('general.form.is_relief'))
-                            ->boolean()
                             ->default(false)
+                            ->boolean()
                             ->live()
                             ->grouped(),
                         Forms\Components\Select::make('branche_id')
                             ->label(__('general.pages.branche'))
                             ->relationship('branche', 'name')
                             ->required(),
+                        //Forms\Components\Select::make('users')
+                        //    ->multiple()
+                        //    ->relationship('user','name')
+                        //    ->required(),
                         Forms\Components\TextInput::make('name')
                             ->label(__('general.form.name'))
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\Repeater::make('qualifications')
-                            //->relationship()
+
+                        Forms\Components\Repeater::make('guard_reliefs')
+                            ->relationship()
                             ->label(__('general.pages.reliefs'))
                             ->hidden(fn(Get $get): bool => !$get('type'))
                             ->columnSpanFull()
-                            //->columns(1)
+                            //->columns(2)
                             ->grid(2)
                             ->reorderableWithDragAndDrop(false)
                             ->schema([
-                                Forms\Components\Section::make('')
-                                    ->schema([
-                                        Forms\Components\Select::make('user_id')
-                                            ->label(__('general.pages.employee'))
-                                            ->required(fn(Get $get): bool => !$get('type')),
-                                        Forms\Components\Select::make('user_id')
-                                            ->label(__('general.pages.employee'))
-                                            ->required(fn(Get $get): bool => !$get('type')),
-                                    ])
-                                    ->columns(2),
+                                Forms\Components\Split::make([
+                                    Forms\Components\Section::make('')
+                                        ->relationship('turn_in')
+                                        //->columns(1)
+                                        ->schema([
+                                            Forms\Components\Select::make('user_id')
+                                                ->label(__('general.form.guard'))
+                                                ->live()
+                                                ->relationship('user', 'name')
+                                                ->getOptionLabelFromRecordUsing(fn(Model $record) => "{$record->name} / {$record->ci}")
+                                                ->required(fn(Get $get): bool => !$get('type')),
+                                        ]),
+                                    Forms\Components\Section::make('')
+                                        ->relationship('turn_out')
+                                        ->live()
+                                        ->schema([
+                                            Forms\Components\Select::make('user_id')
+                                                ->label(__('general.form.guard'))
+                                                ->relationship('user', 'name')
+                                                ->required(fn(Get $get): bool => !$get('type')),
+                                        ]),
+
+                                ]),
                                 Forms\Components\Select::make('user_id')
                                     ->label(__('general.form.employee_sust'))
+                                    ->relationship('user', 'name')
                                     ->required(fn(Get $get): bool => !$get('type')),
+
                             ]),
+                            //->mutateRelationshipDataBeforeSaveUsing(function (array $data, $record, Get $get): array {
+                            //    $user = User::find($data['user_id']);
+                            //    $user['place_id'] = $record->place_id;
+                            //    //dd($user);
+                            //    $user->save();
+                            //    //dd($data);
+                            //    return $data;
+                            //}),
                     ]),
             ]);
     }
@@ -129,7 +160,10 @@ class PlaceResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationGroup::make('Contacts', [
+                RelationManagers\UsersRelationManager::class,
+            ]),
+
         ];
     }
 

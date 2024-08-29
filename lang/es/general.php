@@ -22,6 +22,7 @@ return [
         'branche' => 'Crear Sucursal',
     ],
     'form' => [
+        'guard'=>'Guardia',
         'license_plate'=>'Placa Vehícular',
         'legal_representative' => 'Representante Legal',
         'ruc' => 'Ruc',

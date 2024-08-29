@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  apuk:
+    image: checkeo
+    container_name: checkeo
+    restart: unless-stopped
+    working_dir: /app
+    build: .
+    expose:
+        - "80"
+    volumes:
+      - ./:/app
+    networks:
+      - apuk
+volumes:
+  #certs:
+  html:
+  vhostd:
+networks:
+  apuk:

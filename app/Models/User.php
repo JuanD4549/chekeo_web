@@ -31,6 +31,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'department_id',
         'branche_id',
         'calendar_id',
+        'place_id',
         'name',
         'ci',
         'blood_type',
@@ -98,6 +99,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function place(): BelongsTo
+    {
+        return $this->belongsTo(Place::class);
+    }
+
     public function accesses(): HasMany
     {
         return $this->hasMany(Access::class);
