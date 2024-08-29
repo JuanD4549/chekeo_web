@@ -104,12 +104,12 @@ class TestSeeder extends Seeder
 
         DB::table('places')->insert([
             'branche_id'=>1,
-            'nane'=>'Puesta Principal',
+            'name'=>'Puesta Principal',
             'type'=>'false',
         ]);
         DB::table('places')->insert([
             'branche_id'=>1,
-            'nane'=>'Puesta Secundaria',
+            'name'=>'Puesta Secundaria',
             'type'=>'false',
         ]);
         //Calendar
