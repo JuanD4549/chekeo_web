@@ -34,7 +34,7 @@ class RoundController extends Controller
             }
             $round->save();
         } catch (\Throwable $th) {
-            $codeStatus=500;
+            $codeStatus = 500;
             return response()
                 ->json(['message' => $th], $codeStatus);
         }
@@ -43,10 +43,11 @@ class RoundController extends Controller
         return response()
             ->json(new RoundResource($round), $codeStatus);
     }
+
     private function transformImg($imgString, $folder)
     {
         $img = $imgString;
-        $folderPath = 'storage/'.$folder;
+        $folderPath = 'storage/' . $folder;
         if (!file_exists($folderPath)) {
             mkdir($folderPath);
             //dd($resultado);
@@ -56,7 +57,7 @@ class RoundController extends Controller
         $fileName1 = date("d.m.y") . "." . time() . uniqid() . '.png';
         $file = $folderPath . $fileName1;
         file_put_contents($file, $image_base64);
-        return $folder.$fileName1;
+        return $folder . $fileName1;
     }
     /**
      * Display the specified resource.

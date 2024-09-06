@@ -14,6 +14,10 @@ class ListRegistrationVisits extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\Action::make('Pre Visita')
+                    ->button()
+                    //->color()
+                    ->url(fn (): string => route('filament.admin.resources.pre-visits.index'))
         ];
     }
 }

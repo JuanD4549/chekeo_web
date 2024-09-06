@@ -7,11 +7,13 @@ use App\Filament\Resources\VisitResource\RelationManagers;
 use App\Models\Visit;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class VisitResource extends Resource
 {
@@ -46,10 +48,19 @@ class VisitResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label(__('general.form.name'))
                     ->required()
+                    ->live()
                     ->maxLength(255),
+                Forms\Components\FileUpload::make('img_url')
+                    ->directory('person_visit')
+                    ->avatar()
+                    ->getUploadedFileNameForStorageUsing(
+                        fn(Get $get): string => (string) str($get('name').'jpg')
+                            ->prepend($get('ci') . '-'),
+                    ),
                 Forms\Components\TextInput::make('ci')
                     ->label(__('general.form.ci'))
                     ->required()
+                    ->live()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('cellphone')
                     ->label(__('general.form.cellphone'))
@@ -70,6 +81,8 @@ class VisitResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('general.form.name'))
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('img_url')
+                    ->label(__('general.form.image', ['number' => ''])),
                 Tables\Columns\TextColumn::make('ci')
                     ->label(__('general.form.ci'))
                     ->searchable(),

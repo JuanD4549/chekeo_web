@@ -22,8 +22,8 @@ class RegisterRoundResource extends JsonResource
                 'name' => $this->branche->name
             ],
             'place' => [
-                'id' => $this->place->id,
-                'name' => $this->place->name
+                'id' => $this->place->id??0,
+                'name' => $this->place->name??''
             ],
             'user' => [
                 'id' => $this->user->id,

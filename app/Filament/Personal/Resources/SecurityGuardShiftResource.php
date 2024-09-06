@@ -24,56 +24,68 @@ class SecurityGuardShiftResource extends Resource
 {
     protected static ?string $model = SecurityGuardShift::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'icon-guard';
+    protected static ?int $navigationSort = 3;
+
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.security_guard_shift');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.security_guard_shifts');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.security_guard_shift');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu_category.security');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Grid::make([
-                    'default' => 3,
-                ])
-                    ->schema([
-                        WebCam::make('img1_url')
-                            ->label(__('general.form.photo'))
-                            ->required(),
-                        Textarea::make('detail')
-                            ->label(__('general.detail.detail'))
-                            ->rows(5),
-                       DateTimePicker::make('date_time')
-                            ->label(__('general.date.date_time'))
-                            ->default(Carbon::now())
-                            ->disabled(true),
-                        Latitude::make('latitude')
-                                    ->label(__('general.gps.latitude')),
-                        Latitude::make('longitude')
-                                    ->label(__('general.gps.longitude')),
-                    ]),
+                Forms\Components\Toggle::make('status')
+                    ->required(),
+                Forms\Components\Select::make('place_id')
+                    ->relationship('place', 'name'),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                //Tables\Columns\TextColumn::make('branche.name')
+                //    ->label(__('general.pages.branche'))
+                //    ->sortable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->label(__('general.table.branche_place'))
+                    ->formatStateUsing(function (string $state, \App\Models\SecurityGuardShift $relief): string {
+                        //dd($relief);
+                        return $relief->branche->name . ' - ' . $relief->place->name;
+                    }),
                 Tables\Columns\TextColumn::make('user.name')
-                ->label(__('general.pages.employee'))
+                    ->label(__('general.pages.employee'))
                     ->sortable(),
-                Tables\Columns\TextColumn::make('branche.name')
-                    ->label(__('general.pages.branche'))
+                //Tables\Columns\IconColumn::make('status')
+                //    ->label(__('general.form.status'))
+                //    ->boolean(),
+                Tables\Columns\TextColumn::make('detail_in.detail.date_time')
+                    ->label(__('general.form.in'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('place_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('detail_out.detail.date_time')
+                    ->label(__('general.form.out'))
+                    ->dateTime('H:i:s / d-m-Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('detail_in.id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('detail_out.id')
-                    ->numeric()
-                    ->sortable(),
-                 Tables\Columns\IconColumn::make('status')
-                    ->label(__('general.form.status'))
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('general.table.created_at'))
                     ->dateTime('H:i:s / d-m-Y')
@@ -89,11 +101,16 @@ class SecurityGuardShiftResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label(__('general.table.closing')),
+            ])
+            ->headerActions([
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -101,7 +118,7 @@ class SecurityGuardShiftResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            //RelationManagers\DataSecurityGuardShiftsRelationManager::class,
         ];
     }
 
@@ -110,6 +127,7 @@ class SecurityGuardShiftResource extends Resource
         return [
             'index' => Pages\ListSecurityGuardShifts::route('/'),
             'create' => Pages\CreateSecurityGuardShift::route('/create'),
+            'view' => Pages\ViewSecurityGuardShift::route('/{record}'),
             'edit' => Pages\EditSecurityGuardShift::route('/{record}/edit'),
         ];
     }

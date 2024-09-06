@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        Schema::create('pre_visits', function (Blueprint $table) {
             $table->id();
-            $table->string('img_url',500);
-            $table->string('name');
-            $table->string('ci');
-            $table->string('cellphone');
-            $table->string('info_visit');
+            $table->foreignId('user_id');
+            $table->foreignId('visit_id');
+            $table->dateTime('date_time_in');
+            $table->double('status')->default(false);
+            $table->integer('pin')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visits');
+        Schema::dropIfExists('pre_visits');
     }
 };

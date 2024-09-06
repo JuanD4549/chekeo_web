@@ -14,24 +14,27 @@ class NoveltyRegistrationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        //dd($this);
         return [
             'id' => $this->id,
+            'status'=>$this->date_time_close==null?false:true,
+
             //'status'=>$this->date_time_closed==null?false:true,
             'branche' => [
                 'id' => $this->branche->id,
                 'name' => $this->branche->name
             ],
             'user' => [
-                'id' => $this->user->id,
-                'name' => $this->user->name,
+                'id' => $this->user->id??0,
+                'name' => $this->user->name??0,
             ],
             'user_notificad' => [
-                'id' => $this->user_notificad->id,
-                'name' => $this->user_notificad->name,
+                'id' => $this->user_notificad->id??0,
+                'name' => $this->user_notificad->name??0,
             ],
             'novelty' => [
-                'id' => $this->novelty->id,
-                'name' => $this->novelty->name,
+                'id' => $this->novelty->id??0,
+                'name' => $this->novelty->name??0,
             ],
             'detail_created' => $this->detail_created,
             'latitude' => $this->latitude,

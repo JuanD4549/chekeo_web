@@ -7,6 +7,7 @@ use App\Filament\Resources\RegistrationVisitResource\RelationManagers;
 use App\Forms\Components\WebCam;
 use App\Models\RegistrationVisit;
 use App\Models\User;
+use App\Models\Visit;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -109,15 +110,28 @@ class RegistrationVisitResource extends Resource
                                 Forms\Components\TextInput::make('ci')
                                     ->label(__('general.form.ci'))
                                     ->required(),
-                                //Forms\Components\TextInput::make('email')
-                                //    ->required(),
-                                //Forms\Components\TextInput::make('cellphone')
-                                //    ->required(),
+                                WebCam::make('img_url'),
+                                Forms\Components\TextInput::make('cellphone')
+                                    ->label(__('general.form.cellphone'))
+                                    ->tel()
+                                    ->required()
+                                    ->maxLength(10),
                                 Forms\Components\TextInput::make('info_visit')
                                     ->label(__('general.form.info_visit'))
                                     ->required(),
                             ])
-                            ->required(),
+                            ->required()
+                            ->live()
+                            ->afterStateUpdated(function (Get $get, Set $set) {
+                                $visit = Visit::find($get('visit_id'));
+                                $set('img_visita', $visit->img_url);
+                            }),
+                        Forms\Components\FileUpload::make('img_visita')
+                            ->disabled()
+                            ->avatar()
+                            ->default('public/sd')
+                        //->hidden(fn(Get $get) => $get('visit_id') == null ? true : false)
+                        ,
                         Forms\Components\Select::make('visit_car_id')
                             ->label(__('general.pages.visit_car'))
                             ->disabledOn('edit')
@@ -129,10 +143,10 @@ class RegistrationVisitResource extends Resource
                             ])
                             ->relationship('visit_car', 'license_plate'),
                         WebCam::make('img1_url')
-                            ->label(__('general.form.photo'))
+                            ->label(__('general.form.photo', ['number' => '']))
                             ->hiddenOn('edit')
                             ->disabled(false),
-                        
+
                     ]),
 
             ]);
@@ -178,10 +192,9 @@ class RegistrationVisitResource extends Resource
             ->filters([
                 //
             ])
-            //->recordUrl(
-            //    //fn (Model $record): string => route('posts.edit', ['record' => $record]),
-            //    false
-            //)
+            ->headerActions([
+                //
+            ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()

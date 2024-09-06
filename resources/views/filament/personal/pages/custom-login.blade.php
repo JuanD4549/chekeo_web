@@ -52,6 +52,12 @@
         margin-bottom: 3em;
         width: 35vh;
     }
+    input[type=text] {
+            color: black;
+        }
+        input[type=password] {
+            color: black;
+        }
 </style>
     <div class="MyImgContainer">
         <img class="myImg" src={{ asset('storage/emprise/logo_empresa.png') }} alt="">

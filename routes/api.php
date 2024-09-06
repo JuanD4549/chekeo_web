@@ -49,3 +49,29 @@ Route::prefix('registerNovelty')->group(function () {
     Route::post('/store', [\App\Http\Controllers\NoveltyRegistrationController::class, 'store'])->name('api.registerNovelty.store');
     Route::post('/update', [\App\Http\Controllers\NoveltyRegistrationController::class, 'update'])->name('api.registerNovelty.update');
 });
+
+Route::prefix('novelty')->group(function () {
+    Route::get('/index', [\App\Http\Controllers\NoveltyController::class, 'index'])->name('api.novelty.index');
+});
+
+Route::prefix('user')->group(function () {
+    Route::get('/index', [\App\Http\Controllers\UserController::class, 'index'])->name('api.user.index');
+});
+
+Route::prefix('registerVisit')->group(function () {
+    Route::get('/index', [\App\Http\Controllers\RegistrationVisitController::class, 'index'])->name('api.registerVisit.index');
+    Route::post('/store', [\App\Http\Controllers\RegistrationVisitController::class, 'store'])->name('api.registerVisit.store');
+    Route::post('/update', [\App\Http\Controllers\RegistrationVisitController::class, 'update'])->name('api.registerVisit.update');
+});
+
+Route::prefix('visit')->group(function () {
+    Route::get('/index', [\App\Http\Controllers\VisitController::class, 'index'])->name('api.visit.index');
+    Route::post('/show', [\App\Http\Controllers\VisitController::class, 'show'])->name('api.visit.show');
+    Route::post('/store', [\App\Http\Controllers\VisitController::class, 'store'])->name('api.visit.store');
+});
+
+Route::prefix('visitCar')->group(function () {
+    Route::get('/index', [\App\Http\Controllers\VisitCarController::class, 'index'])->name('api.visitCar.index');
+    Route::post('/show', [\App\Http\Controllers\VisitCarController::class, 'show'])->name('api.visitCar.show');
+    Route::post('/store', [\App\Http\Controllers\VisitCarController::class, 'store'])->name('api.visitCar.store');
+});

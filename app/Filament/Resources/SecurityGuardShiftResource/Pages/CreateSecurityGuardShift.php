@@ -233,7 +233,7 @@ class CreateSecurityGuardShift extends CreateRecord
                             ->schema([
                                 Latitude::make('latitude')
                                     ->label(__('general.gps.latitude')),
-                                Latitude::make('longitude')
+                                Longitude::make('longitude')
                                     ->label(__('general.gps.longitude')),
                             ]),
                         WebCam::make('img1_url')

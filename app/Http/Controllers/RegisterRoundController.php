@@ -11,22 +11,29 @@ class RegisterRoundController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function points(){
-        
-    }
+    public function points() {}
     public function index()
     {
         $message = 'Exito';
         $codeStatus = 200;
-        $registerRounds = RegisterRound::select('*')
-            ->orderBy('id', 'DESC')
-            ->get();
+        try {
+            $registerRounds = RegisterRound::select('*')
+                ->orderBy('id', 'DESC')
+                ->get();
+            //dd($registerRounds);
 
-        return response()
-            ->json([
-                'message' => $message,
-                'registerRounds' => RegisterRoundResource::collection($registerRounds),
-            ], $codeStatus);
+            return response()
+                ->json([
+                    'message' => $message,
+                    'registerRounds' => RegisterRoundResource::collection($registerRounds),
+                ], $codeStatus);
+        } catch (\Throwable $th) {
+            return response()
+                ->json([
+                    'message' => $th,
+                    //'registerRounds' => RegisterRoundResource::collection($registerRounds),
+                ], 500);
+        }
     }
 
     /**

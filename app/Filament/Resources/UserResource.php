@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\Department;
+use App\Models\Place;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -134,7 +135,10 @@ class UserResource extends Resource
                             ->preload()
                             ->searchable()
                             ->live()
-                            ->afterStateUpdated(fn(Set $set) => $set('department_id', null)),
+                            ->afterStateUpdated(function (Set $set) {
+                                $set('department_id', null);
+                                $set('place_id', null);
+                            }),
                         Select::make('department_id')
                             ->label(__('general.pages.department'))
                             ->disabled(fn(Get $get): bool => $get('branche_id') == null)
@@ -143,7 +147,18 @@ class UserResource extends Resource
                                 fn(Get $get): Collection => Department::query()
                                     ->where('id', $get('branche_id'))
                                     ->pluck('name', 'id')
-                            ),
+                            )
+                            ->relationship('department', 'name'),
+                        Select::make('place_id')
+                            ->label(__('general.pages.place'))
+                            ->disabled(fn(Get $get): bool => $get('branche_id') == null)
+                            ->required(fn(Get $get): bool => $get('branche_id') != null)
+                            ->options(
+                                fn(Get $get): Collection => Place::query()
+                                    ->where('branche_id', $get('branche_id'))
+                                    ->pluck('name', 'id')
+                            )
+                            ->relationship('place', 'name'),
                         TextInput::make('charge')
                             ->label(__('general.form.charge'))
                             ->maxLength(255),

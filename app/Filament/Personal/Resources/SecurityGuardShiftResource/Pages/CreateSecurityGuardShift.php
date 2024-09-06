@@ -4,9 +4,25 @@ namespace App\Filament\Personal\Resources\SecurityGuardShiftResource\Pages;
 
 use App\Filament\Funcions\Logica;
 use App\Filament\Personal\Resources\SecurityGuardShiftResource;
+use App\Forms\Components\Latitude;
+use App\Forms\Components\Longitude;
+use App\Forms\Components\WebCam;
 use App\Models\Detail;
 use App\Models\DetailIn;
+use App\Models\Place;
+use App\Models\User;
+use Carbon\Carbon;
 use Filament\Actions;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -51,5 +67,62 @@ class CreateSecurityGuardShift extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make('')
+                    ->columns(2)
+                    ->schema([
+                        Fieldset::make()
+                            ->columns(3)
+                            ->schema([
+                                ToggleButtons::make('status')
+                                    ->label(__('general.pages.relief'))
+                                    ->default('in')
+                                    ->hidden(function (Get $get): bool {
+                                        if ($get('place_id') != null) {
+                                            $place = Place::find($get('place_id'));
+                                            return !$place->type;
+                                        }
+                                        return true;
+                                    })
+                                    ->options([
+                                        'in' => __('general.form.in'),
+                                        'out' => __('general.form.out'),
+                                    ])
+                                    ->grouped()
+                                    ->inline(),
+                                Select::make('place_id')
+                                    ->label(__('general.pages.place'))
+                                    ->disabled()
+                                    ->relationship('place', 'name')
+                                    ->default(fn () =>Auth::user()->place->id)
+                                    ->live()
+                                    ->required(),
+                                DateTimePicker::make('date_time')
+                                    ->label(__('general.date.date_time'))
+                                    ->disabled()
+                                    ->default(Carbon::now()),
+                                //->disabled(true),
+                                Textarea::make('detail')
+                                    ->label(__('general.detail.detail'))
+                                    ->columnSpanFull(),
+                            ]),
+                        Fieldset::make(__('general.gps.location'))
+                            //->columns(1)
+                            ->schema([
+                                Latitude::make('latitude')
+                                    ->label(__('general.gps.latitude')),
+                                Longitude::make('longitude')
+                                    ->label(__('general.gps.longitude')),
+                            ]),
+                        WebCam::make('img1_url')
+                            ->label(__('general.form.photo', ['number' => '']))
+                            ->required(),
+
+                    ]),
+            ]);
     }
 }
