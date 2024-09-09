@@ -25,7 +25,15 @@ class SiteResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\Repeater::make('elements')
+                    ->relationship()
+                    ->simple(
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
+                    )
+                    ->columnSpanFull(),
             ]);
     }
 
