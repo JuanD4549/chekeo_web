@@ -114,4 +114,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return $this->hasMany(RepresentativeUser::class);
     }
+
+    public function user_work_order(): HasMany
+    {
+        return $this->hasMany(UserWorkOrder::class);
+    }
 }
