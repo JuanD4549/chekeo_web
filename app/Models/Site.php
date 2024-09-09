@@ -18,4 +18,8 @@ class Site extends Model
     {
         return $this->hasMany(WorkOrder::class);
     }
+    public function elements(): HasMany
+    {
+        return $this->hasMany(Element::class);
+    }
 }
