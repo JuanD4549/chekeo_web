@@ -4,9 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MaintenanceRoundResource\Pages;
 use App\Filament\Resources\MaintenanceRoundResource\RelationManagers;
+use App\Models\Element;
 use App\Models\MaintenanceRound;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -24,19 +26,88 @@ class MaintenanceRoundResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
+                    ->label(__('general.pages.employee'))
                     ->relationship('user', 'name')
+                    ->disabledOn('edit')
                     ->columnSpanFull()
                     ->required(),
                 Forms\Components\Repeater::make('maintenance_round_details')
+                    ->label(__('general.pages.maintenance_round_details'))
                     ->relationship()
+                    ->columnSpanFull()
+                    ->reorderable(false)
+                    ->deletable(false)
                     ->schema([
                         Forms\Components\Select::make('site_id')
+                            ->label(__('general.pages.site'))
                             ->relationship('site', 'name')
+                            ->disabledOn('edit')
+                            ->live()
                             ->required(),
-                        Forms\Components\Textarea::make('detail')
-                            ->required(),
+                        Forms\Components\Repeater::make('element_detail')
+                            ->label(__('general.pages.element_detail'))
+                            ->relationship()
+                            ->reorderable(false)
+                            ->deletable(false)
+                            ->hidden(function (Get $get): bool {
+                                $site_id = $get('site_id');
+                                if ($site_id != null) {
+                                    //dd($site_id);
+                                    $elements = Element::where('site_id', $site_id)
+                                        ->count();
+                                    if ($elements > 0) {
+                                        return false;
+                                    }
+                                    return true;
+                                } else {
+                                    return true;
+                                }
+                            })
+                            ->schema([
+                                Forms\Components\Split::make([
+                                    Forms\Components\Select::make('element_id')
+                                        ->label(__('general.pages.element'))
+                                        //->relationship('site', 'name')
+                                        ->options(function (Get $get): array {
+                                            $site_id = $get('../../site_id');
+                                            if ($site_id != null) {
+                                                //dd($site_id);
+                                                $elements = Element::where('site_id', $site_id)
+                                                    ->pluck('name', 'id')->toArray();
+                                                return $elements;
+                                            } else {
+                                                return [];
+                                            }
+                                        })
+                                        ->grow(false)
+                                        ->columnSpan(1)
+                                        ->required(),
+                                    Forms\Components\ToggleButtons::make('status')
+                                        ->label(__('general.form.status'))
+                                        //->label('Like this post?')
+                                        ->boolean('Ok', 'Bad')
+                                        ->default(true)
+                                        ->grow(false)
+                                        ->grouped(),
+                                    Forms\Components\Textarea::make('detail')
+                                        ->label(__('general.detail.detail'))
+                                        ->rows(1)
+                                        ->columnSpanFull(),
+                                ])->from('md'),
+
+                            ])
+                            ->maxItems(function (Get $get): int {
+                                $site_id = $get('site_id');
+                                if ($site_id != null) {
+                                    //dd($site_id);
+                                    $elements = Element::where('site_id', $site_id)->count();
+                                    return $elements;
+                                } else {
+                                    return 0;
+                                }
+                            }),
                     ])
-                    ->columns(2)
+                    ->columns(1)
             ]);
     }
 

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('maintenance_round_details', function (Blueprint $table) {
+        Schema::create('element_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('maintenance_round_id');
-            $table->foreignId('site_id');
+            $table->foreignId('maintenance_round_detail_id');
+            $table->foreignId('element_id');
+            $table->boolean('status')->default(true);
+            $table->text('detail')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('maintenance_round_details');
+        Schema::dropIfExists('element_details');
     }
 };

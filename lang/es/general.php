@@ -135,6 +135,14 @@ return [
     ],
 
     'pages' => [
+        'element'=>'Elemento',
+        'elements'=>'Elementos',
+        'element_detail'=>'Detalle del elemento',
+        'element_details'=>'Detalles del elemento',
+        'site'=>'Lugar',
+        'sites'=>'Lugares',
+        'maintenance_round_details'=>'Detalles de la Inspección de Mantenimiento',
+        'maintenance_round_detail'=>'Detalle de la Inspección de Mantenimiento',
         'control_panel' => 'Panel de Control',
         'welcome' => 'Bienvenido',
         'welcomes' => 'Bienvenidos',
