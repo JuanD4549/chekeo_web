@@ -75,6 +75,13 @@ return [
     ],
 
     'date' => [
+        'months'=>'Meses',
+        'month'=>'Mes',
+        'days'=>'Días',
+        'day'=>'Día',
+        'daily'=>'Diariamente',
+        'weekly'=>'Semanalmente',
+        'monthly'=>'Mensualmente',
         'date_in' => 'Fecha Ingreso',
         'date_time_output' => 'Fecha y Hora de Salida',
         'date_time_closing' => 'Fecha y Hora de Cierre',
@@ -92,6 +99,7 @@ return [
     ],
 
     'time' => [
+        'times'=>'Horas',
         'time_in' => 'Hora ingreso',
         'time_out' => 'Hora salida',
         'time_await' => 'Tiempo líminte',
@@ -120,6 +128,7 @@ return [
     ],
 
     'select' => [
+        'select'=>'Selecciona',
         'select_novelty' => 'Seleccion una novedad',
         'fixed' => 'Interno',
         'external' => 'Externo',
@@ -135,6 +144,8 @@ return [
     ],
 
     'pages' => [
+        'work_orders'=>'Ordenes de trabajo',
+        'work_order'=>'Orden de trabajo',
         'control_panel' => 'Panel de Control',
         'welcome' => 'Bienvenido',
         'welcomes' => 'Bienvenidos',
