@@ -12,6 +12,7 @@ class WorkOrder extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'auto_generated',
         'site_id',
         'description',
         'priority',

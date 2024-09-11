@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
+            $table->boolean('auto_generated')->default(false);
             $table->foreignId('site_id');
             $table->text('description')->nullable();
             $table->enum('priority', ['high', 'medium', 'low'])->default('medium');

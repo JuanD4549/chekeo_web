@@ -61,6 +61,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 __('general.menu_category.security'),
+                __('general.menu_category.maintenance'),
                 __('general.menu_category.my_organization'),
                 __('general.menu_category.settings'),
             ])
