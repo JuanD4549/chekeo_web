@@ -2,6 +2,7 @@
 
 return [
     'menu_category' => [
+        'maintenance'=>'Mantenimiento',
         'security' => 'Seguridad',
         'my_organization' => 'Mi organización',
         'settings' => 'Configuraciones',
@@ -22,6 +23,10 @@ return [
         'branche' => 'Crear Sucursal',
     ],
     'form' => [
+        'advance'=>'Avance',
+        'description'=>'Descripcion',
+        'leader'=>'Líder',
+        'priority'=>'Prioridad',
         'high'=>'Alta',
         'medium'=>'Media',
         'low'=>'Baja',
@@ -144,6 +149,8 @@ return [
     ],
 
     'pages' => [
+        'work_order_details'=>'Detalles de la Orden de Trabajo',
+        'work_order_detail'=>'Detalle de la Orden de Trabajo',
         'work_orders'=>'Ordenes de trabajo',
         'work_order'=>'Orden de trabajo',
         'element'=>'Elemento',

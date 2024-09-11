@@ -23,17 +23,38 @@ class WorkOrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.work_order');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.work_orders');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.work_orders');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu_category.maintenance');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\ToggleButtons::make('priority')
+                    ->label(__('general.form.priority'))
                     ->disabledOn('edit')
                     ->required()
                     ->options([
-                        'high' => 'Alta',
-                        'medium' => 'Media',
-                        'low' => 'Baja',
+                        'high' => __('general.form.high'),
+                        'medium' => __('general.form.medium'),
+                        'low' => __('general.form.low'),
                     ])
                     ->colors([
                         'high' => 'danger',
@@ -49,17 +70,21 @@ class WorkOrderResource extends Resource
                     ->inlineLabel(false)
                     ->default('medium'),
                 Forms\Components\Select::make('site_id')
+                    ->label(__('general.pages.site'))
                     ->disabledOn('edit')
                     ->relationship('site', 'name')
                     ->required(),
                 Forms\Components\Repeater::make('user_work_order')
+                    ->label(__('general.pages.employees'))
                     ->disabledOn('edit')
                     ->relationship()
                     ->schema([
                         Forms\Components\Select::make('user_id')
+                            ->label(__('general.pages.employee'))
                             ->relationship('user', 'name')
                             ->required(),
                         Forms\Components\Checkbox::make('leader')
+                            ->label(__('general.form.leader'))
                             ->inline()
                             //->prohibitedIf('leader', false)
                             ->default(true)
@@ -69,27 +94,35 @@ class WorkOrderResource extends Resource
                     ->grid(3)
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('description')
+                    ->label(__('general.detail.detail'))
                     ->disabledOn('edit')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('img1_url')
+                    ->label(__('general.form.photo', ['number' => '1']))
                     ->disabledOn('edit')
                     ->directory('work_orders'),
                 Forms\Components\FileUpload::make('img2_url')
+                    ->label(__('general.form.photo', ['number' => '2']))
                     ->disabledOn('edit')
                     ->directory('work_orders'),
                 Forms\Components\Repeater::make('work_order_details')
+                    ->label(__('general.pages.work_order_details'))
                     ->relationship()
                     ->schema([
                         Forms\Components\TextInput::make('advance')
+                            ->label(__('general.form.advance'))
                             ->numeric()
                             ->step(5)
                             ->minValue(0)
                             ->maxValue(100),
                         Forms\Components\Textarea::make('detail')
+                            ->label(__('general.detail.detail'))
                             ->required(),
                         Forms\Components\FileUpload::make('img1_url')
+                            ->label(__('general.form.photo', ['number' => '1']))
                             ->directory('work_orders'),
                         Forms\Components\FileUpload::make('img2_url')
+                            ->label(__('general.form.photo', ['number' => '2']))
                             ->directory('work_orders'),
                     ])
                     ->hiddenOn('create')
@@ -102,9 +135,11 @@ class WorkOrderResource extends Resource
                     ->hiddenOn(['create', 'edit'])
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('img3_url')
+                    ->label(__('general.form.photo', ['number' => '1']))
                     ->hiddenOn(['create', 'edit'])
                     ->directory('work_orders'),
                 Forms\Components\FileUpload::make('img4_url')
+                    ->label(__('general.form.photo', ['number' => '2']))
                     ->hiddenOn(['create', 'edit'])
                     ->directory('work_orders'),
             ]);
