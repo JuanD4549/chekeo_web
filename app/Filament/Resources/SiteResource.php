@@ -19,20 +19,44 @@ class SiteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.site');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.sites');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.sites');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu_category.maintenance');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('general.form.name'))
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
                 Forms\Components\Repeater::make('elements')
+                    ->label(__('general.pages.elements'))
                     ->relationship()
                     ->simple(
                         Forms\Components\TextInput::make('name')
+                            ->label(__('general.form.name'))
                             ->required(),
                     )
+                    ->deletable(false)
                     ->columnSpanFull(),
             ]);
     }
@@ -42,6 +66,11 @@ class SiteResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('general.form.name'))
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('elements.name')
+                    ->label(__('general.pages.elements'))
+                    ->badge()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -60,7 +89,7 @@ class SiteResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
