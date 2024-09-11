@@ -21,6 +21,26 @@ class MaintenanceRoundResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.maintenance_round');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.maintenance_rounds');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.maintenance_rounds');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu_category.maintenance');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -41,7 +61,6 @@ class MaintenanceRoundResource extends Resource
                         Forms\Components\Select::make('site_id')
                             ->label(__('general.pages.site'))
                             ->relationship('site', 'name')
-                            ->disabledOn('edit')
                             ->live()
                             ->required(),
                         Forms\Components\Repeater::make('element_detail')
@@ -85,7 +104,7 @@ class MaintenanceRoundResource extends Resource
                                     Forms\Components\ToggleButtons::make('status')
                                         ->label(__('general.form.status'))
                                         //->label('Like this post?')
-                                        ->boolean('Ok', 'Bad')
+                                        ->boolean(__('general.form.ok'), __('general.form.bad'))
                                         ->default(true)
                                         ->grow(false)
                                         ->grouped(),
@@ -116,8 +135,13 @@ class MaintenanceRoundResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label(__('general.pages.employee'))
+                    ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('maintenance_round_details.site.name')
+                    ->label(__('general.pages.site'))
+                    ->badge()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
