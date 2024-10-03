@@ -29,14 +29,15 @@ class ScheduledMaintenanceResource extends Resource
                     ->default(true)
                     ->boolean()
                     ->grouped(),
-                Forms\Components\Section::make('order_work')
+                Forms\Components\Section::make(__('general.pages.work_order'))
                     ->schema([
                         Forms\Components\ToggleButtons::make('priority')
+                            ->label(__('general.form.priority'))
                             ->required()
                             ->options([
-                                'high' => 'Alta',
-                                'medium' => 'Media',
-                                'low' => 'Baja',
+                                'high' => __('general.form.high'),
+                                'medium' => __('general.form.mediums'),
+                                'low' => __('general.form.low'),
                             ])
                             ->colors([
                                 'high' => 'danger',
@@ -52,15 +53,19 @@ class ScheduledMaintenanceResource extends Resource
                             ->inlineLabel(false)
                             ->default('medium'),
                         Forms\Components\Select::make('site_id')
+                            ->label(__('general.pages.site'))
                             ->relationship('site', 'name')
                             ->required(),
                         Forms\Components\Repeater::make('scheduled_maintenance_user')
+                            ->label(__('general.pages.employees'))
                             ->relationship()
                             ->schema([
                                 Forms\Components\Select::make('user_id')
+                                    ->label(__('general.pages.employee'))
                                     ->relationship('user', 'name')
                                     ->required(),
                                 Forms\Components\Checkbox::make('leader')
+                                    ->label(__('general.form.leader'))
                                     ->inline()
                                     //->prohibitedIf('leader', false)
                                     ->default(true)
@@ -70,29 +75,70 @@ class ScheduledMaintenanceResource extends Resource
                             ->grid(3)
                             ->columnSpanFull(),
                         Forms\Components\Textarea::make('description')
+                            ->label(__('general.detail.detail'))
                             ->columnSpanFull(),
-                    ]),
-                Forms\Components\Radio::make('type')
-                    ->label('Select format')
-                    ->inline()
-                    ->live()
-                    ->columnSpanFull()
-                    ->default('daily')
-                    ->options([
-                        'daily' => 'daily',
-                        'weekly' => 'weekly',
-                        'monthly' => 'monthly',
                     ]),
                 Forms\Components\Section::make('')
                     ->columns(2)
                     ->schema([
-                        Forms\Components\TextInput::make('pass_time')
-                            ->hidden(fn(Get $get): bool => $get('type') == 'monthly')
-                            ->columnSpan(1)
-                            ->required()
-                            ->numeric()
-                            ->default(1),
+                        Forms\Components\Select::make('months')
+                            ->label(__('general.date.month'))
+                            ->multiple()
+                            ->options(__('general.date.name_months')),
+                        Forms\Components\Checkbox::make('for_days')->inline()
+                            ->label(__('general.form.for_number_day'))
+                            ->default(false)
+                            ->live(),
+                        Forms\Components\Select::make('the')
+                            ->label(__('general.form.the'))
+                            ->hidden(fn(Get $get): bool => $get('for_days'))
+                            ->multiple()
+                            ->options(__('general.data.ordinal')),
+                        Forms\Components\Select::make('days')
+                            ->label(__('general.date.day'))
+                            ->hidden(fn(Get $get): bool => $get('for_days'))
+                            ->multiple()
+                            ->options(__('general.date.name_days')),
+                        Forms\Components\Select::make('days_num')
+                            ->label(__('general.form.number_day'))
+                            ->hidden(fn(Get $get): bool => !$get('for_days'))
+                            ->multiple()
+                            ->options([
+                                '1' => '1',
+                                '2' => '2',
+                                '3' => '3',
+                                '4' => '4',
+                                '5' => '5',
+                                '6' => '6',
+                                '7' => '7',
+                                '8' => '8',
+                                '9' => '9',
+                                '10' => '10',
+                                '11' => '11',
+                                '12' => '12',
+                                '13' => '13',
+                                '14' => '14',
+                                '15' => '15',
+                                '16' => '16',
+                                '17' => '17',
+                                '18' => '18',
+                                '19' => '19',
+                                '20' => '20',
+                                '21' => '21',
+                                '22' => '22',
+                                '23' => '23',
+                                '24' => '24',
+                                '25' => '25',
+                                '26' => '26',
+                                '27' => '27',
+                                '28' => '28',
+                                '29' => '29',
+                                '30' => '30',
+                                '31' => '31',
+                                'last' => __('general.date.last_day'),
+                            ]),
                         Forms\Components\Repeater::make('in_day_time')
+                            ->label(__('general.form.time_day'))
                             ->simple(
                                 Forms\Components\TimePicker::make('time')
                                     ->required(),
@@ -100,47 +146,6 @@ class ScheduledMaintenanceResource extends Resource
                             ->reorderable(false)
                             ->defaultItems(1)
                             ->minItems(1),
-                        Forms\Components\Select::make('months')
-                            ->hidden(fn(Get $get): bool => $get('type') != 'monthly')
-                            ->multiple()
-                            ->options([
-                                'enery' => 'enery',
-                                'febrery' => 'febrery',
-                                'tusday' => 'tusday',
-                            ]),
-                        Forms\Components\Checkbox::make('for_days')->inline()
-                            ->hidden(fn(Get $get): bool => $get('type') != 'monthly')
-                            ->default(true)
-                            ->live(),
-                        Forms\Components\Select::make('the')
-                            ->hidden(fn(Get $get): bool => $get('for_days'))
-                            ->multiple()
-                            ->options([
-                                'first' => 'first',
-                                'second' => 'second',
-                                'third' => 'third',
-                                'quart' => 'quart',
-                                'last' => 'last',
-                            ]),
-                        Forms\Components\Select::make('days')
-                            ->hidden(fn(Get $get): bool => $get('type') != 'weekly' ^ ($get('type') == 'monthly' && !$get('for_days')))
-                            ->multiple()
-                            ->options([
-                                'every day' => 'todos los días',
-                                'monday' => 'monday',
-                                'tusday' => 'tusday',
-                            ]),
-                        Forms\Components\Select::make('days_num')
-                            ->hidden(fn(Get $get): bool => $get('type') == 'monthly' ^ $get('for_days'))
-                            ->multiple()
-                            ->options([
-                                '1' => '1',
-                                '2' => '2',
-                                '3' => '3',
-                                'last' => 'last',
-                            ]),
-
-
                     ]),
             ]);
     }

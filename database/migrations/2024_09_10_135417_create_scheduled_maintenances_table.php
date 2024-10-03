@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('scheduled_maintenances', function (Blueprint $table) {
             $table->id();
             $table->boolean('active')->default(true);
-            $table->integer('pass_time')->default(1);
             $table->json('in_day_time');
-            $table->enum('type', ['daily', 'weekly', 'monthly'])->default('daily');
             $table->json('days')->nullable();
             $table->json('months')->nullable();
             $table->boolean('for_days')->default(true);
