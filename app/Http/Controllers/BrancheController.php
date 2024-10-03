@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BrancheResource;
 use App\Models\Branche;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BrancheController extends Controller
 {
@@ -24,15 +26,14 @@ class BrancheController extends Controller
 
     public function branches()
     {
-        $branches = Branche::select('id', 'name')
-            ->find(1);
-        $message = 'Exito';
-        $codeStatus = 200;
-        return response()
-            ->json([
-                'message' => $message,
-                'branches' => $branches
-            ], $codeStatus);
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
+            $branches = Branche::select('id', 'name')
+                ->get();
+            return response()
+                ->json(BrancheResource::collection($branches), 200);
+        }
     }
     /**
      * Display a listing of the resource.
