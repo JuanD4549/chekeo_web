@@ -12,15 +12,17 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()
-                ->json(['message' => 'Unau'], 401);
+                ->json(['message' => 'Sin autorizacion'], 401);
         }
         $user = User::where('email', $request['email'])->firstOrFail();
         $toke = $user->createToken('auth_token')->plainTextToken;
 
         return response()
-            ->json(['message' => 'Hi',
+            ->json([
+                'message' => 'Hi',
                 'accessToken' => $toke,
                 'token_type' => 'Bearer',
-                'user' => $user]);
+                'user' => $user
+            ]);
     }
 }
