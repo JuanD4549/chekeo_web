@@ -29,7 +29,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     protected $fillable = [
         'name',
-        'email',
         'password',
         'avatar_url',
     ];
@@ -57,5 +56,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     public function getFilamentAvatarUrl(): ?string
     {
         return $this->avatar_url;
+    }
+    //Empledo
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
     }
 }

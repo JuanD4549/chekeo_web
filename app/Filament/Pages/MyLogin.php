@@ -32,7 +32,7 @@ class MyLogin extends BaseAuth
     protected function getCredentialsFromFormData(array $data): array
     {
         //dd($data);
-        $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'ci';
+        $login_type = 'name';
         //dd($login_type);
 
         return [

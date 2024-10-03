@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlaceResource;
 use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,24 +16,19 @@ class PlaceController extends Controller
         //$user_place=Auth::user()->place;
         $place = Place::select('id', 'name')
             ->find(1);
-        $message = 'Exito';
-        $codeStatus = 200;
         return response()
-            ->json([
-                'message' => $message,
-                'place' => $place
-            ], $codeStatus);
+            ->json(PlaceResource::collection($place), 200);
     }
 
-    public function places(){
-        $places = Place::select('id', 'name')->get();
-        $message = 'Exito';
-        $codeStatus = 200;
-        return response()
-            ->json([
-                'message' => $message,
-                'places' => $places
-            ], $codeStatus);
+    public function places()
+    {
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
+            $places = Place::select('id', 'name')->get();
+            return response()
+                ->json(PlaceResource::collection($places), 200);
+        }
     }
     /**
      * Display a listing of the resource.

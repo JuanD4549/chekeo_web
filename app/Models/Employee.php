@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Employee extends User
+class Employee extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,7 @@ class Employee extends User
         'branche_id',
         'calendar_id',
         'place_id',
+        'user_id',
         'name',
         'ci',
         'blood_type',
@@ -33,16 +34,14 @@ class Employee extends User
         'enterprise_mail',
         'enterpriser_phone',
         'enterpriser_phone_ext',
-        'type_empleado',
         'status',
     ];
 
-    public function calendars(): BelongsToMany
-    {
-        return $this->belongsToMany(Calendar::class, 'calendar_user', 'calendar_id', 'user_id');
-    }
     //Relations
-
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function calendar(): BelongsTo
     {
@@ -72,5 +71,4 @@ class Employee extends User
     {
         return $this->hasMany(Access::class);
     }
-
 }

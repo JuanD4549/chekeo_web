@@ -9,6 +9,7 @@ use App\Models\Employee;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -45,10 +46,10 @@ class EmployeeResource extends Resource
     {
         return __('general.menu_category.my_organization');
     }
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->where('id', '!=', 1)->orderBy('id', 'DESC');
-    }
+    //public static function getEloquentQuery(): Builder
+    //{
+    //    return parent::getEloquentQuery()->where('id', '!=', 1)->orderBy('id', 'DESC');
+    //}
     public static function getPermissionPrefixes(): array
     {
         return [
@@ -65,13 +66,29 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
-                Section::make(__('general.data.data_employee'))
+                Group::make()
+                    ->relationship(
+                        'user',
+                    )
                     ->columns(3)
                     ->schema([
                         FileUpload::make('avatar_url')
                             ->label(__('general.form.photo', ['number' => '']))
                             ->directory('users')
                             ->avatar(),
+                        TextInput::make('name')
+                            ->label(__('general.form.name'))
+                            ->disabled(),
+                        TextInput::make('password')
+                            ->label(__('general.form.password'))
+                            ->password()
+                            ->required()
+                            ->hiddenOn('edit'),
+                    ]),
+                Section::make(__('general.data.data_employee'))
+                    ->columns(3)
+                    ->schema([
+
                         TextInput::make('email')
                             ->label(__('general.form.mail'))
                             ->email()
@@ -133,11 +150,6 @@ class EmployeeResource extends Resource
                 Section::make('')
                     ->columns(3)
                     ->schema([
-                        TextInput::make('password')
-                            ->label(__('general.form.password'))
-                            ->password()
-                            ->required()
-                            ->hiddenOn('edit'),
                         Select::make('branche_id')
                             ->label(__('general.pages.branche'))
                             ->relationship('branche', 'name')
@@ -174,12 +186,7 @@ class EmployeeResource extends Resource
                         TextInput::make('enterpriser_phone_ext')
                             ->label(__('general.form.enterprise_phone_ext'))
                             ->maxLength(10),
-                        Select::make('type_user')
-                            ->label(__('general.form.type_employee'))
-                            ->options([
-                                'fixed' => __('general.select.fixed'),
-                                'external' => __('general.select.external')
-                            ]),
+
                     ]),
             ]);
     }
@@ -210,18 +217,6 @@ class EmployeeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Verify')
-                    ->icon('heroicon-o-check-badge')
-                    ->action(function (Employee $user) {
-                        $user->email_verified_at = Date('Y-m-d H:i:s');
-                        $user->save();
-                    }),
-                Tables\Actions\Action::make('Unverify')
-                    ->icon('heroicon-o-x-circle')
-                    ->action(function (Employee $user) {
-                        $user->email_verified_at = null;
-                        $user->save();
-                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

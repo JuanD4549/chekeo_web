@@ -51,27 +51,17 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Section::make(__('general.data.data_employee'))
+                Section::make('')
                     ->columns(3)
                     ->schema([
                         FileUpload::make('avatar_url')
                             ->label(__('general.form.photo', ['number' => '']))
                             ->directory('users')
                             ->avatar(),
-                        TextInput::make('email')
-                            ->label(__('general.form.mail'))
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
                         TextInput::make('name')
                             ->label(__('general.form.name'))
                             ->required()
                             ->maxLength(255),
-                    ]),
-
-                Section::make('')
-                    ->columns(3)
-                    ->schema([
                         Select::make('roles')
                             ->multiple()
                             ->relationship('roles', 'name')
@@ -125,7 +115,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\CalendarsRelationManager::class,
+            //RelationManagers\CalendarsRelationManager::class,
         ];
     }
 

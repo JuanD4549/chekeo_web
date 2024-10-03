@@ -26,25 +26,25 @@ class TestSeeder extends Seeder
         //1
         DB::table('branches')->insert([
             'enterprise_id' => 1,
-            'user_id' => 3,
+            'employee_id' => 3,
             'name' => 'Digital Cumbaya',
         ]);
         //2
         DB::table('branches')->insert([
             'enterprise_id' => 1,
-            'user_id' => 4,
+            'employee_id' => 4,
             'name' => 'Digital Centro',
         ]);
         //1
         DB::table('departments')->insert([
             'branche_id' => 1,
-            'user_id' => 4,
+            'employee_id' => 4,
             'name' => 'Seguridad',
         ]);
         //2
         DB::table('departments')->insert([
             'branche_id' => 1,
-            'user_id' => 4,
+            'employee_id' => 4,
             'name' => 'Mensajeria',
         ]);
         //Places

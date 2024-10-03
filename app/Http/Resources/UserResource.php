@@ -14,9 +14,19 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $roles = RolesResource::collection($this->roles);
+        $rol = '';
+        if (count($roles) > 0) {
+            $rol = $roles[0]->name;
+        }
+        if ($rol == 'security_guard') {
+            $data = '';
+        }
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name_user' => $this->name,
+            'rol' => $rol,
+            'data' => '',
         ];
     }
 }

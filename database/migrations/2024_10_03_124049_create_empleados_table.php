@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('department_id')->nullable();
             $table->foreignId('branche_id')->nullable();
             $table->foreignId('calendar_id')->nullable();
+            $table->foreignId('user_id');
             $table->string('name');
             $table->string('ci')->unique();
             $table->enum('blood_type', ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-',])->default('O+')->nullable();
@@ -30,7 +31,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->dateTime('date_in')->nullable();
             $table->string('enterprise_mail')->nullable();
-            $table->string('enterpriser_phone');
+            $table->string('enterpriser_phone')->nullable();
             $table->string('enterpriser_phone_ext')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

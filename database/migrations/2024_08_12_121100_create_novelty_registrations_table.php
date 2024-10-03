@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('branche_id');
             $table->foreignId('security_guard_id');
-            $table->foreignId('user_notificad_id');
+            $table->foreignId('employee_id');
             $table->foreignId('novelty_id');
             $table->text('detail_created')->nullable();
             $table->dateTime('date_time_close')->nullable();
