@@ -36,7 +36,7 @@ class ScheduledMaintenanceResource extends Resource
                             ->required()
                             ->options([
                                 'high' => __('general.form.high'),
-                                'medium' => __('general.form.mediums'),
+                                'medium' => __('general.form.medium'),
                                 'low' => __('general.form.low'),
                             ])
                             ->colors([

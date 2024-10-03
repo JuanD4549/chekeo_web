@@ -18,7 +18,7 @@
         "laravel/octane": "^2.5",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "rupadana/filament-api-service": "^3.2",
+        "rupadana/filament-api-service": "*",
         "shanerbaner82/panel-roles": "^0.0.3",
         "tomatophp/filament-browser": "^1.0"
     },

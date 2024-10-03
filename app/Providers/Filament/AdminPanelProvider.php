@@ -5,7 +5,6 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\CustomDashboard;
 use App\Filament\Pages\MyLogin;
 use App\Filament\Pages\Welcome;
-use Rupadana\ApiService\ApiServicePlugin;
 use App\Filament\Resources\SecurityGuardShiftResource\Widgets\StatsOverview;
 use Awcodes\Curator\CuratorPlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -84,7 +83,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->spa()
             ->plugins([
-                ApiServicePlugin::make(),
                 FilamentShieldPlugin::make(),
                 //ThemesPlugin::make(),
                 PanelRoles::make()

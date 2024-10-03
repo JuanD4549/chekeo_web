@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "614e77422f095a7fc07c06154c0378d4",
+    "content-hash": "c6e35f8781a1ac80dc0e0a2dafefc6cf",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5709,16 +5709,16 @@
         },
         {
             "name": "rupadana/filament-api-service",
-            "version": "3.2.4",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rupadana/filament-api-service.git",
-                "reference": "e2fe183cff45a6b1f0d1ff1216a1ed193868854b"
+                "reference": "aa665e9208b26dc2052a91d8deb5c44b679c459b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rupadana/filament-api-service/zipball/e2fe183cff45a6b1f0d1ff1216a1ed193868854b",
-                "reference": "e2fe183cff45a6b1f0d1ff1216a1ed193868854b",
+                "url": "https://api.github.com/repos/rupadana/filament-api-service/zipball/aa665e9208b26dc2052a91d8deb5c44b679c459b",
+                "reference": "aa665e9208b26dc2052a91d8deb5c44b679c459b",
                 "shasum": ""
             },
             "require": {
@@ -5787,7 +5787,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-04T05:04:29+00:00"
+            "time": "2024-08-28T07:48:26+00:00"
         },
         {
             "name": "ryangjchandler/blade-capture-directive",
