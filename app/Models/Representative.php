@@ -21,8 +21,4 @@ class Representative extends Model
     {
         return $this->belongsToMany(User::class);
     }
-    public function representativeUsers(): HasMany
-    {
-        return $this->hasMany(RepresentativeUser::class);
-    }
 }

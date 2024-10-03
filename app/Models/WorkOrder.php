@@ -26,7 +26,7 @@ class WorkOrder extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function users(): BelongsToMany
+    public function empleados(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withPivot('leader');
     }
@@ -36,8 +36,8 @@ class WorkOrder extends Model
         return $this->hasMany(WorkOrderDetail::class);
     }
 
-    public function user_work_order(): HasMany
+    public function empleado_work_order(): HasMany
     {
-        return $this->hasMany(UserWorkOrder::class);
+        return $this->hasMany(EmpleadoWorkOrder::class);
     }
 }

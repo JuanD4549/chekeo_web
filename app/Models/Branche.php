@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Branche extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'enterprise_id',
-        'user_id',
+        'employee_id',
         'calendar_id',
         'name',
         'address',
@@ -23,23 +23,23 @@ class Branche extends Model
     {
         return $this->belongsTo(Enterprise::class);
     }
-    public function user(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employee::class);
     }
     public function departments(): HasMany
     {
         return $this->hasMany(Department::class);
     }
-    public function calendar():BelongsTo
+    public function calendar(): BelongsTo
     {
         return $this->belongsTo(Calendar::class);
     }
-    public function users()
+    public function employees(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Employee::class);
     }
-    public function reliefs()
+    public function reliefs(): HasMany
     {
         return $this->hasMany(Relief::class);
     }

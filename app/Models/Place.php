@@ -28,9 +28,9 @@ class Place extends Model
         return $this->hasMany(GuardRelief::class);
     }
 
-    public function users(): HasMany
+    public function security_guard(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(SecurityGuard::class);
     }
 
     public function rounds(): HasMany

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('branche_id');
             $table->foreignId('place_id');
-            $table->foreignId('user_id');
+            $table->foreignId('security_guard_id');
             $table->dateTime('date_time_closed')->nullable();
             $table->text('detail_close')->nullable();
             $table->timestamps();

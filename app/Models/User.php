@@ -28,30 +28,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected $table = 'users';
 
     protected $fillable = [
-        'department_id',
-        'branche_id',
-        'calendar_id',
-        'place_id',
         'name',
-        'ci',
-        'blood_type',
-        'drive_license',
         'email',
         'password',
-        'cellphone',
-        'phone',
-        'address',
-        'charge',
-        'country',
-        'province',
-        'city',
-        'date_in',
-        'enterprise_mail',
-        'enterpriser_phone',
-        'enterpriser_phone_ext',
         'avatar_url',
-        'type_user',
-        'status',
     ];
 
     /**
@@ -72,23 +52,10 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     //Filament
     public function getFilamentAvatarUrl(): ?string
     {
         return $this->avatar_url;
     }
-
-    
-
-    public function accesses(): HasMany
-    {
-        return $this->hasMany(Access::class);
-    }
-
-    public function representativeUsers(): HasMany
-    {
-        return $this->hasMany(RepresentativeUser::class);
-    }
-
-    
 }

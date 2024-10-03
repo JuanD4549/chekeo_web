@@ -10,7 +10,7 @@ class RegistrationVisit extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'employee_id',
         'branche_id',
         'visit_id',
         'visit_car_id',
@@ -20,9 +20,9 @@ class RegistrationVisit extends Model
         'img2_url',
     ];
 
-    public function user(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employee::class);
     }
 
     public function branche(): BelongsTo

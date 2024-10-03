@@ -11,8 +11,8 @@ class NoveltyRegistration extends Model
     use HasFactory;
     protected $fillable = [
         'branche_id',
-        'user_id',
-        'user_notificad_id',
+        'security_guard_id',
+        'employee_id',
         'novelty_id',
         'detail_created',
         'latitude',
@@ -29,14 +29,14 @@ class NoveltyRegistration extends Model
         return $this->belongsTo(Branche::class);
     }
 
-    public function user(): BelongsTo
+    public function security_guard(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SecurityGuard::class);
     }
 
-    public function user_notificad(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_notificad_id', 'id');
+        return $this->belongsTo(Employee::class);
     }
 
     public function novelty(): BelongsTo

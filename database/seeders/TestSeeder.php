@@ -22,60 +22,7 @@ class TestSeeder extends Seeder
             'legal_representative' => 'Jorge Salazar',
             'email' => 'digitaltempo@gmail.com',
         ]);
-        //3
-        DB::table('users')->insert([
-            'name' => 'Roberto',
-            'charge' => 'Boos',
-            'ci' => '1234567789',
-            'enterpriser_phone' => '0978657557',
-            'email' => 'Roberto@gmail.com',
-            'password' => Hash::make('digitaltempo2023%'),
-        ]);
-        //4
-        DB::table('users')->insert([
-            'name' => 'Luis',
-            'charge' => 'Admin',
-            'ci' => '12344567789',
-            'enterpriser_phone' => '0978657557',
-            'email' => 'Luis@gmail.com',
-            'password' => Hash::make('digitaltempo2023%'),
-        ]);
-        //5
-        DB::table('users')->insert([
-            'name' => 'Jose',
-            'charge' => 'Boss',
-            'ci' => '123445ew67789',
-            'enterpriser_phone' => '0978657557',
-            'email' => 'jose@gmail.com',
-            'password' => Hash::make('digitaltempo2023%'),
-        ]);
-        //6
-        DB::table('users')->insert([
-            'name' => 'Melany',
-            'charge' => 'Admin',
-            'ci' => '122344567789',
-            'enterpriser_phone' => '0978657557',
-            'email' => 'melany@gmail.com',
-            'password' => Hash::make('digitaltempo2023%'),
-        ]);
-        //7
-        DB::table('users')->insert([
-            'name' => 'Julio',
-            'charge' => 'Employee',
-            'ci' => '1223424567789',
-            'enterpriser_phone' => '0978657557',
-            'email' => 'julio@gmail.com',
-            'password' => Hash::make('digitaltempo2023%'),
-        ]);
-        //8
-        DB::table('users')->insert([
-            'name' => 'Pedro',
-            'charge' => 'Employee',
-            'ci' => '1223494567789',
-            'enterpriser_phone' => '0978657557',
-            'email' => 'pedro@gmail.com',
-            'password' => Hash::make('digitaltempo2023%'),
-        ]);
+        
         //1
         DB::table('branches')->insert([
             'enterprise_id' => 1,

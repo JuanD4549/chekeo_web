@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('accesses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branche_id');
-            $table->foreignId('user_id');
+            $table->foreignId('employee_id');
             $table->dateTime('date_time_in');
             $table->dateTime('date_time_out')->nullable();
             $table->timestamps();

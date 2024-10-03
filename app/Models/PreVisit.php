@@ -11,7 +11,7 @@ class PreVisit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'employee_id',
         'img_url',
         'visit_id',
         'date_time_in',
@@ -22,9 +22,9 @@ class PreVisit extends Model
         'status' => 'boolean',
     ];
 
-    public function user(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employee::class);
     }
 
     public function visit(): BelongsTo

@@ -13,7 +13,7 @@ class RegisterRound extends Model
     protected $fillable = [
         'branche_id',
         'place_id',
-        'user_id',
+        'security_guard_id',
         'date_time_closed',
         'detail_close',
     ];
@@ -28,9 +28,9 @@ class RegisterRound extends Model
         return $this->belongsTo(Place::class);
     }
 
-    public function user(): BelongsTo
+    public function security_guard(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SecurityGuard::class);
     }
 
     public function rounds(): HasMany

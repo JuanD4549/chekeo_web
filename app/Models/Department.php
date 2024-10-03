@@ -11,7 +11,7 @@ class Department extends Model
     use HasFactory;
     protected $fillable = [
         'branche_id',
-        'user_id',
+        'employee_id',
         'calendar_id',
         'name',
     ];
@@ -19,9 +19,9 @@ class Department extends Model
     {
         return $this->belongsTo(Branche::class);
     }
-    public function user(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Empleado::class);
     }
     public function calendar(): BelongsTo
     {

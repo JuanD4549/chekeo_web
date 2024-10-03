@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_work_order', function (Blueprint $table) {
+        Schema::create('scheduled_maintenance_employee', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('work_order_id');
+            $table->foreignId('employee_id');
+            $table->foreignId('scheduled_maintenance_id');
             $table->boolean('leader')->default(false);
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_work_order');
+        Schema::dropIfExists('scheduled_maintenance_employee');
     }
 };

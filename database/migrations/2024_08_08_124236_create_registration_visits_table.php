@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('registration_visits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('employee_id');
             $table->foreignId('branche_id');
             $table->foreignId('visit_id');
             $table->foreignId('visit_car_id')->nullable();

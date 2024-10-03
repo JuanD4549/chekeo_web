@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('novelty_registrations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branche_id');
-            $table->foreignId('user_id');
+            $table->foreignId('security_guard_id');
             $table->foreignId('user_notificad_id');
             $table->foreignId('novelty_id');
             $table->text('detail_created')->nullable();

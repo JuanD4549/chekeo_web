@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('relief_outs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('security_guard_id');
             $table->foreignId('detail_out_id');
             $table->foreignId('place_id');
             $table->timestamps();

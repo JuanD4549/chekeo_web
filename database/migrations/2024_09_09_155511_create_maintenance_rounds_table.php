@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('maintenance_rounds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('employee_id');
             $table->timestamps();
         });
     }

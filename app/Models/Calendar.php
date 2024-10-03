@@ -19,9 +19,9 @@ class Calendar extends Model
         'saturday',
         'sunday',
     ];
-    public function users(): HasMany
+    public function employees(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Employee::class);
     }
     public function branches(): HasMany
     {

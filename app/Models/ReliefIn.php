@@ -11,13 +11,13 @@ class ReliefIn extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'security_guard_id',
         'detail_in_id'
     ];
 
-    public function user(): BelongsTo
+    public function security_guard(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SecurityGuard::class);
     }
 
     public function detail_in():BelongsTo

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pre_visits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('employee_id');
             $table->foreignId('visit_id');
             $table->dateTime('date_time_in');
             $table->double('status')->default(false);

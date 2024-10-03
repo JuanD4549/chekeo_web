@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('security_guard_shifts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('security_guard_id');
             $table->foreignId('branche_id');
             $table->foreignId('place_id');
             $table->foreignId('detail_in_id')->nullable();

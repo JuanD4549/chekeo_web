@@ -11,7 +11,7 @@ class SecurityGuardShift extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'security_guard_id',
         'branche_id',
         'place_id',
         'detail_in_id',
@@ -19,9 +19,9 @@ class SecurityGuardShift extends Model
         'status',
     ];
 
-    public function user(): BelongsTo
+    public function security_guard(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SecurityGuard::class);
     }
 
     public function branche(): BelongsTo

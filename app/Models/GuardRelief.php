@@ -12,7 +12,7 @@ class GuardRelief extends Model
 
     protected $fillable = [
         'place_id',
-        'user_id',
+        'security_guard_id',
         'turn_in_id',
         'turn_out_id',
     ];
@@ -22,9 +22,9 @@ class GuardRelief extends Model
         return $this->belongsTo(Place::class);
     }
 
-    public function user(): BelongsTo
+    public function security_guard(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(SecurityGuard::class);
     }
 
     public function turn_in(): BelongsTo

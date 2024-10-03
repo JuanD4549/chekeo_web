@@ -67,54 +67,6 @@ class UserResource extends Resource
                             ->label(__('general.form.name'))
                             ->required()
                             ->maxLength(255),
-                        Toggle::make('status')
-                            ->label(__('general.form.status'))
-                            ->default(true),
-                        Select::make('blood_type')
-                            ->label(__('general.form.blood_type'))
-                            ->options([
-                                'O+' => 'O+',
-                                'O-' => 'O-',
-                                'A+' => 'A+',
-                                'A-' => 'A-',
-                                'B+' => 'B+',
-                                'B-' => 'B-',
-                                'AB+' => 'AB+',
-                                'AB-' => 'AB-',
-                            ]),
-                        Select::make('drive_license')
-                            ->label(__('general.form.drive_license'))
-                            ->options([
-                                'A' => 'A',
-                                'B' => 'B',
-                                'F' => 'F',
-                                'A1' => 'A1',
-                                'C' => 'C',
-                                'C1' => 'C1',
-                                'D' => 'D',
-                                'D1' => 'D1',
-                                'E' => 'E',
-                                'E1' => 'E1',
-                                'G' => 'G'
-                            ]),
-                        TextInput::make('cellphone')
-                            ->label(__('general.form.cellphone'))
-                            ->maxLength(10),
-                        TextInput::make('phone')
-                            ->label(__('general.form.phone'))
-                            ->maxLength(10),
-                        TextInput::make('address')
-                            ->label(__('general.form.address'))
-                            ->maxLength(255),
-                        TextInput::make('country')
-                            ->label(__('general.form.country'))
-                            ->maxLength(255),
-                        TextInput::make('province')
-                            ->label(__('general.form.province'))
-                            ->maxLength(255),
-                        TextInput::make('city')
-                            ->label(__('general.form.city'))
-                            ->maxLength(255),
                     ]),
 
                 Section::make('')
@@ -130,57 +82,7 @@ class UserResource extends Resource
                             ->password()
                             ->required()
                             ->hiddenOn('edit'),
-                        Select::make('branche_id')
-                            ->relationship('branche', 'name')
-                            ->preload()
-                            ->searchable()
-                            ->live()
-                            ->afterStateUpdated(function (Set $set) {
-                                $set('department_id', null);
-                                $set('place_id', null);
-                            }),
-                        Select::make('department_id')
-                            ->label(__('general.pages.department'))
-                            ->disabled(fn(Get $get): bool => $get('branche_id') == null)
-                            ->required(fn(Get $get): bool => $get('branche_id') != null)
-                            ->options(
-                                fn(Get $get): Collection => Department::query()
-                                    ->where('id', $get('branche_id'))
-                                    ->pluck('name', 'id')
-                            )
-                            ->relationship('department', 'name'),
-                        Select::make('place_id')
-                            ->label(__('general.pages.place'))
-                            ->disabled(fn(Get $get): bool => $get('branche_id') == null)
-                            ->required(fn(Get $get): bool => $get('branche_id') != null)
-                            ->options(
-                                fn(Get $get): Collection => Place::query()
-                                    ->where('branche_id', $get('branche_id'))
-                                    ->pluck('name', 'id')
-                            )
-                            ->relationship('place', 'name'),
-                        TextInput::make('charge')
-                            ->label(__('general.form.charge'))
-                            ->maxLength(255),
-                        DateTimePicker::make('date_in')
-                            ->label(__('general.date.date_in')),
-                        TextInput::make('enterprise_mail')
-                            ->label(__('general.form.enterprise_mail'))
-                            ->email()
-                            ->maxLength(255),
-                        TextInput::make('enterpriser_phone')
-                            ->label(__('general.form.enterprise_phone'))
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('enterpriser_phone_ext')
-                            ->label(__('general.form.enterprise_phone_ext'))
-                            ->maxLength(10),
-                        Select::make('type_user')
-                            ->label(__('general.form.type_employee'))
-                            ->options([
-                                'fixed' => __('general.select.fixed'),
-                                'external' => __('general.select.external')
-                            ]),
+
                     ]),
             ]);
     }
@@ -192,19 +94,7 @@ class UserResource extends Resource
                 TextColumn::make('name')
                     ->label(__('general.form.name'))
                     ->searchable(),
-                TextColumn::make('branche.name')
-                    ->label(__('general.pages.branche'))
-                    ->searchable(),
-                TextColumn::make('department.name')
-                    ->label(__('general.pages.department'))
-                    ->searchable(),
-                TextColumn::make('charge')
-                    ->label(__('general.form.charge'))
-                    ->searchable(),
-                IconColumn::make('status')
-                    ->label(__('general.form.status'))
-                    ->sortable()
-                    ->boolean(),
+
                 TextColumn::make('roles.name'),
             ])
             ->filters([
