@@ -12,8 +12,8 @@ class Visit extends Model
 
     protected $fillable=[
         'name',
-        'img_url',
         'ci',
+        'img1_url',
         'cellphone',
         'info_visit',
     ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NoveltyResource;
 use App\Models\Novelty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoveltyController extends Controller
 {
@@ -13,17 +14,16 @@ class NoveltyController extends Controller
      */
     public function index()
     {
-        $message = 'Exito';
-        $codeStatus = 200;
-        $novelty = Novelty::select('*')
-            ->orderBy('id', 'DESC')
-            ->get();
-
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
+            $novelty = Novelty::select('*')
+                ->orderBy('id', 'DESC')
+                ->limit(200)
+                ->get();
+        }
         return response()
-            ->json([
-                'message' => $message,
-                'novelty' => NoveltyResource::collection($novelty),
-            ], $codeStatus);
+            ->json(NoveltyResource::collection($novelty), 200);
     }
 
     /**

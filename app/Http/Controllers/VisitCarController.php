@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\VisitCarResource;
 use App\Models\VisitCar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VisitCarController extends Controller
 {
@@ -13,26 +14,20 @@ class VisitCarController extends Controller
      */
     public function index()
     {
-        $message = 'Exito';
-        $codeStatus = 200;
-        try {
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
             $visitCars = VisitCar::select('*')
                 ->orderBy('id', 'DESC')
+                ->limit(200)
                 ->get();
             //dd($registerRounds);
-
-            return response()
-                ->json([
-                    'message' => $message,
-                    'visit_cars' => VisitCarResource::collection($visitCars),
-                ], $codeStatus);
-        } catch (\Throwable $th) {
-            return response()
-                ->json([
-                    'message' => $th,
-                    //'registerRounds' => RegisterRoundResource::collection($registerRounds),
-                ], 500);
         }
+        return response()
+            ->json(
+                VisitCarResource::collection($visitCars),
+                200
+            );
     }
 
     /**
@@ -52,7 +47,17 @@ class VisitCarController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show($id)
+    {
+        $visitCars = VisitCar::findOrFail($id);
+
+        //dd($registerRounds);
+
+        return response()
+            ->json(new VisitCarResource($visitCars), 200);
+    }
+
+    public function search(Request $request)
     {
         $visitCars = VisitCar::where('license_plate', 'like', "%{$request->valor}%")
             ->get();
@@ -67,7 +72,6 @@ class VisitCarController extends Controller
         return response()
             ->json(VisitCarResource::collection($visitCars), 200);
     }
-
     /**
      * Update the specified resource in storage.
      */

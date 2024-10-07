@@ -14,12 +14,18 @@ class VisitResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $fotos = new FotoResource($request);
+        //dd($fotos->resolve());
+        $fotosFiltered = array_filter($fotos->resolve(), function ($item) {
+            return $item !== null;
+        });
         return [
             'id' => $this->id,
             'name' => $this->name,
             'ci' => $this->ci,
             'cellphone' => $this->cellphone,
             'info_visit' => $this->info_visit,
+            'img' => $fotosFiltered,
         ];
     }
 }

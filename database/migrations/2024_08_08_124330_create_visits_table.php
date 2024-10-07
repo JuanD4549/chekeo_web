@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->string('img_url',500);
+            $table->string('img1_url',500)->nullable();
             $table->string('name');
-            $table->string('ci');
+            $table->string('ci')->unique();
             $table->string('cellphone');
             $table->string('info_visit');
             $table->timestamps();

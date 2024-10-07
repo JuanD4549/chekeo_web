@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('visit_cars', function (Blueprint $table) {
             $table->id();
-            $table->string('license_plate');
+            $table->string('license_plate')->unique();
             $table->timestamps();
         });
     }

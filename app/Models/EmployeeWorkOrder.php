@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class EmpleadoWorkOrder extends Pivot
+class EmployeeWorkOrder extends Pivot
 {
     use HasFactory;
     protected $fillable = [
-        'Empleado_id',
+        'employee_id',
         'work_order_id',
         'leader'
     ];
 
-    public function empleado(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Employee::class);
     }
 
     public function work_order(): BelongsTo

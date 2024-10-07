@@ -60,7 +60,7 @@ class Employee extends Model
 
     public function empleado_work_order(): HasMany
     {
-        return $this->hasMany(EmpleadoWorkOrder::class);
+        return $this->hasMany(EmployeeWorkOrder::class);
     }
 
     public function scheduled_maintenance_empleado(): HasMany

@@ -22,8 +22,6 @@ class RoundController extends Controller
 
     public function store(Request $request)
     {
-        $message = 'Exito';
-        $codeStatus = 201;
         try {
             $round = new Round();
             $round['register_round_id'] = $request->register_round_id;
@@ -34,14 +32,13 @@ class RoundController extends Controller
             }
             $round->save();
         } catch (\Throwable $th) {
-            $codeStatus = 500;
             return response()
-                ->json(['message' => $th], $codeStatus);
+                ->json(null, 500);
         }
 
 
         return response()
-            ->json(new RoundResource($round), $codeStatus);
+            ->json(new RoundResource($round), 201);
     }
 
     private function transformImg($imgString, $folder)

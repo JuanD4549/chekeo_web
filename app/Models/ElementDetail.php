@@ -17,12 +17,19 @@ class ElementDetail extends Model
         'detail',
     ];
 
-    public function maintenance_round_detail():BelongsTo
+    protected function casts(): array
+    {
+        return [
+            'status' => 'boolean',
+        ];
+    }
+
+    public function maintenance_round_detail(): BelongsTo
     {
         return $this->belongsTo(MaintenanceRoundDetail::class);
     }
 
-    public function element():BelongsTo
+    public function element(): BelongsTo
     {
         return $this->belongsTo(Element::class);
     }

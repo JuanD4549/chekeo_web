@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\RegistrationVisitResource;
 use App\Models\RegistrationVisit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrationVisitController extends Controller
 {
@@ -13,26 +14,19 @@ class RegistrationVisitController extends Controller
      */
     public function index()
     {
-        $message = 'Exito';
-        $codeStatus = 200;
-        try {
-            $registerVisits = RegistrationVisit::select('*')
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
+            $registerVisits = RegistrationVisit::select('id')
                 ->orderBy('id', 'DESC')
                 ->get();
             //dd($registerRounds);
-
-            return response()
-                ->json([
-                    'message' => $message,
-                    'registerVisits' => RegistrationVisitResource::collection($registerVisits),
-                ], $codeStatus);
-        } catch (\Throwable $th) {
-            return response()
-                ->json([
-                    'message' => $th,
-                    //'registerRounds' => RegisterRoundResource::collection($registerRounds),
-                ], 500);
         }
+        return response()
+            ->json(
+                RegistrationVisitResource::collection($registerVisits),
+                200
+            );
     }
 
     /**
@@ -57,8 +51,9 @@ class RegistrationVisitController extends Controller
     public function store(Request $request)
     {
         //
+        //dd($request);
         $registerVisit = new RegistrationVisit();
-        $registerVisit['user_id'] = $request->user_id;
+        $registerVisit['employee_id'] = $request->employee_id;
         $registerVisit['branche_id'] = $request->branche_id;
         $registerVisit['visit_id'] = $request->visit_id;
         $registerVisit['visit_car_id'] = $request->visit_car_id;
@@ -78,20 +73,21 @@ class RegistrationVisitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RegistrationVisit $registrationVisit)
+    public function show($id)
     {
-        //
+        $register_visit = RegistrationVisit::findOrFail($id);
+        return response()->json(new RegistrationVisitResource($register_visit), 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RegistrationVisit $registrationVisit)
+    public function update(Request $request, $id)
     {
-        $registerVisit = RegistrationVisit::find($request->id);
+        //dd($request->all());
+        $registerVisit = RegistrationVisit::findOrFail($id);
         $registerVisit['date_time_out'] = $request->date_time_out;
         //$registerVisit['date_time_in'] = $request->date_time_in;
-
         $registerVisit->save();
         return response()
             ->json(new RegistrationVisitResource($registerVisit), 200);

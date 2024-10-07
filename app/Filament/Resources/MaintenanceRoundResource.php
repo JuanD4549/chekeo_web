@@ -45,9 +45,9 @@ class MaintenanceRoundResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
+                Forms\Components\Select::make('employee_id')
                     ->label(__('general.pages.employee'))
-                    ->relationship('user', 'name')
+                    ->relationship('employee', 'name')
                     ->disabledOn('edit')
                     ->columnSpanFull()
                     ->required(),
@@ -134,7 +134,7 @@ class MaintenanceRoundResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('employee.name')
                     ->label(__('general.pages.employee'))
                     ->searchable()
                     ->sortable(),

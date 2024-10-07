@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NoveltyRegistrationResource;
 use App\Models\NoveltyRegistration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoveltyRegistrationController extends Controller
 {
@@ -13,35 +14,19 @@ class NoveltyRegistrationController extends Controller
      */
     public function index()
     {
-        $message = 'Exito';
-        $codeStatus = 200;
-        try {
+
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
+
             $registerNoveltys = NoveltyRegistration::select('*')
                 ->orderBy('id', 'DESC')
+                ->limit(200)
                 ->get();
-        } catch (\Throwable $th) {
-            $codeStatus = 500;
-            return response()
-                ->json([
-                    'message' => $th,
-                    //'registerNoveltys' => NoveltyRegistrationResource::collection($registerNoveltys),
-                ], $codeStatus);
         }
-        try {
-            $json = NoveltyRegistrationResource::collection($registerNoveltys);
-        } catch (\Throwable $th) {
-            $codeStatus = 400;
-            return response()
-                ->json([
-                    'message' => $th,
-                    //'registerNoveltys' => NoveltyRegistrationResource::collection($registerNoveltys),
-                ], $codeStatus);
-        }
+
         return response()
-            ->json([
-                'message' => $message,
-                'registerNoveltys' => $json,
-            ], $codeStatus);
+            ->json(NoveltyRegistrationResource::collection($registerNoveltys), 200);
     }
 
     /**
@@ -65,12 +50,11 @@ class NoveltyRegistrationController extends Controller
 
     public function store(Request $request)
     {
-        $codeStatus = 201;
         try {
             $registerNovelty = new  NoveltyRegistration();
             $registerNovelty['branche_id'] = $request->branche_id;
-            $registerNovelty['user_id'] = $request->user_id;
-            $registerNovelty['user_notificad_id'] = $request->user_notificad_id;
+            $registerNovelty['security_guard_id'] = $request->user_id;
+            $registerNovelty['employee_id'] = $request->user_notificad_id;
             $registerNovelty['novelty_id'] = $request->novelty_id;
             $registerNovelty['detail_created'] = $request->detail_created;
             $registerNovelty['latitude'] = $request->latitude;
@@ -91,24 +75,21 @@ class NoveltyRegistrationController extends Controller
             return response()
                 ->json(
                     //new NoveltyRegistrationResource($registerNovelty),
-                    $codeStatus
+                    201
                 );
         } catch (\Exception $th) {
-            $codeStatus = 500;
             return response()
-                ->json([
-                    'message' => $th,
-                    //'registerNoveltys' => NoveltyRegistrationResource::collection($registerNoveltys),
-                ], $codeStatus);
+                ->json(null, 500);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(NoveltyRegistration $noveltyRegistration)
+    public function show($id)
     {
-        //
+        $novelty_registration = NoveltyRegistration::findOrFail();
+        return response()->json(new NoveltyRegistrationResource($novelty_registration), 200);
     }
 
     /**
@@ -126,7 +107,7 @@ class NoveltyRegistrationController extends Controller
             //$registerNovelty['longitude'] = $request->longitude;
             //$registerNovelty['user_notificad_id'] = $request->user_notificad_id;
             //$registerNovelty['novelty_id'] = $request->novelty_id;
-            
+
             $registerNovelty->save();
             return response()
                 ->json(

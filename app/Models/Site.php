@@ -22,7 +22,6 @@ class Site extends Model
     {
         return $this->hasMany(Element::class);
     }
-
     public function scheduled_maintenance(): HasMany
     {
         return $this->hasMany(ScheduledMaintenance::class);

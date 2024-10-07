@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,17 +14,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $message = 'Exito';
-        $codeStatus = 200;
-        $users = User::select('*')
-            ->orderBy('id', 'DESC')
-            ->get();
-
+        $roles = Auth::user()->roles->first();
+        //dd($roles->name);
+        if ($roles->name == 'super_admin') {
+            $users = User::orderBy('id', 'DESC')
+                ->get();
+        }
         return response()
-            ->json([
-                'message' => $message,
-                'users' => UserResource::collection($users),
-            ], $codeStatus);
+            ->json(
+                UserResource::collection($users),
+                200
+            );
     }
 
     /**

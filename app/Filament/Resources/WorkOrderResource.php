@@ -74,14 +74,14 @@ class WorkOrderResource extends Resource
                     ->disabledOn('edit')
                     ->relationship('site', 'name')
                     ->required(),
-                Forms\Components\Repeater::make('user_work_order')
+                Forms\Components\Repeater::make('employee_work_order')
                     ->label(__('general.pages.employees'))
                     ->disabledOn('edit')
                     ->relationship()
                     ->schema([
-                        Forms\Components\Select::make('user_id')
+                        Forms\Components\Select::make('employee_id')
                             ->label(__('general.pages.employee'))
-                            ->relationship('user', 'name')
+                            ->relationship('employee', 'name')
                             ->required(),
                         Forms\Components\Checkbox::make('leader')
                             ->label(__('general.form.leader'))
