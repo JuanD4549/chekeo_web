@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('scheduled_maintenances', function (Blueprint $table) {
             $table->id();
             $table->boolean('active')->default(true);
-            $table->json('in_day_time');
-            $table->json('days')->nullable();
-            $table->json('months')->nullable();
+            $table->array('in_day_time');
+            $table->array('days')->nullable();
+            $table->array('months')->nullable();
             $table->boolean('for_days')->default(true);
-            $table->json('days_num')->nullable();
-            $table->json('the')->nullable();
+            $table->array('days_num')->nullable();
+            $table->array('the')->nullable();
             $table->foreignId('site_id');
             $table->text('description')->nullable();
             $table->enum('priority', ['high', 'medium', 'low'])->default('medium');

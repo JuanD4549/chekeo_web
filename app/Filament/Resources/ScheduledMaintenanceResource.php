@@ -56,13 +56,13 @@ class ScheduledMaintenanceResource extends Resource
                             ->label(__('general.pages.site'))
                             ->relationship('site', 'name')
                             ->required(),
-                        Forms\Components\Repeater::make('scheduled_maintenance_user')
+                        Forms\Components\Repeater::make('scheduled_maintenance_employee')
                             ->label(__('general.pages.employees'))
                             ->relationship()
                             ->schema([
-                                Forms\Components\Select::make('user_id')
+                                Forms\Components\Select::make('employee_id')
                                     ->label(__('general.pages.employee'))
-                                    ->relationship('user', 'name')
+                                    ->relationship('employee', 'name')
                                     ->required(),
                                 Forms\Components\Checkbox::make('leader')
                                     ->label(__('general.form.leader'))

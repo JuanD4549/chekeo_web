@@ -15,16 +15,24 @@ class EmployeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        //dd($request->route()->uri());
+        //$condicion = $request->route()->uri() == "api/employee/{id}";
+        $department = new DepartmentResource($this->department);
+        $branche = new BrancheResource($this->branche);
+
         return [
             'id' => $this->id,
-            'department' => new DepartmentResource($this->department),
-            'branche' => new BrancheResource($this->branche),
-            'calendar' => new CalendarResource($this->calendar),
-            'user' => new UserResource($this->user),
+            'department' => $department['name'],
+            'branche' => $branche['name'],
+            //'calendar' => new CalendarResource($this->whenLoaded('calendar')),
+            //'user' => new UserResource($this->whenLoaded('user')),
             'name' => $this->name,
+            //'ci' => $this->when($condicion, 'ci'),
             'ci' => $this->ci,
+            //'blood_type' => $this->when($condicion, 'blood_type'),
             'blood_type' => $this->blood_type,
             'drive_license' => $this->drive_license ?? '',
+            //'email' => $this->when($condicion, 'email'),
             'email' => $this->email,
             'cellphone' => $this->cellphone ?? '',
             'phone' => $this->phone ?? '',
@@ -37,7 +45,9 @@ class EmployeeResource extends JsonResource
             'enterprise_mail' => $this->enterprise_mail ?? '',
             'enterprise_phone' => $this->enterprise_phone ?? '',
             'enterpriser_phone_ext' => $this->enterpriser_phone_ext ?? '',
+            //'status' => $this->when($condicion, 'status'),
             'status' => $this->status,
+            //'created_at' => $this->when($condicion, 'created_at'),
             'created_at' => $this->created_at,
         ];
     }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VisitResource extends JsonResource
+class WorkOrderDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,11 +21,10 @@ class VisitResource extends JsonResource
         });
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'ci' => $this->ci,
-            'cellphone' => $this->cellphone,
-            'info_visit' => $this->info_visit ?? '',
+            'advance' => $this->advance,
+            'detail' => $this->detail ?? '',
             'img' => $fotosFiltered,
+            'created_at' => $this->created_at
         ];
     }
 }

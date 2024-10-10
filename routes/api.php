@@ -21,7 +21,17 @@ Route::middleware('auth:sanctum')
     ->group(function () {
         //LogOut
         Route::get('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
-
+        //Profile
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [\App\Http\Controllers\ProfileController::class, 'show'])->name('api.profile.show');
+        });
+        //Employee
+        Route::prefix('employee')->group(function () {
+            Route::get('/', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('api.employee.index');
+            Route::get('/{id}', [\App\Http\Controllers\EmployeeController::class, 'show'])->name('api.employee.show');
+            //Route::post('/', [\App\Http\Controllers\EmployeeController::class, 'store'])->name('api.employee.store');
+            //Route::put('/{id}', [\App\Http\Controllers\EmployeeController::class, 'update'])->name('api.employee.update');
+        });
         //Place
         Route::prefix('place')->group(function () {
             Route::get('/places', [\App\Http\Controllers\PlaceController::class, 'places'])->name('api.place.places');
@@ -113,6 +123,42 @@ Route::middleware('auth:sanctum')
             Route::post('/', [\App\Http\Controllers\ElementDetailController::class, 'store'])->name('api.elementDetail.store');
             Route::get('/{id}', [\App\Http\Controllers\ElementDetailController::class, 'show'])->name('api.elementDetail.show');
             Route::put('/{id}', [\App\Http\Controllers\ElementDetailController::class, 'update'])->name('api.elementDetail.update');
+        });
+        //Work Orders
+        Route::prefix('workOrder')->group(function () {
+            Route::get('/', [\App\Http\Controllers\WorkOrderController::class, 'index'])->name('api.workOrder.index');
+            Route::post('/', [\App\Http\Controllers\WorkOrderController::class, 'store'])->name('api.workOrder.store');
+            Route::get('/{id}', [\App\Http\Controllers\WorkOrderController::class, 'show'])->name('api.workOrder.show');
+            Route::put('/{id}', [\App\Http\Controllers\WorkOrderController::class, 'update'])->name('api.workOrder.update');
+            Route::put('/closed/{id}', [\App\Http\Controllers\WorkOrderController::class, 'closed'])->name('api.workOrder.closed');
+        });
+        //Work Order Detail
+        Route::prefix('workOrderDetail')->group(function () {
+            Route::get('/', [\App\Http\Controllers\WorkOrderDetailController::class, 'index'])->name('api.workOrderDetail.index');
+            Route::post('/', [\App\Http\Controllers\WorkOrderDetailController::class, 'store'])->name('api.workOrderDetail.store');
+            Route::get('/{id}', [\App\Http\Controllers\WorkOrderDetailController::class, 'show'])->name('api.workOrderDetail.show');
+            Route::put('/{id}', [\App\Http\Controllers\WorkOrderDetailController::class, 'update'])->name('api.workOrderDetail.update');
+        });
+        //Employee Work Order
+        Route::prefix('employeeWorkOrder')->group(function () {
+            Route::get('/', [\App\Http\Controllers\EmployeeWorkOrderController::class, 'index'])->name('api.employeeWorkOrder.index');
+            Route::post('/', [\App\Http\Controllers\EmployeeWorkOrderController::class, 'store'])->name('api.employeeWorkOrder.store');
+            Route::get('/{id}', [\App\Http\Controllers\EmployeeWorkOrderController::class, 'show'])->name('api.employeeWorkOrder.show');
+            Route::put('/{id}', [\App\Http\Controllers\EmployeeWorkOrderController::class, 'update'])->name('api.employeeWorkOrder.update');
+        });
+        //Scheduled Maintenance
+        Route::prefix('scheduledMaintenance')->group(function () {
+            Route::get('/', [\App\Http\Controllers\ScheduledMaintenanceController::class, 'index'])->name('api.scheduledMaintenance.index');
+            Route::post('/', [\App\Http\Controllers\ScheduledMaintenanceController::class, 'store'])->name('api.scheduledMaintenance.store');
+            Route::get('/{id}', [\App\Http\Controllers\ScheduledMaintenanceController::class, 'show'])->name('api.scheduledMaintenance.show');
+            Route::put('/{id}', [\App\Http\Controllers\ScheduledMaintenanceController::class, 'update'])->name('api.scheduledMaintenance.update');
+        });
+        //Scheduled Maintenance Employee
+        Route::prefix('scheduledMaintenanceEmployee')->group(function () {
+            Route::get('/', [\App\Http\Controllers\ScheduledMaintenanceEmployeeController::class, 'index'])->name('api.scheduledMaintenanceEmployee.index');
+            Route::post('/', [\App\Http\Controllers\ScheduledMaintenanceEmployeeController::class, 'store'])->name('api.scheduledMaintenanceEmployee.store');
+            Route::get('/{id}', [\App\Http\Controllers\ScheduledMaintenanceEmployeeController::class, 'show'])->name('api.scheduledMaintenanceEmployee.show');
+            Route::put('/{id}', [\App\Http\Controllers\ScheduledMaintenanceEmployeeController::class, 'update'])->name('api.scheduledMaintenanceEmployee.update');
         });
     });
 //Access

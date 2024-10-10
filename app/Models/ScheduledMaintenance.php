@@ -37,8 +37,8 @@ class ScheduledMaintenance extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function scheduled_maintenance_user(): HasMany
+    public function scheduled_maintenance_employee(): HasMany
     {
-        return $this->hasMany(ScheduledMaintenanceUser::class);
+        return $this->hasMany(ScheduledMaintenanceEmployee::class);
     }
 }

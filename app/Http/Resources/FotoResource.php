@@ -17,6 +17,8 @@ class FotoResource extends JsonResource
         return [
             $this->img1_url,
             $this->img2_url,
+            $this->img3_url,
+            $this->img4_url,
         ];
     }
 }

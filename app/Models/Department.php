@@ -21,7 +21,7 @@ class Department extends Model
     }
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Employee::class);
     }
     public function calendar(): BelongsTo
     {

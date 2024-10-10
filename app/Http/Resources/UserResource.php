@@ -24,9 +24,8 @@ class UserResource extends JsonResource
         }
         return [
             'id' => $this->id,
-            'name_user' => $this->name,
+            'name' => $this->name,
             'rol' => $rol,
-            'data' => '',
         ];
     }
 }

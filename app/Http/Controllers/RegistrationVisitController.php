@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RegistrationVisitIndexResource;
 use App\Http\Resources\RegistrationVisitResource;
 use App\Models\RegistrationVisit;
 use Illuminate\Http\Request;
@@ -17,14 +18,14 @@ class RegistrationVisitController extends Controller
         $roles = Auth::user()->roles->first();
         //dd($roles->name);
         if ($roles->name == 'super_admin') {
-            $registerVisits = RegistrationVisit::select('id')
+            $registerVisits = RegistrationVisit::limit(200)
                 ->orderBy('id', 'DESC')
                 ->get();
             //dd($registerRounds);
         }
         return response()
             ->json(
-                RegistrationVisitResource::collection($registerVisits),
+                RegistrationVisitIndexResource::collection($registerVisits),
                 200
             );
     }

@@ -18,18 +18,21 @@ class WorkOrder extends Model
         'priority',
         'state',
         'date_time_closed',
+        'description_closed',
         'img1_url',
         'img2_url',
+        'img3_url',
+        'img4_url',
     ];
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);
     }
 
-    public function employee(): BelongsToMany
-    {
-        return $this->belongsToMany(Employee::class)->withPivot('leader');
-    }
+    //public function employee(): BelongsToMany
+    //{
+    //    return $this->belongsToMany(Employee::class)->withPivot('leader');
+    //}
 
     public function work_order_details(): HasMany
     {

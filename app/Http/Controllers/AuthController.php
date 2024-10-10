@@ -22,17 +22,14 @@ class AuthController extends Controller
 
         return response()
             ->json([
-                'message' => 'Hi',
-                'accessToken' => $toke,
-                'token_type' => 'Bearer',
+                'access_token' => $toke,
+                //'token_type' => 'Bearer',
                 'user' => new UserResource($user),
-            ]);
+            ], 200);
     }
     public function logout()
     {
         auth()->user()->tokens()->delete();
-        return [
-            'message' => 'Cerrado'
-        ];
+        return response()->isOk();
     }
 }
