@@ -47,10 +47,9 @@ class DepartmentResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('user_id')
-                    ->label(__('general.pages.employee'))
+                Forms\Components\Select::make('employee_id')
                     ->label(__('general.form.boss'))
-                    ->relationship('user', 'name')
+                    ->relationship('employee', 'name', fn (Builder $query) => $query->where('charge','boss'))
                     ->required(),
                 Forms\Components\Select::make('calendar_id')
                     ->label(__('general.pages.calendar'))
