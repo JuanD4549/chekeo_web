@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use DateTime;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'admin',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //DB::table('employees')->insert([
         //    'name' => 'DigitalTempo',
@@ -29,6 +32,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => '123456799',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Juan Diego',
@@ -37,11 +42,15 @@ class UserSeeder extends Seeder
             'enterpriser_phone' => '0978657557',
             'email' => 'juandiego402@gmail.com',
             'user_id' => 2,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //3
         DB::table('users')->insert([
             'name' => '1234567789',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Roberto',
@@ -50,11 +59,15 @@ class UserSeeder extends Seeder
             'enterpriser_phone' => '0978657557',
             'email' => 'Roberto@gmail.com',
             'user_id' => 3,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //4
         DB::table('users')->insert([
             'name' => '12344567789',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Luis',
@@ -63,11 +76,15 @@ class UserSeeder extends Seeder
             'email' => 'Luis@gmail.com',
             'enterpriser_phone' => '0978657557',
             'user_id' => 4,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //5
         DB::table('users')->insert([
             'name' => '123445ew67789',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Jose',
@@ -76,11 +93,15 @@ class UserSeeder extends Seeder
             'email' => 'jose@gmail.com',
             'enterpriser_phone' => '0978657557',
             'user_id' => 5,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //6
         DB::table('users')->insert([
             'name' => '122344567789',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Melany',
@@ -89,11 +110,15 @@ class UserSeeder extends Seeder
             'email' => 'melany@gmail.com',
             'enterpriser_phone' => '0978657557',
             'user_id' => 6,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //7
         DB::table('users')->insert([
             'name' => '1223424567789',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Julio',
@@ -102,11 +127,15 @@ class UserSeeder extends Seeder
             'email' => 'julio@gmail.com',
             'enterpriser_phone' => '0978657557',
             'user_id' => 7,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         //8
         DB::table('users')->insert([
             'name' => '1223494567789',
             'password' => Hash::make('digitaltempo2023%'),
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
         DB::table('employees')->insert([
             'name' => 'Pedro',
@@ -115,6 +144,8 @@ class UserSeeder extends Seeder
             'enterpriser_phone' => '0978657557',
             'email' => 'pedro@gmail.com',
             'user_id' => 8,
+            'created_at' => new DateTime(),
+            'updated_at' => new DateTime(),
         ]);
     }
 }

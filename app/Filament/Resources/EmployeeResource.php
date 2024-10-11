@@ -70,25 +70,35 @@ class EmployeeResource extends Resource
                     ->relationship(
                         'user',
                     )
-                    ->columns(3)
+                    ->columnSpanFull()
+                    ->columns(4)
                     ->schema([
                         FileUpload::make('avatar_url')
                             ->label(__('general.form.photo', ['number' => '']))
                             ->directory('users')
                             ->avatar(),
                         TextInput::make('name')
-                            ->label(__('general.form.name'))
+                            ->label(__('general.form.user'))
+                            ->live()
+                            //->default(fn(Get $get) => $get('ci'))
                             ->disabled(),
                         TextInput::make('password')
                             ->label(__('general.form.password'))
                             ->password()
                             ->required()
                             ->hiddenOn('edit'),
+                        Select::make('roles')
+                            //->multiple()
+                            ->relationship('roles', 'name')
+                            ->preload()
+                            ->searchable(),
                     ]),
                 Section::make(__('general.data.data_employee'))
                     ->columns(3)
                     ->schema([
-
+                        Toggle::make('status')
+                            ->label(__('general.form.status'))
+                            ->default(true),
                         TextInput::make('email')
                             ->label(__('general.form.mail'))
                             ->email()
@@ -98,11 +108,15 @@ class EmployeeResource extends Resource
                             ->label(__('general.form.name'))
                             ->required()
                             ->maxLength(255),
-                        Toggle::make('status')
-                            ->label(__('general.form.status'))
-                            ->default(true),
+                        TextInput::make('ci')
+                            ->label(__('general.form.ci'))
+                            ->required()
+                            //->live()
+                            ->afterStateUpdated(fn(Set $set, Get $get,$state) => $set('user.name', $state))
+                            ->maxLength(10),
                         Select::make('blood_type')
                             ->label(__('general.form.blood_type'))
+                            //->default('O+')
                             ->options([
                                 'O+' => 'O+',
                                 'O-' => 'O-',
@@ -170,9 +184,15 @@ class EmployeeResource extends Resource
                         //->preload()
                         //->relationship('user', 'name')
                         ,
-                        TextInput::make('charge')
+                        Select::make('charge')
                             ->label(__('general.form.charge'))
-                            ->maxLength(255),
+                            ->options([
+                                'admin' => __('general.form.admin'),
+                                'boss' => __('general.form.boss'),
+                                'guard_user' => __('general.form.guard_user'),
+                                'employee' => __('general.form.employee'),
+                                'maintenance_user' => __('general.form.maintenance_user')
+                            ]),
                         DateTimePicker::make('date_in')
                             ->label(__('general.date.date_in')),
                         TextInput::make('enterprise_mail')
