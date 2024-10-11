@@ -11,11 +11,11 @@ class TurnOut extends Model
     use HasFactory;
 
     protected $fillable=[
-        'employee_id'
+        'security_guard_id'
     ];
 
-    public function employee(): BelongsTo
+    public function security_guard(): BelongsTo
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(SecurityGuard::class);
     }
 }

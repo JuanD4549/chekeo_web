@@ -62,7 +62,7 @@ class PlaceResource extends Resource
                             ->required(),
                         //Forms\Components\Select::make('users')
                         //    ->multiple()
-                        //    ->relationship('user','name')
+                        //    ->relationship('security_guard','name')
                         //    ->required(),
                         Forms\Components\TextInput::make('name')
                             ->label(__('general.form.name'))
@@ -83,10 +83,10 @@ class PlaceResource extends Resource
                                         ->relationship('turn_in')
                                         //->columns(1)
                                         ->schema([
-                                            Forms\Components\Select::make('user_id')
+                                            Forms\Components\Select::make('security_guard_id')
                                                 ->label(__('general.form.guard'))
                                                 ->live()
-                                                ->relationship('user', 'name')
+                                                ->relationship('security_guard', 'name')
                                                 ->getOptionLabelFromRecordUsing(fn(Model $record) => "{$record->name} / {$record->ci}")
                                                 ->required(fn(Get $get): bool => !$get('type')),
                                         ]),
@@ -94,24 +94,24 @@ class PlaceResource extends Resource
                                         ->relationship('turn_out')
                                         ->live()
                                         ->schema([
-                                            Forms\Components\Select::make('user_id')
+                                            Forms\Components\Select::make('security_guard_id')
                                                 ->label(__('general.form.guard'))
-                                                ->relationship('user', 'name')
+                                                ->relationship('security_guard', 'name')
                                                 ->required(fn(Get $get): bool => !$get('type')),
                                         ]),
 
                                 ]),
-                                Forms\Components\Select::make('user_id')
+                                Forms\Components\Select::make('security_guard_id')
                                     ->label(__('general.form.employee_sust'))
-                                    ->relationship('user', 'name')
+                                    ->relationship('security_guard', 'name')
                                     ->required(fn(Get $get): bool => !$get('type')),
 
                             ]),
                             //->mutateRelationshipDataBeforeSaveUsing(function (array $data, $record, Get $get): array {
-                            //    $user = User::find($data['user_id']);
-                            //    $user['place_id'] = $record->place_id;
-                            //    //dd($user);
-                            //    $user->save();
+                            //    $security_guard = User::find($data['security_guard_id']);
+                            //    $security_guard['place_id'] = $record->place_id;
+                            //    //dd($security_guard);
+                            //    $security_guard->save();
                             //    //dd($data);
                             //    return $data;
                             //}),
@@ -161,7 +161,7 @@ class PlaceResource extends Resource
     {
         return [
             RelationGroup::make('Contacts', [
-                RelationManagers\UsersRelationManager::class,
+                RelationManagers\SecurityGuardsRelationManager::class,
             ]),
 
         ];
