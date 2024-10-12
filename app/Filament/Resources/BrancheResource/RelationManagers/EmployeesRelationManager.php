@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UsersRelationManager extends RelationManager
+class EmployeesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'users';
+    protected static string $relationship = 'employees';
 
     public static function getTitle(Model $ownerRecord, string $pageClass): string
     {
-        return __('general.pages.users');
+        return __('general.pages.employees');
     }
 
     public function form(Form $form): Form

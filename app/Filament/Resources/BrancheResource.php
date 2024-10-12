@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BrancheResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\BrancheResource\RelationManagers;
+use App\Models\Employee;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Split;
 
@@ -59,11 +60,11 @@ class BrancheResource extends Resource
                                     ->label(__('general.form.name'))
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\Select::make('user_id')
+                                Forms\Components\Select::make('employee_id')
                                     ->label(__('general.form.boss'))
-                                    ->relationship('user', 'name')
+                                    ->relationship('employee', 'name')
                                     ->options(
-                                        fn(): Collection => User::query()
+                                        fn(): Collection => Employee::query()
                                             //->where('id', '!=', $get('user_id'))
                                             ->where('charge', 'Boss')
                                             ->pluck('name', 'id')
@@ -132,7 +133,7 @@ class BrancheResource extends Resource
     {
         return [
             RelationManagers\DepartmentsRelationManager::class,
-            RelationManagers\UsersRelationManager::class,
+            RelationManagers\EmployeesRelationManager::class,
         ];
     }
 
