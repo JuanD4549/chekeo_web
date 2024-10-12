@@ -19,7 +19,7 @@ class RoundResource extends JsonResource
             'latitude'=>$this->latitude,
             'longitude'=>$this->longitude,
             'img'=>$this->img1_url,
-            'date_time_created'=>$this->created_at,
+            'created_at'=>$this->created_at,
         ];
     }
 }

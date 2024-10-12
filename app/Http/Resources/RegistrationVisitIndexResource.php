@@ -22,7 +22,7 @@ class RegistrationVisitIndexResource extends JsonResource
             'employee' => $employee['name'],
             'visit' => $visit['name'],
             'date_time_in' => $this->date_time_in,
-            'date_time_out' => $this->date_time_out ?? '',
+            'date_time_out' => $this->date_time_out,
         ];
     }
 }

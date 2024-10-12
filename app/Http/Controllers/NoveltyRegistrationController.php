@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NoveltyRegistrationIndexResource;
 use App\Http\Resources\NoveltyRegistrationResource;
 use App\Models\NoveltyRegistration;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class NoveltyRegistrationController extends Controller
         }
 
         return response()
-            ->json(NoveltyRegistrationResource::collection($registerNoveltys), 200);
+            ->json(NoveltyRegistrationIndexResource::collection($registerNoveltys), 200);
     }
 
     /**
@@ -53,8 +54,8 @@ class NoveltyRegistrationController extends Controller
         try {
             $registerNovelty = new  NoveltyRegistration();
             $registerNovelty['branche_id'] = $request->branche_id;
-            $registerNovelty['security_guard_id'] = $request->user_id;
-            $registerNovelty['employee_id'] = $request->user_notificad_id;
+            $registerNovelty['security_guard_id'] = $request->security_guard_id;
+            $registerNovelty['employee_id'] = $request->employee_id;
             $registerNovelty['novelty_id'] = $request->novelty_id;
             $registerNovelty['detail_created'] = $request->detail_created;
             $registerNovelty['latitude'] = $request->latitude;
@@ -88,7 +89,7 @@ class NoveltyRegistrationController extends Controller
      */
     public function show($id)
     {
-        $novelty_registration = NoveltyRegistration::findOrFail();
+        $novelty_registration = NoveltyRegistration::findOrFail($id);
         return response()->json(new NoveltyRegistrationResource($novelty_registration), 200);
     }
 

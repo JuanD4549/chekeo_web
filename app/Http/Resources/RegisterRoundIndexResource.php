@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\SecurityGuard;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RegisterRoundResource extends JsonResource
+class RegisterRoundIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,11 +21,11 @@ class RegisterRoundResource extends JsonResource
             'place' => $this->place->name ?? '',
             'security_guard' => $this->security_guard->name ?? '',
             'created_at' => $this->created_at,
-            'date_time_closed' => $this->date_time_closed ,
-            'detail_closed' => $this->detail_close ?? '',
-            'rounds' => RoundResource::collection($this->rounds),
+            'date_time_closed' => $this->date_time_closed,
+            //'detail_close' => $this->detail_close ?? '',
+            //'rounds' => RoundResource::collection($this->rounds),
             //dd($this->rounds->select('latitude','longitude')),
-            'points' => $this->rounds->select('latitude', 'longitude'),
+            //'points' => $this->rounds->select('latitude', 'longitude'),
         ];
     }
 }

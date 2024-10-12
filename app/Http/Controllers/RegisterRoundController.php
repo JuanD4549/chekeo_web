@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RegisterRoundIndexResource;
 use App\Http\Resources\RegisterRoundResource;
 use App\Models\RegisterRound;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class RegisterRoundController extends Controller
             //dd($registerRounds);
 
             return response()
-                ->json(RegisterRoundResource::collection($registerRounds), 200);
+                ->json(RegisterRoundIndexResource::collection($registerRounds), 200);
         }
     }
 
@@ -37,7 +38,7 @@ class RegisterRoundController extends Controller
         $validator = Validator::make($request->all(), [
             'branche_id' => 'required|string',
             'place_id' => 'required|string',
-            'user_id' => 'required|string',
+            'security_guard_id' => 'required|string',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -45,11 +46,11 @@ class RegisterRoundController extends Controller
         $registerRound = new RegisterRound();
         $registerRound['branche_id'] = $request->branche_id;
         $registerRound['place_id'] = $request->place_id;
-        $registerRound['security_guard_id'] = $request->user_id;
+        $registerRound['security_guard_id'] = $request->security_guard_id;
 
         $registerRound->save();
         return response()
-            ->json(new RegisterRoundResource($registerRound), 201);
+            ->json($registerRound->id, 201);
     }
 
     /**
@@ -72,8 +73,7 @@ class RegisterRoundController extends Controller
         $registerRound['detail_close'] = $request->detail_close;
 
         $registerRound->save();
-        return response()
-            ->json(new RegisterRoundResource($registerRound), 200);
+        return response()->isOk();
     }
 
     /**

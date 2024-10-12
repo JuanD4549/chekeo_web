@@ -54,10 +54,10 @@ class RegisterRoundResource extends Resource
                             ->relationship('branche', 'name')
                             ->preload()
                             ->required(),
-                        Forms\Components\Select::make('user_id')
+                        Forms\Components\Select::make('security_guard_id')
                             ->label(__('general.pages.employee'))
                             ->searchable(['name', 'ci'])
-                            ->relationship('user', 'name')
+                            ->relationship('security_guard', 'name')
                             ->required(),
                         Forms\Components\Select::make('place_id')
                             ->label(__('general.pages.place'))
