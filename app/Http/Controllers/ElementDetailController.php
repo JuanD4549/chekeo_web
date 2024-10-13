@@ -35,7 +35,7 @@ class ElementDetailController extends Controller
         $elementDetails['detail'] = $request->detail;
         $elementDetails->save();
 
-        return response()->json(new ElementDetailResource($elementDetails), 200);
+        return response()->json($elementDetails->id, 200);
     }
 
     /**

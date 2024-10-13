@@ -33,7 +33,7 @@ class MaintenanceRoundDetailController extends Controller
         $maintenanceRoundDetails['site_id'] = $request->site_id;
         $maintenanceRoundDetails->save();
 
-        return response()->json(new MaintenanceRoundDetailResource($maintenanceRoundDetails), 200);
+        return response()->json($maintenanceRoundDetails->id, 201);
     }
 
     /**

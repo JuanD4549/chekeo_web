@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MaintenanceRoundResource extends JsonResource
+class MaintenanceRoundIndexResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,11 @@ class MaintenanceRoundResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'status' => false,
             'employee' => $this->employee->name ?? '',
-            'maintenance_round_details' => MaintenanceRoundDetailResource::collection($this->maintenance_round_details),
+            //'maintenance_round_details' => MaintenanceRoundDetailResource::collection($this->maintenance_round_details),
             'created_at' => $this->created_at,
+            'date_time_closed' => null,
 
         ];
     }

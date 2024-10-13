@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')
         Route::prefix('place')->group(function () {
             Route::get('/places', [\App\Http\Controllers\PlaceController::class, 'places'])->name('api.place.places');
             Route::get('/user-place', [\App\Http\Controllers\PlaceController::class, 'user_place'])->name('api.place.user_place');
+            Route::get('/elements', [\App\Http\Controllers\PlaceController::class, 'elements'])->name('api.place.elements');
         });
         //Branche
         Route::prefix('branche')->group(function () {
@@ -93,8 +94,10 @@ Route::middleware('auth:sanctum')
         Route::prefix('maintenanceRound')->group(function () {
             Route::get('/', [\App\Http\Controllers\MaintenanceRoundController::class, 'index'])->name('api.maintenanceRound.index');
             Route::post('/', [\App\Http\Controllers\MaintenanceRoundController::class, 'store'])->name('api.maintenanceRound.store');
+            Route::post('/storeComplete', [\App\Http\Controllers\MaintenanceRoundController::class, 'store_complete'])->name('api.maintenanceRound.store_complete');
             Route::get('/{id}', [\App\Http\Controllers\MaintenanceRoundController::class, 'show'])->name('api.maintenanceRound.show');
             Route::put('/{id}', [\App\Http\Controllers\MaintenanceRoundController::class, 'update'])->name('api.maintenanceRound.update');
+            Route::put('/updateComplete/{id}', [\App\Http\Controllers\MaintenanceRoundController::class, 'update_complete'])->name('api.maintenanceRound.update_complete');
         });
         //Maintenance Round Detail
         Route::prefix('maintenanceRoundDetail')->group(function () {
@@ -106,6 +109,7 @@ Route::middleware('auth:sanctum')
         //Site
         Route::prefix('site')->group(function () {
             Route::get('/', [\App\Http\Controllers\SiteController::class, 'index'])->name('api.site.index');
+            Route::get('/elements/{id}', [\App\Http\Controllers\SiteController::class, 'elements'])->name('api.site.elements');
             Route::post('/', [\App\Http\Controllers\SiteController::class, 'store'])->name('api.site.store');
             Route::get('/{id}', [\App\Http\Controllers\SiteController::class, 'show'])->name('api.site.show');
             Route::put('/{id}', [\App\Http\Controllers\SiteController::class, 'update'])->name('api.site.update');

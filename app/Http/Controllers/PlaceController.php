@@ -30,6 +30,8 @@ class PlaceController extends Controller
                 ->json(PlaceResource::collection($places), 200);
         }
     }
+
+    
     /**
      * Display a listing of the resource.
      */

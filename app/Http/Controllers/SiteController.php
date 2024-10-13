@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ElementResource;
 use App\Http\Resources\SiteResource;
+use App\Models\Element;
 use App\Models\Site;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SiteController extends Controller
 {
+    public function elements($id)
+    {
+        $elements = Element::where('site_id', $id)->get();
+        return response()->json(ElementResource::collection($elements), 200);
+    }
     /**
      * Display a listing of the resource.
      */
