@@ -135,6 +135,7 @@ Route::middleware('auth:sanctum')
             Route::get('/{id}', [\App\Http\Controllers\WorkOrderController::class, 'show'])->name('api.workOrder.show');
             Route::put('/{id}', [\App\Http\Controllers\WorkOrderController::class, 'update'])->name('api.workOrder.update');
             Route::put('/closed/{id}', [\App\Http\Controllers\WorkOrderController::class, 'closed'])->name('api.workOrder.closed');
+            Route::put('/add/{id}', [\App\Http\Controllers\WorkOrderController::class, 'add'])->name('api.workOrder.add');
         });
         //Work Order Detail
         Route::prefix('workOrderDetail')->group(function () {

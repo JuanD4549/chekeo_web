@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('img2_url', 500)->nullable();
             $table->string('img3_url', 500)->nullable();
             $table->string('img4_url', 500)->nullable();
+            $table->dateTime('date_time_ejecuted');
+            $table->dateTime('date_time_finished');
             $table->timestamps();
         });
     }

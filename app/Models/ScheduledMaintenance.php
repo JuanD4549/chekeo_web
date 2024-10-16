@@ -18,6 +18,7 @@ class ScheduledMaintenance extends Model
         'in_day_time',
         'days',
         'months',
+        'type_finished',
         'for_days',
         'days_num',
         'the',

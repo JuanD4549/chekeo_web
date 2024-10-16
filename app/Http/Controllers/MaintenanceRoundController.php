@@ -43,9 +43,9 @@ class MaintenanceRoundController extends Controller
 
     public function store_complete(Request $request)
     {
+        //dd($request->all());
         $maintenanceRound = new MaintenanceRound();
         $maintenanceRoundDetails = new MaintenanceRoundDetail();
-        $element_detail = new ElementDetail();
 
         $maintenanceRound['employee_id'] = $request->employee_id;
         $maintenanceRound->save();
@@ -53,12 +53,15 @@ class MaintenanceRoundController extends Controller
         $maintenanceRoundDetails['maintenance_round_id'] = $maintenanceRound->id;
         $maintenanceRoundDetails['site_id'] = $request->site_id;
         $maintenanceRoundDetails->save();
-
-        $element_detail['maintenance_round_detail_id'] = $maintenanceRoundDetails->id;
-        $element_detail['element_id'] = $request->element_id;
-        $element_detail['status'] = $request->status;
-        $element_detail['detail'] = $request->detail;
-        $element_detail->save();
+        foreach ($request->element_ids as $key => $value) {
+            //dd($request->status[$key], $value);
+            $element_detail = new ElementDetail();
+            $element_detail['maintenance_round_detail_id'] = $maintenanceRoundDetails->id;
+            $element_detail['element_id'] = $value;
+            $element_detail['status'] = $request->status[$key];
+            $element_detail['detail'] = $request->details[$key];
+            $element_detail->save();
+        }
 
         return response($maintenanceRound->id, 201);
     }
@@ -67,36 +70,26 @@ class MaintenanceRoundController extends Controller
     {
         $maintenanceRound = MaintenanceRound::findOrFail($id);
         $maintenanceRoundDetail = $maintenanceRound->maintenance_round_details->where('site_id', $request->site_id);
-        $maintenanceRoundDetails = new MaintenanceRoundDetail();
-        $element_detail = new ElementDetail();
         if ($maintenanceRoundDetail->count() > 0) {
-            $maintenanceRoundDetailId = $maintenanceRoundDetail[0]->id;
-            $element_details = ElementDetail::where('maintenance_round_detail_id', $maintenanceRoundDetailId)
-                ->where('element_id', $request->element_id)
-                ->get();
-            if ($element_details->count() > 0) {
-                return response('Ya registro este elemento', 208);
-            }
-            $element_detail['maintenance_round_detail_id'] = $maintenanceRoundDetailId;
-            $element_detail['element_id'] = $request->element_id;
-            $element_detail['status'] = $request->status;
-            $element_detail['detail'] = $request->detail;
-            $element_detail->save();
-            return response('Elemento agregado', 201);
-            //dd($element_details);
+            return response('Ya registro este sitio', 208);
         }
+        $maintenanceRoundDetails = new MaintenanceRoundDetail();
         $maintenanceRoundDetails['maintenance_round_id'] = $request->maintenance_round_id;
         $maintenanceRoundDetails['site_id'] = $request->site_id;
         $maintenanceRoundDetails->save();
 
-        $element_detail['maintenance_round_detail_id'] = $maintenanceRoundDetails->id;
-        $element_detail['element_id'] = $request->element_id;
-        $element_detail['status'] = $request->status;
-        $element_detail['detail'] = $request->detail;
-        $element_detail->save();
+        foreach ($request->element_ids as $key => $value) {
+            //dd($request->status[$key], $value);
+            $element_detail = new ElementDetail();
+            $element_detail['maintenance_round_detail_id'] = $maintenanceRoundDetails->id;
+            $element_detail['element_id'] = $value;
+            $element_detail['status'] = $request->status[$key];
+            $element_detail['detail'] = $request->details[$key];
+            $element_detail->save();
+        }
         //dd();
 
-        return response('Lugar y elemento agregado', 201);
+        return response('Lugar y elementos agregados', 201);
     }
 
     /**

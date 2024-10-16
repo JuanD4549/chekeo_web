@@ -23,7 +23,9 @@ return new class extends Migration
             $table->foreignId('site_id');
             $table->text('description')->nullable();
             $table->enum('priority', ['high', 'medium', 'low'])->default('medium');
-
+            $table->enum('type_finished', ['time', 'days'])->default('days');
+            $table->time('time_finished')->nullable();
+            $table->integer('days_finished')->nullable();
             $table->timestamps();
         });
     }

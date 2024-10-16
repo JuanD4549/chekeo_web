@@ -21,16 +21,18 @@ class WorkOrderResource extends JsonResource
         });
         return [
             'id' => $this->id,
-            'site' => new SiteResource($this->site),
-            'employees' => EmployeeWorkOrderResource::collection($this->employee_work_order),
+            'site' => $this->site->name,
+            'workers' => EmployeeWorkOrderResource::collection($this->employee_work_order),
             'description' => $this->description ?? '',
             'priority' => $this->priority,
             'state' => $this->state,
             'work_order_details' => WorkOrderDetailResource::collection($this->work_order_details),
-            'date_time_closed' => $this->date_time_closed ?? '',
+            'date_time_closed' => $this->date_time_closed,
             'description_closed' => $this->description_closed ?? '',
             'img' => $fotosFiltered,
             'created_at' => $this->created_at,
+            'date_time_finished' => $this->date_time_finished,
+            'date_time_executed' => $this->date_time_ejecuted,
         ];
     }
 }

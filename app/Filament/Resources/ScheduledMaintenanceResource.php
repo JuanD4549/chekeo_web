@@ -81,6 +81,7 @@ class ScheduledMaintenanceResource extends Resource
                 Forms\Components\Section::make('')
                     ->columns(2)
                     ->schema([
+
                         Forms\Components\Select::make('months')
                             ->label(__('general.date.month'))
                             ->multiple()
@@ -89,6 +90,7 @@ class ScheduledMaintenanceResource extends Resource
                             ->label(__('general.form.for_number_day'))
                             ->default(false)
                             ->live(),
+
                         Forms\Components\Select::make('the')
                             ->label(__('general.form.the'))
                             ->hidden(fn(Get $get): bool => $get('for_days'))
@@ -146,6 +148,24 @@ class ScheduledMaintenanceResource extends Resource
                             ->reorderable(false)
                             ->defaultItems(1)
                             ->minItems(1),
+                        Forms\Components\Select::make('type_finished')
+                            ->label(__('general.form.type_finished'))
+                            ->default('days')
+                            ->live()
+                            ->options([
+                                'time' => __('general.date.time'),
+                                'days' => __('general.date.days'),
+                            ]),
+                        Forms\Components\TimePicker::make('time_finished')
+                            ->label(__('general.form.time_finished'))
+                            ->hidden(fn(Get $get) => $get('type_finished') == 'days')
+                            ->required(fn(Get $get) => $get('type_finished') == 'time')
+                            ->seconds(false),
+                        Forms\Components\TextInput::make('days_finished')
+                            ->label(__('general.form.days_finished'))
+                            ->hidden(fn(Get $get) => $get('type_finished') == 'time')
+                            ->required(fn(Get $get) => $get('type_finished') == 'days')
+                            ->integer(),
                     ]),
             ]);
     }

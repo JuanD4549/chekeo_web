@@ -69,6 +69,10 @@ class WorkOrderResource extends Resource
                     ->inline()
                     ->inlineLabel(false)
                     ->default('medium'),
+                Forms\Components\DateTimePicker::make('date_time_ejecuted')
+                    ->label(__('general.date.date_time_ejecuted')),
+                Forms\Components\DateTimePicker::make('date_time_finished')
+                    ->label(__('general.date.date_time_finished')),
                 Forms\Components\Select::make('site_id')
                     ->label(__('general.pages.site'))
                     ->disabledOn('edit')

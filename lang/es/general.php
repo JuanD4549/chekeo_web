@@ -24,6 +24,9 @@ return [
     ],
     'form' => [
         'the' => 'El',
+        'type_finished' => 'Tipo duración',
+        'days_finished'=>'Duración en días',
+        'time_finished'=>'Duración en Horas y Minutos',
         'for_number_day' => 'Por numero de día',
         'number_day' => 'Número de día',
         'times_day' => 'Horas del día',
@@ -112,6 +115,8 @@ return [
             'saturday' => 'Sábado',
             'sunday' => 'Domingo',
         ],
+        'time' => 'Tiempo',
+        'minutes' => 'Minutos',
         'last_day' => 'Último día',
         'months' => 'Meses',
         'month' => 'Mes',
@@ -127,6 +132,8 @@ return [
         'date_time_in' => 'Fecha y Hora de Entrada',
         'date_time_outup' => 'Fecha y Hora de Salida',
         'date_time' => 'Fecha y hora',
+        'date_time_finished' => 'Fecha y hora estima de finalización',
+        'date_time_ejecuted' => 'Fecha y hora estima de ejecución',
     ],
 
     'time' => [

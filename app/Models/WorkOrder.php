@@ -23,6 +23,8 @@ class WorkOrder extends Model
         'img2_url',
         'img3_url',
         'img4_url',
+        'date_time_ejecuted',
+        'date_time_finished',
     ];
     public function site(): BelongsTo
     {
