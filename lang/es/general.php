@@ -189,6 +189,10 @@ return [
     ],
 
     'pages' => [
+        'security_guard'=>'Guardia de Seguridad',
+        'security_guards'=>'Guardias de Seguridad',
+        'scheduled_maintenances'=>'Mantenimientos Programados',
+        'scheduled_maintenance'=>'Mantenimiento Programado',
         'maintenance_round' => 'Ronda de Mantenimiento',
         'maintenance_rounds' => 'Rondas de Mantenimiento',
         'work_order_details' => 'Detalles de la Orden de Trabajo',

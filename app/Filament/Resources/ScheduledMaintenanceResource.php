@@ -20,6 +20,26 @@ class ScheduledMaintenanceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.scheduled_maintenance');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.scheduled_maintenances');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.scheduled_maintenance');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu_category.maintenance');
+    }
+
     public static function form(Form $form): Form
     {
         return $form

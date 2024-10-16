@@ -19,6 +19,23 @@ class SecurityGuardResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('general.pages.security_guard');
+    }
+    public static function getPluralModelLabel(): string
+    {
+        return __('general.pages.security_guards');
+    }
+    public static function getNavigationLabel(): string
+    {
+        return __('general.pages.security_guard');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('general.menu_category.my_organization');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
