@@ -212,8 +212,7 @@ class EmployeeResource extends Resource
                             ->required()
                             ->maxLength(255),
                         TextInput::make('enterpriser_phone_ext')
-                            ->label(__('general.form.enterprise_phone_ext'))
-                            ->maxLength(10),
+                            ->label(__('general.form.enterprise_phone_ext'))->maxLength(10),
 
                     ]),
             ]);
