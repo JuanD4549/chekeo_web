@@ -124,6 +124,7 @@ class WorkOrderResource extends Resource
                             ->required(),
                         Forms\Components\FileUpload::make('img1_url')
                             ->label(__('general.form.photo', ['number' => '1']))
+                            ->image()
                             ->directory('work_orders'),
                         Forms\Components\FileUpload::make('img2_url')
                             ->label(__('general.form.photo', ['number' => '2']))

@@ -52,7 +52,7 @@ class WorkOrderController extends Controller
             $worker->save();
         }
 
-        return response("Se creo la orden de trabajo", 201);
+        return response("Se creó la orden de trabajo", 201);
     }
 
     /**
