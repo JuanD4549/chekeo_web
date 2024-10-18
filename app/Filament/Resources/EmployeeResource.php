@@ -6,8 +6,11 @@ use App\Filament\Resources\EmployeeResource\Pages;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\Department;
 use App\Models\Employee;
+use DateTime;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -66,7 +69,7 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Fieldset::make()
                     ->relationship(
                         'user',
                     )
@@ -78,10 +81,12 @@ class EmployeeResource extends Resource
                             ->directory('users')
                             ->avatar(),
                         TextInput::make('name')
-                            ->label(__('general.form.user'))
+                            ->label(__('general.pages.user'))
+                            //->default('d')
                             ->live()
                             //->default(fn(Get $get) => $get('ci'))
-                            ->disabled(),
+                            ->disabled()
+                            ->dehydrated(),
                         TextInput::make('password')
                             ->label(__('general.form.password'))
                             ->password()
@@ -90,6 +95,8 @@ class EmployeeResource extends Resource
                         Select::make('roles')
                             //->multiple()
                             ->relationship('roles', 'name')
+                            ->default(2)
+                            ->disabled()
                             ->preload()
                             ->searchable(),
                     ]),
@@ -111,8 +118,8 @@ class EmployeeResource extends Resource
                         TextInput::make('ci')
                             ->label(__('general.form.ci'))
                             ->required()
-                            //->live()
-                            ->afterStateUpdated(fn(Set $set, Get $get,$state) => $set('user.name', $state))
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn($state, Set $set) => $set('user.name', $state))
                             ->maxLength(10),
                         Select::make('blood_type')
                             ->label(__('general.form.blood_type'))
@@ -193,7 +200,8 @@ class EmployeeResource extends Resource
                                 'employee' => __('general.form.employee'),
                                 'maintenance_user' => __('general.form.maintenance_user')
                             ]),
-                        DateTimePicker::make('date_in')
+                        DatePicker::make('date_in')
+                            //->default(new DateTime())
                             ->label(__('general.date.date_in')),
                         TextInput::make('enterprise_mail')
                             ->label(__('general.form.enterprise_mail'))
